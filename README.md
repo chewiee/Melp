@@ -1,9 +1,9 @@
 # YelpClone
 aA Capstone: Yelp clone
 
-## Heroku link
+(will be added after day 1) - [Heroku link][heroku]
 
-(will be added after day 1) - [heroku]: http://www.herokuapp.com
+[heroku]: http://www.herokuapp.com
 
 ## Minimum Viable Product
 
