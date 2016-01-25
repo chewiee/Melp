@@ -76,7 +76,7 @@ profile page and "thumbs up" or "thumbs down" other reviews.
 I will display a list of Restaurants on a map, allow users to search within the 
 map bounds, and adjust the map to match the list returned by the search.
 I will also implement a backend server which tracks user activity including
-account creation, Restaurants and Review impressions and interaction,
+Restaurants and Review impressions and interaction, search activity,
 and any available demographic data for the user (location, device).
 
 [Details][phase-five]
