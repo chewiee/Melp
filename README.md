@@ -54,7 +54,7 @@ associated with a particular Restaurant. I will also create a JSON API
 for Restaurants along with a `Item` view to display one Restaurant and 
 its Reviews. Restaurants will have properties that are aggregates of
 their Reviews' properties. Users will also be able to filter Restaurants
-and Reviews using `SearchIndex` and `SearchIndex` views. Finally, I will
+and Reviews using `Search` views. Finally, I will
 create a Restaurants `Form` view to add potential new Restaurants pending
 Admin review.
 
