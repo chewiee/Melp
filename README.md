@@ -41,10 +41,12 @@ end, I will set up a full JSON API for Reviews.
 
 For Phase 2, I'll set up the Flux and React structure for the main application,
 including a Review Store and necessary Review Actions. I will then create React
-views for Reviews `List`, `Item`, and `Form`. At the end of the phase,
-Reviews can be created, read, edited and destroyed in the browser. Reviews
-should save to the database when the form loses focus or is left idle after 
-editing. I'll start using basic bootstrap for styling.
+views for Reviews `List`, `Item`, and `Form`. Users will also receive `List`, `Show`
+and `Form` views. Users will only be able to access their own `Form` view. At the end 
+of the phase, Reviews can be created, read, edited and destroyed in the browser. 
+Reviews should save to the database when the form loses focus or is left idle after 
+editing. Users can create their basic profiles as well. I'll start using basic bootstrap 
+for styling.
 
 [Details][phase-two]
 
@@ -52,12 +54,11 @@ editing. I'll start using basic bootstrap for styling.
 
 After Reviews are functional, I will add in Restaurants. Reviews must be 
 associated with a particular Restaurant. I will also create a JSON API
-for Restaurants along with a `Item` view to display one Restaurant and 
+for Restaurants along with a `Show` view to display one Restaurant and 
 its Reviews. Restaurants will have properties that are aggregates of
 their Reviews' properties. Users will also be able to filter Restaurants
-and Reviews using `Search` views. Finally, I will
-create a Restaurants `Form` view to add potential new Restaurants pending
-Admin review.
+and Reviews using `Search` views. Finally, I will create a Restaurants `Form` 
+view to add potential new Restaurants pending Admin review.
 
 [Details][phase-three]
 
