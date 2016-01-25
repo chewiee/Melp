@@ -7,7 +7,7 @@
 ## Minimum Viable Product
 
 Melp is a web application inspired by Yelp built using Ruby on Rails
-and React.js. FresherNote allows users to:
+and React.js. Melp lets users:
 
 - [ ] Create an account
 - [ ] Log in / Log out
