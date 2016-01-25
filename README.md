@@ -16,6 +16,7 @@ and React.js. Melp lets users:
 - [ ] Search for restaurants by cuisine, rating, price, and location
 - [ ] Search for reviews matching a phrase
 - [ ] Rate reviews as helpful or unhelpful
+- [ ] Display restaurants on a map
 - [ ] Create a profile with review stats
 
 ## Design Docs
@@ -69,9 +70,11 @@ profile page and "thumbs up" or "thumbs down" other reviews.
 
 [Details][phase-four]
 
-### Phase 5: Tracking (1 day)
+### Phase 5: Map and Tracking (1 day)
 
-I will implement a backend server which tracks user activity including
+I will display a list of Restaurants on a map, allow users to search within the 
+map bounds, and adjust the map to match the list returned by the search.
+I will also implement a backend server which tracks user activity including
 account creation, Restaurants and Review impressions and interaction,
 and any available demographic data for the user (location, device).
 
