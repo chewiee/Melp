@@ -1,7 +1,7 @@
 # YelpClone
 aA Capstone: Yelp clone
 
-[Heroku link]
+## Heroku link
 
 (will be added after day 1) - [heroku]: http://www.herokuapp.com
 
