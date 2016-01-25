@@ -1,4 +1,4 @@
-# YelpClone
+# Melp
 
 (will be added after day 1) - [Heroku link][heroku]
 
@@ -6,7 +6,7 @@
 
 ## Minimum Viable Product
 
-YelpClone is a web application inspired by Yelp built using Ruby on Rails
+Melp is a web application inspired by Yelp built using Ruby on Rails
 and React.js. FresherNote allows users to:
 
 - [ ] Create an account
