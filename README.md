@@ -1,5 +1,4 @@
 # YelpClone
-aA Capstone: Yelp clone
 
 (will be added after day 1) - [Heroku link][heroku]
 
