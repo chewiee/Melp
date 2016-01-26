@@ -51,7 +51,7 @@
 	var Route = __webpack_require__(159).Route;
 	var IndexRoute = __webpack_require__(159).IndexRoute;
 	
-	var HeaderNav = __webpack_require__(206);
+	var HeaderNav = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/header_nav.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	var Content = __webpack_require__(207);
 	
 	var App = React.createClass({
@@ -24006,50 +24006,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 206 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var SearchBar = __webpack_require__(208);
-	
-	var HeaderNav = React.createClass({
-	  displayName: 'HeaderNav',
-	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { className: 'header' },
-	      React.createElement(
-	        'div',
-	        { className: 'header-nav group' },
-	        React.createElement(
-	          'div',
-	          { className: 'header-logo' },
-	          React.createElement('image', { src: 'melp_logo.png' })
-	        ),
-	        React.createElement(SearchBar, null),
-	        React.createElement(
-	          'div',
-	          { className: 'sign-up-log-in-container group' },
-	          React.createElement(
-	            'div',
-	            { className: 'sign-up-button' },
-	            'Sign Up'
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'log-in-button' },
-	            'Log In'
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = HeaderNav;
-
-/***/ },
+/* 206 */,
 /* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -24072,32 +24029,6 @@
 	});
 	
 	module.exports = Content;
-
-/***/ },
-/* 208 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	
-	var SearchBar = React.createClass({
-	  displayName: 'SearchBar',
-	
-	  render: function () {
-	    return React.createElement(
-	      'form',
-	      { className: 'search-bar group' },
-	      React.createElement('input', { type: 'text', id: 'search-box' }),
-	      React.createElement(
-	        'div',
-	        { className: 'search-button' },
-	        React.createElement('i', { className: 'fa fa-search' })
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = SearchBar;
 
 /***/ }
 /******/ ]);
