@@ -24037,7 +24037,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'header-logo' },
-	          React.createElement('img', { src: 'melp_logo.png', onClick: this.loadHomePage })
+	          React.createElement('img', { src: 'assets/melp_logo.png', onClick: this.loadHomePage })
 	        ),
 	        React.createElement(SearchBar, null),
 	        React.createElement(

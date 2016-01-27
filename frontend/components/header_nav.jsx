@@ -19,7 +19,7 @@ var HeaderNav = React.createClass({
       <div className="header">
         <div className="header-nav group">
           <div className="header-logo">
-            <img src="melp_logo.png" onClick={this.loadHomePage}/>
+            <img src="assets/melp_logo.png" onClick={this.loadHomePage}/>
           </div>
           <SearchBar />
           <div className="sign-up-log-in-container group">
