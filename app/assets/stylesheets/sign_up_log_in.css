@@ -1,0 +1,146 @@
+/*used http://codepen.io/ehermanson/pen/KwKWEv as guide*/
+
+
+a {
+  background-color: white;
+  color: #4C4C44;
+  transition: .2s ease;
+}
+
+a:hover {
+  background-color: #4C4C44;
+  color: white;
+}
+
+.sign-up-log-in-form {
+  padding: 40px;
+  max-width: 600px;
+  margin: 40px auto;
+  border-radius: 10px;
+  border: 3px solid #6D758C;
+  box-shadow: 0 4px 10px 4px #3F3F3F;
+  box-sizing: border-box;
+}
+
+.tab-group {
+  padding: 0;
+  margin: 0 0 40px 0;
+}
+
+.tab-group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.tab-group > li > .sign-up {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right: 1px solid #4C4C47;
+}
+
+.tab-group > li > .log-in {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.tab-group > li > a {
+  display:block;
+  text-decoration:none;
+  padding:20px;
+  background:linear-gradient(#D8CDBA, #BFB4A4);
+  color:#4C4C44;
+  font-size:24px;
+  float:left;
+  width:50%;
+  text-align:center;
+  cursor:pointer;
+  transition:.2s ease;
+  box-sizing: border-box;
+}
+
+.tab-group > li > a:hover {
+  background: linear-gradient(#C14953, #A83C43);
+  color:white;
+}
+
+.tab-group > .active > a {
+  background: linear-gradient(#C14953, #A83C43);
+  color:white;
+}
+
+.tab-content > div:last-child {
+  display:none;
+}
+
+h2 {
+  text-align:center;
+  color:#C1454E;
+  margin:0 0 40px;
+  font-size: 36px;
+}
+
+.field-wrap {
+  position:relative;
+  margin-bottom:40px;
+}
+
+label {
+  position:absolute;
+  transform:translateY(6px);
+  left:13px;
+  color:#6D758C;
+  transition:all 0.25s ease;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+  font-size:22px;
+}
+
+label > .req {
+	margin:2px;
+	color:black;
+}
+
+input, text {
+  font-size:22px;
+  display:block;
+  width:100%;
+  height:100%;
+  padding:5px 10px;
+  border:1px solid #4C4C44;
+  color:#4C4C44;
+  border-radius:3px;
+  transition:border-color .25s ease, box-shadow .25s ease;
+}
+
+input:focus, text:focus {
+  outline:0;
+  border-color:#C1454E;
+}
+
+#user_password {
+  margin-bottom: 20px;
+}
+
+.form-button {
+  border:0;
+  outline:none;
+  border-radius:0;
+  padding:15px 0;
+  font-size:36px;
+  font-weight: 600;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  background: linear-gradient(#C14953, #A83C43);
+  color:white;
+  transition:all.5s ease;
+  -webkit-appearance: none;
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+}
+
+.form-button:hover {
+  cursor: pointer;
+  background: linear-gradient(#E85864, #C14953)
+}

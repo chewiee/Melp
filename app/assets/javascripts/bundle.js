@@ -24015,6 +24015,18 @@
 	var HeaderNav = React.createClass({
 	  displayName: 'HeaderNav',
 	
+	  loadSignUpPage: function () {
+	    window.location = '/api/users/new';
+	  },
+	
+	  loadLogInPage: function () {
+	    window.location = '/api/session/new';
+	  },
+	
+	  loadHomePage: function () {
+	    window.location = '/#/';
+	  },
+	
 	  render: function () {
 	    return React.createElement(
 	      'div',
@@ -24025,7 +24037,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'header-logo' },
-	          React.createElement('img', { src: 'melp_logo.png' })
+	          React.createElement('img', { src: 'melp_logo.png', onClick: this.loadHomePage })
 	        ),
 	        React.createElement(SearchBar, null),
 	        React.createElement(
@@ -24033,12 +24045,14 @@
 	          { className: 'sign-up-log-in-container group' },
 	          React.createElement(
 	            'div',
-	            { className: 'sign-up-button header-button' },
+	            { className: 'sign-up-button header-button',
+	              onClick: this.loadSignUpPage },
 	            'Sign Up'
 	          ),
 	          React.createElement(
 	            'div',
-	            { className: 'log-in-button header-button-2' },
+	            { className: 'log-in-button header-button-2',
+	              onClick: this.loadLogInPage },
 	            'Log In'
 	          )
 	        )

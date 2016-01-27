@@ -1,30 +1,104 @@
-<form class="new-user-form" action="<%= api_users_url %>" method="post">
-  <input type="hidden" name="authenticity_token"
-         value="<%= form_authenticity_token %>">
-  <label for="user_email">email</label>
-  <input
-    type="text"
-    name="user[email]"
-    value="<%= @user.email %>"
-    id="user_email">
+<div class="sign-up-log-in-form">
+  <!-- used http://codepen.io/ehermanson/pen/KwKWEv as guide -->
+  <ul class="tab-group">
+     <li class="tab">
+       <a class="sign-up" href="#sign-up">sign up</a>
+     </li>
+     <li class="tab">
+       <a class="log-in" href="#log-in">log in</a>
+     </li>
+  </ul>
 
-  <label for="user_username">username</label>
-  <input
-    type="text"
-    name="user[username]"
-    value="<%= @user.username %>"
-    id="user_username">
+  <div class="tab-content">
+    <div id="sign-up">
+      <h2> sign up for melp </h2>
 
-  <label for="user_password">password</label>
-  <input
-    type="password"
-    name="user[password]"
-    id="user_password">
+      <form action="<%= api_users_url %>" method="post">
+        <input type="hidden" name="authenticity_token"
+               value="<%= form_authenticity_token %>">
 
-  <label for="user_password_confirmation">confirm password</label>
-  <input
-    type="password"
-    name="user[password_confirmation]"
-    id="user_password_confirmation">
-  <input type="submit" name="register" value="register"></input>
-</form>
+        <div class="field-wrap">
+          <label for="user_email">e-mail
+            <span class="req">*</span>
+          </label>
+          <input
+            type="text"
+            name="user[email]"
+            value="<%= @user.email %>"
+            id="user_email">
+        </div>
+
+        <div class="field-wrap">
+          <label for="user_password">password
+            <span class="req">*</span>
+          </label>
+          <input
+            type="password"
+            name="user[password]"
+            id="user_password">
+
+          <label for="user_password_confirmation">confirm password
+            <span class="req">*</span>
+          </label>
+          <input
+            type="password"
+            name="user[password_confirmation]"
+            id="user_password_confirmation">
+        </div>
+
+        <button class="form-button"
+          type="submit"
+          name="register">
+          register
+        </button>
+
+      </form>
+    </div>
+
+    <div id="log-in">
+      <h2> welcome back </h2>
+      <form action="<%= api_session_url %>" method="post">
+        <input type="hidden" name="authenticity_token"
+               value="<%= form_authenticity_token %>">
+        <div class="field-wrap">
+          <label for="user_username">e-mail</label>
+          <input
+            type="text"
+            name="user[email]"
+            value="<%= @user.email %>"
+            id="user_email">
+        </div>
+
+        <div class="field-wrap">
+          <label for="user_password">password</label>
+          <input
+            type="password"
+            name="user[password]"
+            id="user_password">
+        </div>
+        <button class="form-button"
+          type="submit"
+          name="login">log in
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('.tab a').on('click', function (e) {
+
+    e.preventDefault();
+
+    $(this).parent().addClass('active');
+    $(this).parent().siblings().removeClass('active');
+
+    target = $(this).attr('href');
+
+    $('.tab-content > div').not(target).hide();
+
+    $(target).fadeIn(200);
+
+  });
+
+</script>
