@@ -51,8 +51,8 @@
 	var Route = __webpack_require__(159).Route;
 	var IndexRoute = __webpack_require__(159).IndexRoute;
 	
-	var HeaderNav = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/header_nav.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
-	var Content = __webpack_require__(207);
+	var HeaderNav = __webpack_require__(206);
+	var Content = __webpack_require__(208);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -24006,8 +24006,82 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 206 */,
+/* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var SearchBar = __webpack_require__(207);
+	
+	var HeaderNav = React.createClass({
+	  displayName: 'HeaderNav',
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'header' },
+	      React.createElement(
+	        'div',
+	        { className: 'header-nav group' },
+	        React.createElement(
+	          'div',
+	          { className: 'header-logo' },
+	          React.createElement('img', { src: 'melp_logo.png' })
+	        ),
+	        React.createElement(SearchBar, null),
+	        React.createElement(
+	          'div',
+	          { className: 'sign-up-log-in-container group' },
+	          React.createElement(
+	            'div',
+	            { className: 'sign-up-button header-button' },
+	            'Sign Up'
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'log-in-button header-button-2' },
+	            'Log In'
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = HeaderNav;
+
+/***/ },
 /* 207 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var SearchBar = React.createClass({
+	  displayName: "SearchBar",
+	
+	  render: function () {
+	    var searchBoxText = "Search for restaurants, reviews, or users";
+	
+	    return React.createElement(
+	      "form",
+	      { className: "search-bar group" },
+	      React.createElement("input", {
+	        type: "text",
+	        className: "search-box",
+	        defaultValue: searchBoxText }),
+	      React.createElement(
+	        "div",
+	        { className: "search-button header-button" },
+	        React.createElement("i", { className: "fa fa-search" })
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = SearchBar;
+
+/***/ },
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
