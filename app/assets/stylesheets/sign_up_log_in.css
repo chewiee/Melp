@@ -85,22 +85,6 @@ h2 {
   margin-bottom:40px;
 }
 
-label {
-  position:absolute;
-  transform:translateY(6px);
-  left:13px;
-  color:#6D758C;
-  transition:all 0.25s ease;
-  -webkit-backface-visibility: hidden;
-  pointer-events: none;
-  font-size:22px;
-}
-
-label > .req {
-	margin:2px;
-	color:black;
-}
-
 input, text {
   font-size:22px;
   display:block;
@@ -143,4 +127,13 @@ input:focus, text:focus {
 .form-button:hover {
   cursor: pointer;
   background: linear-gradient(#E85864, #C14953)
+}
+
+#guest-login {
+  margin-top: 10px;
+  background: linear-gradient(#8189A5, #6D738C);
+}
+
+#guest-login:hover {
+  background: linear-gradient(#959DBF, #8189A5);
 }

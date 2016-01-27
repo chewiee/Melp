@@ -1,9 +1,4 @@
 class Api::SessionsController < ApplicationController
-  def new
-    @user = User.new
-    render "api/session/new.html.erb"
-  end
-
   def create
     user = User.find_by_credentials(
       params[:user][:email],

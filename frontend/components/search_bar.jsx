@@ -9,7 +9,8 @@ var SearchBar = React.createClass({
         <input
           type='text'
           className="search-box"
-          defaultValue={searchBoxText}/>
+          placeholder={searchBoxText}
+          autofocus="true"/>
         <div className="search-button header-button">
           <i className="fa fa-search"></i>
         </div>

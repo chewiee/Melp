@@ -1,7 +1,7 @@
 <div class="sign-up-log-in-form">
   <!-- used http://codepen.io/ehermanson/pen/KwKWEv as guide -->
   <ul class="tab-group">
-     <li class="tab">
+     <li class="tab active">
        <a class="sign-up" href="#sign-up">sign up</a>
      </li>
      <li class="tab">
@@ -18,31 +18,26 @@
                value="<%= form_authenticity_token %>">
 
         <div class="field-wrap">
-          <label for="user_email">e-mail
-            <span class="req">*</span>
-          </label>
           <input
             type="text"
             name="user[email]"
             value="<%= @user.email %>"
+            placeholder="email *"
+            autofocus="true"
             id="user_email">
         </div>
 
         <div class="field-wrap">
-          <label for="user_password">password
-            <span class="req">*</span>
-          </label>
           <input
             type="password"
             name="user[password]"
+            placeholder="password *"
             id="user_password">
 
-          <label for="user_password_confirmation">confirm password
-            <span class="req">*</span>
-          </label>
           <input
             type="password"
             name="user[password_confirmation]"
+            placeholder="confirm password *"
             id="user_password_confirmation">
         </div>
 
@@ -61,19 +56,20 @@
         <input type="hidden" name="authenticity_token"
                value="<%= form_authenticity_token %>">
         <div class="field-wrap">
-          <label for="user_username">e-mail</label>
           <input
             type="text"
             name="user[email]"
             value="<%= @user.email %>"
+            placeholder="email"
+            autofocus="true"
             id="user_email">
         </div>
 
         <div class="field-wrap">
-          <label for="user_password">password</label>
           <input
             type="password"
             name="user[password]"
+            placeholder="password"
             id="user_password">
         </div>
         <button class="form-button"
@@ -81,24 +77,11 @@
           name="login">log in
         </button>
       </form>
+
+      <button class="form-button" id="guest-login">
+        log in as guest
+      </button>
+
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  $('.tab a').on('click', function (e) {
-
-    e.preventDefault();
-
-    $(this).parent().addClass('active');
-    $(this).parent().siblings().removeClass('active');
-
-    target = $(this).attr('href');
-
-    $('.tab-content > div').not(target).hide();
-
-    $(target).fadeIn(200);
-
-  });
-
-</script>

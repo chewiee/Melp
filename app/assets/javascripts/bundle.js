@@ -24016,11 +24016,11 @@
 	  displayName: 'HeaderNav',
 	
 	  loadSignUpPage: function () {
-	    window.location = '/api/users/new';
+	    window.location = '/api/users/new#sign-up';
 	  },
 	
 	  loadLogInPage: function () {
-	    window.location = '/api/session/new';
+	    window.location = '/api/users/new#log-in';
 	  },
 	
 	  loadHomePage: function () {
@@ -24081,7 +24081,8 @@
 	      React.createElement("input", {
 	        type: "text",
 	        className: "search-box",
-	        defaultValue: searchBoxText }),
+	        placeholder: searchBoxText,
+	        autofocus: "true" }),
 	      React.createElement(
 	        "div",
 	        { className: "search-button header-button" },

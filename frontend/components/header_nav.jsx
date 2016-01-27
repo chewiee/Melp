@@ -3,11 +3,11 @@ var SearchBar = require('./search_bar.jsx');
 
 var HeaderNav = React.createClass({
   loadSignUpPage: function () {
-    window.location='/api/users/new';
+    window.location='/api/users/new#sign-up';
   },
 
   loadLogInPage: function () {
-    window.location='/api/session/new';
+    window.location='/api/users/new#log-in';
   },
 
   loadHomePage: function () {
@@ -19,7 +19,7 @@ var HeaderNav = React.createClass({
       <div className="header">
         <div className="header-nav group">
           <div className="header-logo">
-            <img src='melp_logo.png' onClick={this.loadHomePage}/>
+            <img src="melp_logo.png" onClick={this.loadHomePage}/>
           </div>
           <SearchBar />
           <div className="sign-up-log-in-container group">
