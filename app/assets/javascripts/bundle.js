@@ -31020,8 +31020,17 @@
 	        ),
 	        React.createElement(
 	          'div',
-	          { className: 'item-address' },
-	          this.props.restaurant.address
+	          { className: 'item-subtitle' },
+	          React.createElement(
+	            'span',
+	            { className: 'cuisines' },
+	            "filler cuisine"
+	          ),
+	          React.createElement(
+	            'span',
+	            null,
+	            " - " + this.props.restaurant.address
+	          )
 	        ),
 	        React.createElement(
 	          'div',

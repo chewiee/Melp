@@ -24,8 +24,13 @@ module.exports = React.createClass({
           <div className="item-name" onClick={this.showDetail}>
             {this.props.restaurant.name}
           </div>
-          <div className="item-address">
-            {this.props.restaurant.address}
+          <div className="item-subtitle">
+            <span className="cuisines">
+              {"filler cuisine"}
+            </span>
+            <span>
+              {" - " + this.props.restaurant.address}
+            </span>
           </div>
           <div className="item-review">
             {"...this is filler review text..."}
