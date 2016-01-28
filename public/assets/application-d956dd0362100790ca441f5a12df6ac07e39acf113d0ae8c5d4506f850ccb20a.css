@@ -1,0 +1,518 @@
+html, body, section, article,
+h1, h2, p, strong, em, a, input, ol {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: inherit;
+  font: inherit;
+  text-decoration: inherit;
+  text-align: inherit;
+  color: inherit;
+  background: transparent;
+  font-family: 'Bitter', sans-serif;
+  z-index: inherit;
+}
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  background-color: #E5DCC5;
+}
+
+.header {
+  background-color: #C14953;
+  border-bottom: 1px solid #4C4C47;
+  -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+  z-index: 1;
+  position: relative;
+}
+
+.content {
+  width: 900px;
+  margin: auto;
+  background-color: white;
+  border-left: 1px solid #4C4C47;
+  border-right: 1px solid #4C4C47;
+  border-bottom: 1px solid #4C4C47;
+  z-index: 0;
+  box-sizing: border-box;
+  padding: 20px;
+}
+.header-nav {
+  color: white;
+  background-color: #C14953;
+  width: 900px;
+  height: 80px;
+  margin: auto;
+}
+
+.header-logo {
+  float: left;
+  display: block;
+  width: 140px;
+  height: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.header-logo > img {
+  display: block;
+  width: 120%;
+  margin-left: -3px;
+  margin-top: -3px;
+  cursor: pointer;
+}
+
+.header-button {
+  border: 1px solid #4C4C47;
+  border-radius: 3px;
+  padding: 5px;
+  background: linear-gradient(#C14953, #A83C43);
+}
+
+.header-button:hover {
+  cursor: pointer;
+  background: linear-gradient(#E85864, #C14953);
+}
+
+.header-button:active {
+  background: linear-gradient(#E85864, #A83C43);
+}
+
+.search-bar {
+  float: left;
+  width: 620px;
+  padding: 10px 0px 10px 0px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.search-box {
+  float: left;
+  display: block;
+  border-radius: 5px;
+  width: 90%;
+  height: 50px;
+  padding: 5px 5px 5px 15px;
+  margin-top: 5px;
+  cursor: pointer;
+  font-size: 24px;
+  background-color: white;
+  color: lightgray;
+  -moz-box-shadow: inset 0 0 5px #000000;
+  -webkit-box-shadow: inset 0 0 5px #000000;
+  box-shadow: inset 0 0 5px #000000;
+}
+
+.search-box:focus {
+  cursor: text;
+  color: black;
+}
+
+.search-button {
+  float: right;
+  display: block;
+  height: 50px;
+  width: 50px;
+  margin-top: 5px;
+  font-size: 36px;
+  padding: 5px;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 35px;
+  vertical-align: middle;
+}
+
+.sign-up-log-in-container {
+  float: right;
+  width: 140px;
+  padding: 10px 20px;
+  display: block;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.sign-up-button {
+  text-align: center;
+}
+
+.log-in-button {
+  font-size: 14px;
+  margin: 5px auto;
+  text-align: center;
+  border-radius: 3px;
+  padding: 5px;
+  cursor: pointer;
+  width: 60px;
+}
+
+.log-in-button:hover {
+  background-color: #823036;
+  -moz-box-shadow: inset 0 0 5px #000000;
+  -webkit-box-shadow: inset 0 0 5px #000000;
+  box-shadow: inset 0 0 5px #000000;
+}
+
+.log-in-button:active {
+  background-color: #621016;
+}
+.restaurant-index {
+  box-sizing: border-box;
+  background-color: #FFF4DB;
+  border: 1px solid #474742;
+  border-radius: 10px;
+  padding: 5px;
+  width: 100%;
+  height: 500px;
+  -moz-box-shadow: inset 0 0 5px #000000;
+  -webkit-box-shadow: inset 0 0 5px #000000;
+  box-shadow: inset 0 0 5px #000000;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.index-header {
+  float: left;
+  font-size: 36px;
+  margin: 0px 0px 0px 20px;
+}
+
+.index-add-button {
+  float: right;
+  border: 1px solid #4C4C47;
+  border-radius: 3px;
+  padding: 5px 20px;
+  margin-right: 20px;
+  height: 24px;
+  background: linear-gradient(#C14953, #A83C43);
+  color: white;
+  line-height: 1.5;
+}
+
+.index-add-button:hover {
+  cursor: pointer;
+  background: linear-gradient(#E85864, #C14953);
+}
+
+.index-add-button:active {
+  background: linear-gradient(#E85864, #A83C43);
+}
+
+.index-add-button > i {
+  float: left;
+  margin-top: 2px;
+  margin-left: -10px;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.restaurant-index-item {
+  box-sizing: border-box;
+  background-color: white;
+  border: 1px solid #848FA5;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  height: 120px;
+  -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.25);
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+
+.restaurant-index-item:hover {
+  -webkit-box-shadow: 0px 0px 5px 0px black;
+  -moz-box-shadow: 0px 0px 5px 0px black;
+  box-shadow: 0px 0px 5px 0px black;
+}
+
+.index-item-image {
+  float: left;
+  height: 100%;
+  width: 200px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.index-item-image:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 70%;
+  height: 100%;
+  right: 0;
+  bottom: 0;
+  background: -webkit-linear-gradient(to right, transparent, #FFF) left repeat;
+  background: linear-gradient(to right, transparent, #FFF) left repeat;
+}
+
+.index-item-image > video {
+  height: 100%;
+}
+
+.index-item-info {
+  float: left;
+  padding: 10px 20px;
+}
+
+.index-item-info > .item-name {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #848FA5;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.index-item-info > .item-name:hover {
+  text-decoration: underline;
+}
+
+.index-item-info > .item-subtitle {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #822D34;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+.index-item-info > .item-review {
+  width: 250px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.index-item-rating {
+  height: 100%;
+  float: left;
+}
+
+.index-item-rating > .star-rating {
+  float: left;
+  width: 90px;
+  height: 90px;
+  background-color: red;
+  margin-top: 8px;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.index-item-rating > .price-rating {
+  float: right;
+  width: 90px;
+  height: 90px;
+  background-color: green;
+  margin-top: 8px;
+  padding: 5px;
+}
+
+.index-item-button {
+  float: right;
+  width: 90px;
+  height: 90px;
+  margin-top: 8px;
+  margin-right: 8px;
+  border: 1px solid #4C4C47;
+  border-radius: 3px;
+  padding: 5px;
+  background: linear-gradient(#C14953, #A83C43);
+  cursor: pointer;
+}
+
+.index-item-button:hover {
+  cursor: pointer;
+  background: linear-gradient(#E85864, #C14953);
+}
+
+.index-item-button:active {
+  background: linear-gradient(#E85864, #A83C43);
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #848FA5;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+/*used http://codepen.io/ehermanson/pen/KwKWEv as guide*/
+
+
+
+a {
+  background-color: white;
+  color: #4C4C44;
+  transition: .2s ease;
+}
+
+a:hover {
+  background-color: #4C4C44;
+  color: white;
+}
+
+.sign-up-log-in-form {
+  background-color: white;
+  padding: 40px;
+  max-width: 600px;
+  margin: 40px auto;
+  border-radius: 10px;
+  border: 3px solid #6D758C;
+  box-shadow: 0 4px 10px 4px #3F3F3F;
+  box-sizing: border-box;
+}
+
+.tab-group {
+  padding: 0;
+  margin: 0 0 40px 0;
+}
+
+.tab-group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.tab-group > li > .sign-up {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right: 1px solid #4C4C47;
+}
+
+.tab-group > li > .log-in {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.tab-group > li > a {
+  display:block;
+  text-decoration:none;
+  padding:20px;
+  background:linear-gradient(#D8CDBA, #BFB4A4);
+  color:#4C4C44;
+  font-size:24px;
+  float:left;
+  width:50%;
+  text-align:center;
+  cursor:pointer;
+  transition:.2s ease;
+  box-sizing: border-box;
+}
+
+.tab-group > li > a:hover {
+  background: linear-gradient(#C14953, #A83C43);
+  color:white;
+}
+
+.tab-group > .active > a {
+  background: linear-gradient(#C14953, #A83C43);
+  color:white;
+}
+
+.tab-content > div:last-child {
+  display:none;
+}
+
+h2 {
+  text-align:center;
+  color:#C1454E;
+  margin:0 0 40px;
+  font-size: 36px;
+}
+
+.field-wrap {
+  position:relative;
+  margin-bottom:40px;
+}
+
+input, text {
+  font-size:22px;
+  display:block;
+  width:100%;
+  height:100%;
+  padding:5px 10px;
+  border:1px solid #4C4C44;
+  color:#4C4C44;
+  border-radius:3px;
+  transition:border-color .25s ease, box-shadow .25s ease;
+}
+
+input:focus, text:focus {
+  outline:0;
+  border-color:#C1454E;
+}
+
+#user_password {
+  margin-bottom: 20px;
+}
+
+.form-button {
+  border:0;
+  outline:none;
+  border-radius:0;
+  padding:15px 0;
+  font-size:36px;
+  font-weight: 600;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  background: linear-gradient(#C14953, #A83C43);
+  color:white;
+  transition:all.5s ease;
+  -webkit-appearance: none;
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+}
+
+.form-button:hover {
+  cursor: pointer;
+  background: linear-gradient(#E85864, #C14953)
+}
+
+#guest-login {
+  margin-top: 10px;
+  background: linear-gradient(#8189A5, #6D738C);
+}
+
+#guest-login:hover {
+  background: linear-gradient(#959DBF, #8189A5);
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+
