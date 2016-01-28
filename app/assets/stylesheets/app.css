@@ -1,5 +1,5 @@
 html, body, section, article,
-h1, h2, p, strong, em, a, input {
+h1, h2, p, strong, em, a, input, ol {
   margin: 0;
   border: 0;
   padding: 0;
@@ -11,18 +11,41 @@ h1, h2, p, strong, em, a, input {
   color: inherit;
   background: transparent;
   font-family: 'Bitter', sans-serif;
+  z-index: inherit;
 }
 
 .group:after {
- content: "";
- display: block;
- clear: both;
+  content: "";
+  display: block;
+  clear: both;
 }
 
 ul {
   list-style: none;
 }
 
-#root {
- background-color: #E5DCC5
+body {
+  background-color: #E5DCC5;
+}
+
+.header {
+  background-color: #C14953;
+  border-bottom: 1px solid #4C4C47;
+  -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.75);
+  z-index: 1;
+  position: relative;
+}
+
+.content {
+  width: 900px;
+  margin: auto;
+  background-color: white;
+  border-left: 1px solid #4C4C47;
+  border-right: 1px solid #4C4C47;
+  border-bottom: 1px solid #4C4C47;
+  z-index: 0;
+  box-sizing: border-box;
+  padding: 20px;
 }

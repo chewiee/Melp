@@ -6,14 +6,17 @@ var Route = require('react-router').Route;
 var IndexRoute = require('react-router').IndexRoute;
 
 var HeaderNav = require('./components/header_nav.jsx');
-var Content = require('./components/content.jsx');
+var RestaurantIndex = require('./components/restaurants/index.jsx');
+var RestaurantDetail = require('./components/restaurants/detail.jsx');
 
 var App = React.createClass({
   render: function () {
     return(
       <div>
         <HeaderNav />
-        <Content />
+        <div className="content">
+          {this.props.children}
+        </div>
       </div>
     );
   }
@@ -21,6 +24,8 @@ var App = React.createClass({
 
 var routes = (
   <Route path="/" component={App}>
+    <IndexRoute component={RestaurantIndex} />
+    <Route path="restaurant/:restaurantId" component={RestaurantDetail} />
   </Route>
 );
 

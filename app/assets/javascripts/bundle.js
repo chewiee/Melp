@@ -52,7 +52,8 @@
 	var IndexRoute = __webpack_require__(159).IndexRoute;
 	
 	var HeaderNav = __webpack_require__(206);
-	var Content = __webpack_require__(208);
+	var RestaurantIndex = __webpack_require__(235);
+	var RestaurantDetail = __webpack_require__(234);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -62,12 +63,21 @@
 	      'div',
 	      null,
 	      React.createElement(HeaderNav, null),
-	      React.createElement(Content, null)
+	      React.createElement(
+	        'div',
+	        { className: 'content' },
+	        this.props.children
+	      )
 	    );
 	  }
 	});
 	
-	var routes = React.createElement(Route, { path: '/', component: App });
+	var routes = React.createElement(
+	  Route,
+	  { path: '/', component: App },
+	  React.createElement(IndexRoute, { component: RestaurantIndex }),
+	  React.createElement(Route, { path: 'restaurant/:restaurantId', component: RestaurantDetail })
+	);
 	
 	document.addEventListener("DOMContentLoaded", function () {
 	  ReactDOM.render(React.createElement(
@@ -24096,75 +24106,8 @@
 	module.exports = SearchBar;
 
 /***/ },
-/* 208 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var RestaurantIndex = __webpack_require__(209);
-	
-	var Content = React.createClass({
-	  displayName: 'Content',
-	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { className: 'body' },
-	      React.createElement(
-	        'div',
-	        { className: 'content' },
-	        React.createElement(RestaurantIndex, null)
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = Content;
-
-/***/ },
-/* 209 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var RestaurantStore = __webpack_require__(210);
-	var ApiUtil = __webpack_require__(231);
-	var RestaurantIndexItem = __webpack_require__(233);
-	
-	var RestaurantIndex = React.createClass({
-	  displayName: 'RestaurantIndex',
-	
-	  getInitialState: function () {
-	    return { restaurants: RestaurantStore.all() };
-	  },
-	
-	  _onChange: function () {
-	    this.setState({ restaurants: RestaurantStore.all() });
-	  },
-	
-	  componentDidMount: function () {
-	    this.listenerToken = RestaurantStore.addListener(this._onChange);
-	    ApiUtil.fetchAllRestaurants();
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.listenerToken.remove();
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'ul',
-	      null,
-	      this.state.restaurants.map(function (restaurant) {
-	        return React.createElement(RestaurantIndexItem, {
-	          key: restaurant.id,
-	          restaurant: restaurant });
-	      })
-	    );
-	  }
-	});
-	
-	module.exports = RestaurantIndex;
-
-/***/ },
+/* 208 */,
+/* 209 */,
 /* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -30948,7 +30891,94 @@
 	};
 
 /***/ },
-/* 233 */
+/* 233 */,
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var RestaurantDetail = React.createClass({
+	  displayName: 'RestaurantDetail',
+	
+	  render: function () {
+	    return React.createElement('div', null);
+	  }
+	});
+	
+	module.exports = RestaurantDetail;
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var RestaurantStore = __webpack_require__(210);
+	var ApiUtil = __webpack_require__(231);
+	var RestaurantIndexItem = __webpack_require__(236);
+	
+	var RestaurantIndex = React.createClass({
+	  displayName: 'RestaurantIndex',
+	
+	  getInitialState: function () {
+	    return { restaurants: RestaurantStore.all() };
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ restaurants: RestaurantStore.all() });
+	  },
+	
+	  componentDidMount: function () {
+	    this.listenerToken = RestaurantStore.addListener(this._onChange);
+	    ApiUtil.fetchAllRestaurants();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listenerToken.remove();
+	  },
+	
+	  playVideo: function (e) {
+	    $(e.currentTarget).find('video')[0].play();
+	  },
+	
+	  pauseVideo: function (e) {
+	    $(e.currentTarget).find('video')[0].pause();
+	  },
+	
+	  render: function () {
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'group' },
+	      React.createElement(
+	        'div',
+	        { className: 'index-header' },
+	        'Restaurants'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'index-add-button group' },
+	        React.createElement('i', { className: 'fa fa-plus' }),
+	        'Add New Restaurant'
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'restaurant-index' },
+	        this.state.restaurants.map(function (restaurant, i) {
+	          return React.createElement(RestaurantIndexItem, {
+	            key: restaurant.id,
+	            restaurant: restaurant,
+	            idx: i + 1,
+	            onHover: [this.playVideo, this.pauseVideo] });
+	        }.bind(this))
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = RestaurantIndex;
+
+/***/ },
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -30964,21 +30994,49 @@
 	  },
 	
 	  render: function () {
+	
 	    return React.createElement(
 	      'li',
-	      { onClick: this.showDetail, className: 'restaurant-index-item' },
+	      { onMouseEnter: this.props.onHover[0],
+	        onMouseLeave: this.props.onHover[1],
+	        className: 'restaurant-index-item' },
 	      React.createElement(
-	        'p',
-	        null,
-	        'Name: ',
-	        this.props.restaurant.name
+	        'div',
+	        { className: 'index-item-image',
+	          onClick: this.showDetail },
+	        React.createElement(
+	          'video',
+	          { loop: true },
+	          React.createElement('source', { src: 'assets/default-restaurant-bg.mp4', type: 'video/mp4' })
+	        )
 	      ),
 	      React.createElement(
-	        'p',
-	        null,
-	        'Address: ',
-	        this.props.restaurant.address
-	      )
+	        'div',
+	        { className: 'index-item-info' },
+	        React.createElement(
+	          'div',
+	          { className: 'item-name', onClick: this.showDetail },
+	          this.props.restaurant.name
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'item-address' },
+	          this.props.restaurant.address
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'item-review' },
+	          "...this is filler review text..."
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'index-item-rating group' },
+	        React.createElement('div', { className: 'star-rating' }),
+	        React.createElement('div', { className: 'price-rating' })
+	      ),
+	      React.createElement('div', { className: 'index-item-button',
+	        onClick: this.addReview })
 	    );
 	  }
 	});

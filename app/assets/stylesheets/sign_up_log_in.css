@@ -13,6 +13,7 @@ a:hover {
 }
 
 .sign-up-log-in-form {
+  background-color: white;
   padding: 40px;
   max-width: 600px;
   margin: 40px auto;

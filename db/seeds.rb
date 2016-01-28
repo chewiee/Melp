@@ -23,3 +23,35 @@ Restaurant.create(name: "Freddie & Pepper\'s",
   phone_number: '2127992463',
   website: 'www.freddieandpeppers.com'
   )
+
+Restaurant.create(name: "Shake Shack",
+  address: "366 Columbus Ave",
+  city: 'New York City',
+  zipcode: '10023',
+  phone_number: '6467478770',
+  website: 'www.shakeshack.com'
+  )
+
+Restaurant.create(name: "Hummus Place",
+  address: "305 Amsterdam Ave",
+  city: 'New York City',
+  zipcode: '10023',
+  phone_number: '2127993335',
+  website: 'www.hummusplace.com'
+  )
+
+Restaurant.create(name: "Lenwich by Lenny\'s",
+  address: "302 Columbus Ave",
+  city: 'New York City',
+  zipcode: '10023',
+  phone_number: '2125808300',
+  website: 'www.lenwich.com'
+  )
+
+Restaurant.create(name: "Simit & Smith",
+  address: "124 W 72nd St",
+  city: 'New York City',
+  zipcode: '10023',
+  phone_number: '2124966605',
+  website: 'www.simitandsmith.com'
+  )
