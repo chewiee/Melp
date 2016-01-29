@@ -1,0 +1,7 @@
+var UserConstants = {
+  RECEIVE_CURRENT_USER: "RECEIVE_CURRENT_USER",
+  RECEIVE_USERS: "RECEIVE_USERS",
+  RECEIVE_USER: "RECEIVE_USER"
+};
+
+module.exports = UserConstants;

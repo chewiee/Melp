@@ -15,12 +15,20 @@
   box-sizing: border-box;
 }
 
-.header-logo > img {
+.header-logo > img, .header-logo-centered > img {
   display: block;
   width: 120%;
   margin-left: -3px;
   margin-top: -3px;
   cursor: pointer;
+}
+
+.header-logo-centered {
+  margin: auto;
+  width: 140px;
+  height: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
 }
 
 .header-button {
@@ -93,10 +101,15 @@
 }
 
 .sign-up-button {
+  display: block;
+  color: white;
   text-align: center;
 }
 
 .log-in-button {
+  display: block;
+  background-color: #C14953;
+  color: white;
   font-size: 14px;
   margin: 5px auto;
   text-align: center;
@@ -115,4 +128,52 @@
 
 .log-in-button:active {
   background-color: #621016;
+}
+
+.header-user {
+  margin-right: 30px;
+  margin-top: 15px;
+  float: right;
+  width: 80px;
+  padding: 0px;
+  display: block;
+  height: 50px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.header-user-avatar {
+  float: left;
+  background-color: white;
+  width: 50px;
+  height: 100%;
+}
+
+.header-user-arrow {
+  padding-right: 5px;
+  line-height: 1.6;
+  font-size: 30px;
+  float: right;
+  height: 100%;
+  color: white;
+}
+
+.header-user-dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.header-user-dropdown-content {
+  top: 55px;
+  left: -40px;
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 140px;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+.show {
+  display: block;
 }

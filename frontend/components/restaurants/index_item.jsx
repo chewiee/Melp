@@ -17,7 +17,7 @@ module.exports = React.createClass({
         <div className="index-item-image"
           onClick={this.showDetail}>
           <video loop>
-            <source src="assets/default-restaurant-bg.mp4" type="video/mp4"/>
+            <source src="https://s3.amazonaws.com/melp-assets/default-restaurant-bg.mp4" type="video/mp4"/>
           </video>
         </div>
         <div className="index-item-info">

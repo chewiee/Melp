@@ -1,40 +1,42 @@
 var React = require('react');
-var SearchBar = require('./search_bar.jsx');
+var History = require('react-router').History;
+var ApiUtil = require('../util/user_session_api_util.js');
+var CurrentUserStore = require('../stores/current_user_store');
+
+var LoggedOutHeader = require('./headers/logged_out_header.jsx');
+var LogInHeader = require('./headers/log_in_header.jsx');
+var LoggedInHeader = require('./headers/logged_in_header.jsx');
 
 var HeaderNav = React.createClass({
-  loadSignUpPage: function () {
-    window.location='/api/users/new#sign-up';
+  mixins: [History],
+
+  getInitialState: function () {
+    return {
+      currentUser: {}
+    };
   },
 
-  loadLogInPage: function () {
-    window.location='/api/users/new#log-in';
+  componentDidMount: function () {
+    ApiUtil.fetchCurrentUser();
+
+    CurrentUserStore.addListener(this._onChange);
   },
 
-  loadHomePage: function () {
-    window.location='/#/';
+  _onChange: function () {
+    this.setState({currentUser: CurrentUserStore.currentUser()});
   },
 
   render: function () {
-    return(
-      <div className="header">
-        <div className="header-nav group">
-          <div className="header-logo">
-            <img src="assets/melp_logo.png" onClick={this.loadHomePage}/>
-          </div>
-          <SearchBar />
-          <div className="sign-up-log-in-container group">
-            <div className="sign-up-button header-button"
-              onClick={this.loadSignUpPage}>
-              Sign Up
-            </div>
-            <div className="log-in-button header-button-2"
-              onClick={this.loadLogInPage}>
-              Log In
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    var logInPage = window.location.hash.includes("#/users/new") ||
+      window.location.hash.includes("#/session/new");
+
+    if (CurrentUserStore.isLoggedIn()) {
+      return(<LoggedInHeader />);
+    } else if (logInPage) {
+      return (<LogInHeader />);
+    } else {
+      return(<LoggedOutHeader />);
+    }
   }
 });
 

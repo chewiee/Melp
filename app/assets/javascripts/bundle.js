@@ -52,8 +52,9 @@
 	var IndexRoute = __webpack_require__(159).IndexRoute;
 	
 	var HeaderNav = __webpack_require__(206);
-	var RestaurantIndex = __webpack_require__(235);
-	var RestaurantDetail = __webpack_require__(234);
+	var RestaurantIndex = __webpack_require__(208);
+	var RestaurantDetail = __webpack_require__(233);
+	var SignUpLogIn = __webpack_require__(234);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -76,7 +77,9 @@
 	  Route,
 	  { path: '/', component: App },
 	  React.createElement(IndexRoute, { component: RestaurantIndex }),
-	  React.createElement(Route, { path: 'restaurant/:restaurantId', component: RestaurantDetail })
+	  React.createElement(Route, { path: 'restaurant/:restaurantId', component: RestaurantDetail }),
+	  React.createElement(Route, { path: 'users/new', component: SignUpLogIn }),
+	  React.createElement(Route, { path: 'session/new', component: SignUpLogIn })
 	);
 	
 	document.addEventListener("DOMContentLoaded", function () {
@@ -24020,100 +24023,128 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var SearchBar = __webpack_require__(207);
+	var History = __webpack_require__(159).History;
+	var ApiUtil = __webpack_require__(235);
+	var CurrentUserStore = __webpack_require__(239);
+	
+	var LoggedOutHeader = __webpack_require__(242);
+	var LogInHeader = __webpack_require__(244);
+	var LoggedInHeader = __webpack_require__(245);
 	
 	var HeaderNav = React.createClass({
 	  displayName: 'HeaderNav',
 	
-	  loadSignUpPage: function () {
-	    window.location = '/api/users/new#sign-up';
+	  mixins: [History],
+	
+	  getInitialState: function () {
+	    return {
+	      currentUser: {}
+	    };
 	  },
 	
-	  loadLogInPage: function () {
-	    window.location = '/api/users/new#log-in';
+	  componentDidMount: function () {
+	    ApiUtil.fetchCurrentUser();
+	
+	    CurrentUserStore.addListener(this._onChange);
 	  },
 	
-	  loadHomePage: function () {
-	    window.location = '/#/';
+	  _onChange: function () {
+	    this.setState({ currentUser: CurrentUserStore.currentUser() });
 	  },
 	
 	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { className: 'header' },
-	      React.createElement(
-	        'div',
-	        { className: 'header-nav group' },
-	        React.createElement(
-	          'div',
-	          { className: 'header-logo' },
-	          React.createElement('img', { src: 'assets/melp_logo.png', onClick: this.loadHomePage })
-	        ),
-	        React.createElement(SearchBar, null),
-	        React.createElement(
-	          'div',
-	          { className: 'sign-up-log-in-container group' },
-	          React.createElement(
-	            'div',
-	            { className: 'sign-up-button header-button',
-	              onClick: this.loadSignUpPage },
-	            'Sign Up'
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'log-in-button header-button-2',
-	              onClick: this.loadLogInPage },
-	            'Log In'
-	          )
-	        )
-	      )
-	    );
+	    var logInPage = window.location.hash.includes("#/users/new") || window.location.hash.includes("#/session/new");
+	
+	    if (CurrentUserStore.isLoggedIn()) {
+	      return React.createElement(LoggedInHeader, null);
+	    } else if (logInPage) {
+	      return React.createElement(LogInHeader, null);
+	    } else {
+	      return React.createElement(LoggedOutHeader, null);
+	    }
 	  }
 	});
 	
 	module.exports = HeaderNav;
 
 /***/ },
-/* 207 */
+/* 207 */,
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var RestaurantStore = __webpack_require__(209);
+	var ApiUtil = __webpack_require__(238);
+	var RestaurantIndexItem = __webpack_require__(232);
 	
-	var SearchBar = React.createClass({
-	  displayName: "SearchBar",
+	var RestaurantIndex = React.createClass({
+	  displayName: 'RestaurantIndex',
+	
+	  getInitialState: function () {
+	    return { restaurants: RestaurantStore.all() };
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ restaurants: RestaurantStore.all() });
+	  },
+	
+	  componentDidMount: function () {
+	    this.listenerToken = RestaurantStore.addListener(this._onChange);
+	    ApiUtil.fetchAllRestaurants();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listenerToken.remove();
+	  },
+	
+	  playVideo: function (e) {
+	    $(e.currentTarget).find('video')[0].play();
+	  },
+	
+	  pauseVideo: function (e) {
+	    $(e.currentTarget).find('video')[0].pause();
+	  },
 	
 	  render: function () {
-	    var searchBoxText = "Search for restaurants, reviews, or users";
 	
 	    return React.createElement(
-	      "form",
-	      { className: "search-bar group" },
-	      React.createElement("input", {
-	        type: "text",
-	        className: "search-box",
-	        placeholder: searchBoxText,
-	        autofocus: "true" }),
+	      'div',
+	      { className: 'group' },
 	      React.createElement(
-	        "div",
-	        { className: "search-button header-button" },
-	        React.createElement("i", { className: "fa fa-search" })
+	        'div',
+	        { className: 'index-header' },
+	        'Restaurants'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'index-add-button group' },
+	        React.createElement('i', { className: 'fa fa-plus' }),
+	        'Add New Restaurant'
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'restaurant-index' },
+	        this.state.restaurants.map(function (restaurant, i) {
+	          return React.createElement(RestaurantIndexItem, {
+	            key: restaurant.id,
+	            restaurant: restaurant,
+	            idx: i + 1,
+	            onHover: [this.playVideo, this.pauseVideo] });
+	        }.bind(this))
 	      )
 	    );
 	  }
-	
 	});
 	
-	module.exports = SearchBar;
+	module.exports = RestaurantIndex;
 
 /***/ },
-/* 208 */,
-/* 209 */,
-/* 210 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(211).Store;
-	var AppDispatcher = __webpack_require__(227);
-	var RestaurantConstants = __webpack_require__(230);
+	var Store = __webpack_require__(210).Store;
+	var AppDispatcher = __webpack_require__(226);
+	var RestaurantConstants = __webpack_require__(229);
 	var RestaurantStore = new Store(AppDispatcher);
 	
 	var _restaurants = {};
@@ -24157,7 +24188,7 @@
 	module.exports = RestaurantStore;
 
 /***/ },
-/* 211 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24169,15 +24200,15 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Container = __webpack_require__(212);
-	module.exports.MapStore = __webpack_require__(216);
-	module.exports.Mixin = __webpack_require__(226);
-	module.exports.ReduceStore = __webpack_require__(217);
-	module.exports.Store = __webpack_require__(218);
+	module.exports.Container = __webpack_require__(211);
+	module.exports.MapStore = __webpack_require__(215);
+	module.exports.Mixin = __webpack_require__(225);
+	module.exports.ReduceStore = __webpack_require__(216);
+	module.exports.Store = __webpack_require__(217);
 
 
 /***/ },
-/* 212 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24199,10 +24230,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStoreGroup = __webpack_require__(213);
+	var FluxStoreGroup = __webpack_require__(212);
 	
-	var invariant = __webpack_require__(214);
-	var shallowEqual = __webpack_require__(215);
+	var invariant = __webpack_require__(213);
+	var shallowEqual = __webpack_require__(214);
 	
 	var DEFAULT_OPTIONS = {
 	  pure: true,
@@ -24360,7 +24391,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 213 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24379,7 +24410,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(214);
+	var invariant = __webpack_require__(213);
 	
 	/**
 	 * FluxStoreGroup allows you to execute a callback on every dispatch after
@@ -24441,7 +24472,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 214 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24496,7 +24527,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 215 */
+/* 214 */
 /***/ function(module, exports) {
 
 	/**
@@ -24551,7 +24582,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 216 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24572,10 +24603,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxReduceStore = __webpack_require__(217);
-	var Immutable = __webpack_require__(225);
+	var FluxReduceStore = __webpack_require__(216);
+	var Immutable = __webpack_require__(224);
 	
-	var invariant = __webpack_require__(214);
+	var invariant = __webpack_require__(213);
 	
 	/**
 	 * This is a simple store. It allows caching key value pairs. An implementation
@@ -24701,7 +24732,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 217 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24722,10 +24753,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStore = __webpack_require__(218);
+	var FluxStore = __webpack_require__(217);
 	
-	var abstractMethod = __webpack_require__(224);
-	var invariant = __webpack_require__(214);
+	var abstractMethod = __webpack_require__(223);
+	var invariant = __webpack_require__(213);
 	
 	var FluxReduceStore = (function (_FluxStore) {
 	  _inherits(FluxReduceStore, _FluxStore);
@@ -24808,7 +24839,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 218 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24827,11 +24858,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _require = __webpack_require__(219);
+	var _require = __webpack_require__(218);
 	
 	var EventEmitter = _require.EventEmitter;
 	
-	var invariant = __webpack_require__(214);
+	var invariant = __webpack_require__(213);
 	
 	/**
 	 * This class should be extended by the stores in your application, like so:
@@ -24991,7 +25022,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 219 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25004,14 +25035,14 @@
 	 */
 	
 	var fbemitter = {
-	  EventEmitter: __webpack_require__(220)
+	  EventEmitter: __webpack_require__(219)
 	};
 	
 	module.exports = fbemitter;
 
 
 /***/ },
-/* 220 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25030,8 +25061,8 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var EmitterSubscription = __webpack_require__(221);
-	var EventSubscriptionVendor = __webpack_require__(223);
+	var EmitterSubscription = __webpack_require__(220);
+	var EventSubscriptionVendor = __webpack_require__(222);
 	
 	var emptyFunction = __webpack_require__(15);
 	var invariant = __webpack_require__(13);
@@ -25208,7 +25239,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 221 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25229,7 +25260,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var EventSubscription = __webpack_require__(222);
+	var EventSubscription = __webpack_require__(221);
 	
 	/**
 	 * EmitterSubscription represents a subscription with listener and context data.
@@ -25261,7 +25292,7 @@
 	module.exports = EmitterSubscription;
 
 /***/ },
-/* 222 */
+/* 221 */
 /***/ function(module, exports) {
 
 	/**
@@ -25315,7 +25346,7 @@
 	module.exports = EventSubscription;
 
 /***/ },
-/* 223 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25424,7 +25455,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 224 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25441,7 +25472,7 @@
 	
 	'use strict';
 	
-	var invariant = __webpack_require__(214);
+	var invariant = __webpack_require__(213);
 	
 	function abstractMethod(className, methodName) {
 	   true ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Subclasses of %s must override %s() with their own implementation.', className, methodName) : invariant(false) : undefined;
@@ -25451,7 +25482,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 225 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30438,7 +30469,7 @@
 	}));
 
 /***/ },
-/* 226 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -30455,9 +30486,9 @@
 	
 	'use strict';
 	
-	var FluxStoreGroup = __webpack_require__(213);
+	var FluxStoreGroup = __webpack_require__(212);
 	
-	var invariant = __webpack_require__(214);
+	var invariant = __webpack_require__(213);
 	
 	/**
 	 * `FluxContainer` should be preferred over this mixin, but it requires using
@@ -30561,14 +30592,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 227 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Dispatcher = __webpack_require__(228).Dispatcher;
+	var Dispatcher = __webpack_require__(227).Dispatcher;
 	module.exports = new Dispatcher();
 
 /***/ },
-/* 228 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30580,11 +30611,11 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Dispatcher = __webpack_require__(229);
+	module.exports.Dispatcher = __webpack_require__(228);
 
 
 /***/ },
-/* 229 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -30606,7 +30637,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(214);
+	var invariant = __webpack_require__(213);
 	
 	var _prefix = 'ID_';
 	
@@ -30821,7 +30852,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 230 */
+/* 229 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -30830,49 +30861,12 @@
 	};
 
 /***/ },
+/* 230 */,
 /* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var RestaurantActions = __webpack_require__(232);
-	
-	module.exports = {
-	  fetchAllRestaurants: function () {
-	    $.ajax({
-	      url: "api/restaurants",
-	      success: function (restaurants) {
-	        RestaurantActions.receiveAllRestaurants(restaurants);
-	      }
-	    });
-	  },
-	
-	  fetchOneRestaurant: function (id) {
-	    $.ajax({
-	      url: "api/restaurant/" + id,
-	      success: function (restaurant) {
-	        RestaurantActions.receiveOneRestaurant(restaurant);
-	      }
-	    });
-	  },
-	
-	  createRestaurant: function (restaurant, callback) {
-	    $.ajax({
-	      url: "api/restaurants",
-	      method: "POST",
-	      data: { restaurant: restaurant },
-	      success: function (restaurant) {
-	        RestaurantActions.receiveOneRestaurant(restaurant);
-	        callback(restaurant.id);
-	      }
-	    });
-	  }
-	};
-
-/***/ },
-/* 232 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Dispatcher = __webpack_require__(227);
-	var RestaurantConstants = __webpack_require__(230);
+	var Dispatcher = __webpack_require__(226);
+	var RestaurantConstants = __webpack_require__(229);
 	
 	module.exports = {
 	  receiveAllRestaurants: function (restaurants) {
@@ -30891,94 +30885,7 @@
 	};
 
 /***/ },
-/* 233 */,
-/* 234 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	
-	var RestaurantDetail = React.createClass({
-	  displayName: 'RestaurantDetail',
-	
-	  render: function () {
-	    return React.createElement('div', null);
-	  }
-	});
-	
-	module.exports = RestaurantDetail;
-
-/***/ },
-/* 235 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var RestaurantStore = __webpack_require__(210);
-	var ApiUtil = __webpack_require__(231);
-	var RestaurantIndexItem = __webpack_require__(236);
-	
-	var RestaurantIndex = React.createClass({
-	  displayName: 'RestaurantIndex',
-	
-	  getInitialState: function () {
-	    return { restaurants: RestaurantStore.all() };
-	  },
-	
-	  _onChange: function () {
-	    this.setState({ restaurants: RestaurantStore.all() });
-	  },
-	
-	  componentDidMount: function () {
-	    this.listenerToken = RestaurantStore.addListener(this._onChange);
-	    ApiUtil.fetchAllRestaurants();
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.listenerToken.remove();
-	  },
-	
-	  playVideo: function (e) {
-	    $(e.currentTarget).find('video')[0].play();
-	  },
-	
-	  pauseVideo: function (e) {
-	    $(e.currentTarget).find('video')[0].pause();
-	  },
-	
-	  render: function () {
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'group' },
-	      React.createElement(
-	        'div',
-	        { className: 'index-header' },
-	        'Restaurants'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'index-add-button group' },
-	        React.createElement('i', { className: 'fa fa-plus' }),
-	        'Add New Restaurant'
-	      ),
-	      React.createElement(
-	        'ul',
-	        { className: 'restaurant-index' },
-	        this.state.restaurants.map(function (restaurant, i) {
-	          return React.createElement(RestaurantIndexItem, {
-	            key: restaurant.id,
-	            restaurant: restaurant,
-	            idx: i + 1,
-	            onHover: [this.playVideo, this.pauseVideo] });
-	        }.bind(this))
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = RestaurantIndex;
-
-/***/ },
-/* 236 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -31007,7 +30914,7 @@
 	        React.createElement(
 	          'video',
 	          { loop: true },
-	          React.createElement('source', { src: 'assets/default-restaurant-bg.mp4', type: 'video/mp4' })
+	          React.createElement('source', { src: 'https://s3.amazonaws.com/melp-assets/default-restaurant-bg.mp4', type: 'video/mp4' })
 	        )
 	      ),
 	      React.createElement(
@@ -31046,6 +30953,647 @@
 	      ),
 	      React.createElement('div', { className: 'index-item-button',
 	        onClick: this.addReview })
+	    );
+	  }
+	});
+
+/***/ },
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var RestaurantDetail = React.createClass({
+	  displayName: 'RestaurantDetail',
+	
+	  render: function () {
+	    return React.createElement('div', null);
+	  }
+	});
+	
+	module.exports = RestaurantDetail;
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+	var UserSessionApiUtil = __webpack_require__(235);
+	var CurrentUserStore = __webpack_require__(239);
+	
+	var SignUpLogIn = React.createClass({
+	  displayName: 'SignUpLogIn',
+	
+	  mixins: [History],
+	
+	  componentDidMount: function () {
+	    var LogInActive = window.location.hash.includes("#/session/new");
+	
+	    if (LogInActive) {
+	      target = "#log-in";
+	
+	      $('.tab-content > div').not(target).hide();
+	
+	      $(target).fadeIn(100);
+	
+	      $('.log-in-tab').parent().addClass('active');
+	      $('.sign-up-tab').parent().removeClass('active');
+	    }
+	  },
+	
+	  signUp: function (e) {
+	    e.preventDefault();
+	
+	    var user_params = $(e.currentTarget).serializeJSON();
+	
+	    UserSessionApiUtil.createUser(user_params, function () {
+	      this.history.pushState({}, "/");
+	    }.bind(this));
+	  },
+	
+	  logIn: function (e) {
+	    e.preventDefault();
+	
+	    var credentials = $(e.currentTarget).serializeJSON();
+	
+	    UserSessionApiUtil.login(credentials, function () {
+	      this.history.pushState({}, "/");
+	    }.bind(this));
+	  },
+	
+	  changeTabs: function (e) {
+	    var clicked_el = e.currentTarget;
+	
+	    e.preventDefault();
+	
+	    $(clicked_el).parent().addClass('active');
+	    $(clicked_el).parent().siblings().removeClass('active');
+	
+	    target = $(clicked_el).attr('href');
+	
+	    $('.tab-content > div').not(target).hide();
+	
+	    $(target).fadeIn(200);
+	  },
+	
+	  guestLogin: function (e) {
+	    e.preventDefault();
+	
+	    var credentials = { user: { email: "guest@email.com", password: "password" } };
+	
+	    UserSessionApiUtil.login(credentials, function () {
+	      this.history.pushState({}, "/");
+	    }.bind(this));
+	  },
+	
+	  // used http://codepen.io/ehermanson/pen/KwKWEv
+	  render: function () {
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'sign-up-log-in-form' },
+	      React.createElement(
+	        'ul',
+	        { className: 'tab-group' },
+	        React.createElement(
+	          'li',
+	          { className: 'tab active' },
+	          React.createElement(
+	            'a',
+	            { className: 'tab-button sign-up-tab',
+	              onClick: this.changeTabs,
+	              href: '#sign-up' },
+	            "Sign Up"
+	          )
+	        ),
+	        React.createElement(
+	          'li',
+	          { className: 'tab' },
+	          React.createElement(
+	            'a',
+	            { className: 'tab-button log-in-tab',
+	              onClick: this.changeTabs,
+	              href: '#log-in' },
+	            "Log In"
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'tab-content' },
+	        React.createElement(
+	          'div',
+	          { id: 'sign-up' },
+	          React.createElement(
+	            'h2',
+	            null,
+	            ' ',
+	            "Sign Up for Melp",
+	            ' '
+	          ),
+	          React.createElement(
+	            'form',
+	            { onSubmit: this.signUp },
+	            React.createElement(
+	              'div',
+	              { className: 'field-wrap' },
+	              React.createElement('input', {
+	                type: 'text',
+	                name: 'user[email]',
+	                placeholder: 'email *',
+	                autofocus: 'true',
+	                id: 'user_email' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'field-wrap' },
+	              React.createElement('input', {
+	                type: 'password',
+	                name: 'user[password]',
+	                placeholder: 'password *',
+	                id: 'user_password' }),
+	              React.createElement('input', {
+	                type: 'password',
+	                name: 'user[password_confirmation]',
+	                placeholder: 'confirm password *',
+	                id: 'user_password_confirmation' })
+	            ),
+	            React.createElement(
+	              'button',
+	              { className: 'form-button',
+	                type: 'submit',
+	                name: 'register' },
+	              "register"
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { id: 'log-in' },
+	          React.createElement(
+	            'h2',
+	            null,
+	            ' ',
+	            "Welcome Back",
+	            ' '
+	          ),
+	          React.createElement(
+	            'form',
+	            { onSubmit: this.logIn },
+	            React.createElement(
+	              'div',
+	              { className: 'field-wrap' },
+	              React.createElement('input', {
+	                type: 'text',
+	                name: 'user[email]',
+	                placeholder: 'email',
+	                autofocus: 'true',
+	                id: 'user_email' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'field-wrap' },
+	              React.createElement('input', {
+	                type: 'password',
+	                name: 'user[password]',
+	                placeholder: 'password',
+	                id: 'user_password' })
+	            ),
+	            React.createElement(
+	              'button',
+	              { className: 'form-button',
+	                type: 'submit',
+	                name: 'login' },
+	              "log in"
+	            )
+	          ),
+	          React.createElement(
+	            'button',
+	            { className: 'form-button',
+	              id: 'guest-login',
+	              onClick: this.guestLogin },
+	            "log in as guest"
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = SignUpLogIn;
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var CurrentUserActions = __webpack_require__(236);
+	var UserActions = __webpack_require__(243);
+	
+	var UserSessionApiUtil = {
+	  login: function (credentials, success) {
+	    $.ajax({
+	      url: '/api/session',
+	      type: 'POST',
+	      dataType: 'json',
+	      data: credentials,
+	      success: function (currentUser) {
+	        CurrentUserActions.receiveCurrentUser(currentUser);
+	        success && success();
+	      }
+	    });
+	  },
+	
+	  logout: function (cb) {
+	    $.ajax({
+	      url: '/api/session',
+	      type: 'DELETE',
+	      dataType: 'json',
+	      success: function () {
+	        CurrentUserActions.receiveCurrentUser({});
+	      }
+	    });
+	  },
+	
+	  fetchCurrentUser: function (cb) {
+	    $.ajax({
+	      url: '/api/session',
+	      type: 'GET',
+	      dataType: 'json',
+	      success: function (currentUser) {
+	        CurrentUserActions.receiveCurrentUser(currentUser);
+	        cb && cb(currentUser);
+	      }
+	    });
+	  },
+	
+	  fetchUsers: function () {
+	    $.ajax({
+	      url: '/api/users',
+	      type: 'GET',
+	      dataType: 'json',
+	      success: function (users) {
+	        UserActions.receiveUsers(users);
+	      }
+	    });
+	  },
+	
+	  fetchUser: function (id) {
+	    $.ajax({
+	      url: '/api/users/' + id,
+	      type: 'GET',
+	      dataType: 'json',
+	      success: function (user) {
+	        UserActions.receiveUser(user);
+	      }
+	    });
+	  },
+	
+	  createUser: function (attrs, callback) {
+	    $.ajax({
+	      url: '/api/users',
+	      type: 'POST',
+	      dataType: 'json',
+	      data: attrs,
+	      success: function (user) {
+	        UserActions.receiveUser(user);
+	        callback && callback();
+	      }
+	    });
+	  }
+	};
+	
+	module.exports = UserSessionApiUtil;
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(226);
+	var UserConstants = __webpack_require__(237);
+	
+	var CurrentUserActions = {
+	  receiveCurrentUser: function (currentUser) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.RECEIVE_CURRENT_USER,
+	      currentUser: currentUser
+	    });
+	  }
+	};
+	
+	module.exports = CurrentUserActions;
+
+/***/ },
+/* 237 */
+/***/ function(module, exports) {
+
+	var UserConstants = {
+	  RECEIVE_CURRENT_USER: "RECEIVE_CURRENT_USER",
+	  RECEIVE_USERS: "RECEIVE_USERS",
+	  RECEIVE_USER: "RECEIVE_USER"
+	};
+	
+	module.exports = UserConstants;
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var RestaurantActions = __webpack_require__(231);
+	
+	module.exports = {
+	  fetchAllRestaurants: function () {
+	    $.ajax({
+	      url: "api/restaurants",
+	      success: function (restaurants) {
+	        RestaurantActions.receiveAllRestaurants(restaurants);
+	      }
+	    });
+	  },
+	
+	  fetchOneRestaurant: function (id) {
+	    $.ajax({
+	      url: "api/restaurant/" + id,
+	      success: function (restaurant) {
+	        RestaurantActions.receiveOneRestaurant(restaurant);
+	      }
+	    });
+	  },
+	
+	  createRestaurant: function (restaurant, callback) {
+	    $.ajax({
+	      url: "api/restaurants",
+	      method: "POST",
+	      data: { restaurant: restaurant },
+	      success: function (restaurant) {
+	        RestaurantActions.receiveOneRestaurant(restaurant);
+	        callback(restaurant.id);
+	      }
+	    });
+	  }
+	};
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(210).Store;
+	var AppDispatcher = __webpack_require__(226);
+	var UserConstants = __webpack_require__(237);
+	
+	var _currentUser = {};
+	var _currentUserHasBeenFetched = false;
+	var CurrentUserStore = new Store(AppDispatcher);
+	
+	CurrentUserStore.currentUser = function () {
+	  return $.extend({}, _currentUser);
+	};
+	
+	CurrentUserStore.isLoggedIn = function () {
+	  return !!_currentUser.id;
+	};
+	
+	CurrentUserStore.userHasBeenFetched = function () {
+	  return _currentUserHasBeenFetched;
+	};
+	
+	CurrentUserStore.__onDispatch = function (payload) {
+	  if (payload.actionType === UserConstants.RECEIVE_CURRENT_USER) {
+	    _currentUserHasBeenFetched = true;
+	    _currentUser = payload.currentUser;
+	    CurrentUserStore.__emitChange();
+	  }
+	};
+	
+	module.exports = CurrentUserStore;
+
+/***/ },
+/* 240 */,
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var SearchBar = React.createClass({
+	  displayName: "SearchBar",
+	
+	  render: function () {
+	    var searchBoxText = "Search for restaurants, reviews, or users";
+	
+	    return React.createElement(
+	      "form",
+	      { className: "search-bar group" },
+	      React.createElement("input", {
+	        type: "text",
+	        className: "search-box",
+	        placeholder: searchBoxText,
+	        autofocus: "true" }),
+	      React.createElement(
+	        "div",
+	        { className: "search-button header-button" },
+	        React.createElement("i", { className: "fa fa-search" })
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = SearchBar;
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+	var SearchBar = __webpack_require__(241);
+	
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	
+	  mixins: [History],
+	
+	  loadSignUpPage: function () {
+	    this.history.pushState(null, '/users/new', {});
+	  },
+	
+	  loadLogInPage: function () {
+	    this.history.pushState(null, '/users/new', {});
+	  },
+	
+	  loadHomePage: function () {
+	    window.location = '/#/';
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'header' },
+	      React.createElement(
+	        'div',
+	        { className: 'header-nav group' },
+	        React.createElement(
+	          'div',
+	          { className: 'header-logo' },
+	          React.createElement('img', { src: 'https://s3.amazonaws.com/melp-assets/melp_logo.png', onClick: this.loadHomePage })
+	        ),
+	        React.createElement(SearchBar, null),
+	        React.createElement(
+	          'div',
+	          { className: 'sign-up-log-in-container group' },
+	          React.createElement(
+	            'a',
+	            { className: 'sign-up-button header-button',
+	              href: '#/users/new' },
+	            'Sign Up'
+	          ),
+	          React.createElement(
+	            'a',
+	            { className: 'log-in-button header-button-2',
+	              href: '#/session/new' },
+	            'Log In'
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(226);
+	var UserConstants = __webpack_require__(237);
+	
+	var UserActions = {
+	  receiveUsers: function (users) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.RECEIVE_USERS,
+	      users: users
+	    });
+	  },
+	
+	  receiveUser: function (user) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.RECEIVE_USER,
+	      user: user
+	    });
+	  }
+	};
+	
+	module.exports = UserActions;
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	
+	  loadHomePage: function () {
+	    window.location = '/#/';
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'header' },
+	      React.createElement(
+	        'div',
+	        { className: 'header-nav group' },
+	        React.createElement(
+	          'div',
+	          { className: 'header-logo-centered' },
+	          React.createElement('img', { src: 'https://s3.amazonaws.com/melp-assets/melp_logo.png', onClick: this.loadHomePage })
+	        )
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var SearchBar = __webpack_require__(241);
+	var UserDropdown = __webpack_require__(246);
+	
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	
+	  loadHomePage: function () {
+	    window.location = '/#/';
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'header' },
+	      React.createElement(
+	        'div',
+	        { className: 'header-nav group' },
+	        React.createElement(
+	          'div',
+	          { className: 'header-logo' },
+	          React.createElement('img', { src: 'https://s3.amazonaws.com/melp-assets/melp_logo.png', onClick: this.loadHomePage })
+	        ),
+	        React.createElement(SearchBar, null),
+	        React.createElement(UserDropdown, null)
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(235);
+	
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	
+	  showDropdown: function () {
+	    $('.header-user-dropdown-content').toggleClass('show');
+	  },
+	
+	  logOut: function () {
+	    ApiUtil.logout();
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'header-button header-user group' },
+	        React.createElement('div', { className: 'header-user-avatar' }),
+	        React.createElement(
+	          'div',
+	          { className: 'header-user-arrow',
+	            onClick: this.showDropdown },
+	          React.createElement('i', { className: 'fa fa-caret-down' })
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'header-user-dropdown' },
+	        React.createElement(
+	          'div',
+	          { className: 'header-user-dropdown-content' },
+	          React.createElement(
+	            'div',
+	            { className: 'header-button header-logout', onClick: this.logOut },
+	            'Logout'
+	          )
+	        )
+	      )
 	    );
 	  }
 	});

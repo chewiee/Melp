@@ -1,6 +1,6 @@
 var React = require('react');
 var RestaurantStore = require('../../stores/restaurant_store');
-var ApiUtil = require('../../util/api_util');
+var ApiUtil = require('../../util/restaurants_api_util');
 var RestaurantIndexItem = require('./index_item.jsx');
 
 var RestaurantIndex = React.createClass({

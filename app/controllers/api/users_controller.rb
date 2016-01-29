@@ -4,6 +4,7 @@ class Api::UsersController < ApplicationController
     @user.username = @user.email if @user.username = ""
 
     if @user.save
+      login!(@user)
       render :show
     else
       render json: @user.errors.full_messages

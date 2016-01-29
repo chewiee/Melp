@@ -8,6 +8,7 @@ var IndexRoute = require('react-router').IndexRoute;
 var HeaderNav = require('./components/header_nav.jsx');
 var RestaurantIndex = require('./components/restaurants/index.jsx');
 var RestaurantDetail = require('./components/restaurants/detail.jsx');
+var SignUpLogIn = require('./components/sign_up_log_in.jsx');
 
 var App = React.createClass({
   render: function () {
@@ -26,6 +27,8 @@ var routes = (
   <Route path="/" component={App}>
     <IndexRoute component={RestaurantIndex} />
     <Route path="restaurant/:restaurantId" component={RestaurantDetail} />
+    <Route path="users/new" component={SignUpLogIn} />
+    <Route path="session/new" component={SignUpLogIn} />
   </Route>
 );
 
