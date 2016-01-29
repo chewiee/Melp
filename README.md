@@ -1,3 +1,5 @@
+(this needs to be moved)
+
 # Melp
 
 (will be added after day 1) - [Heroku link][heroku]
@@ -30,7 +32,7 @@ and React.js. Melp lets users:
 
 ### Phase 1: User Authentication, Review Model and JSON API (1.5 days)
 
-I'll first build user sign and authentication (using BCrypt, including e-mail 
+I'll first build user sign and authentication (using BCrypt, including e-mail
 confirmation). There will be a review feed landing page after signup that will
 contain the application's root React component. Before building out the front
 end, I will set up a full JSON API for Reviews.
@@ -42,22 +44,22 @@ end, I will set up a full JSON API for Reviews.
 For Phase 2, I'll set up the Flux and React structure for the main application,
 including a Review Store and necessary Review Actions. I will then create React
 views for Reviews `List`, `Item`, and `Form`. Users will also receive `List`, `Show`
-and `Form` views. Users will only be able to access their own `Form` view. At the end 
-of the phase, Reviews can be created, read, edited and destroyed in the browser. 
-Reviews should save to the database when the form loses focus or is left idle after 
-editing. Users can create their basic profiles as well. I'll start using basic bootstrap 
+and `Form` views. Users will only be able to access their own `Form` view. At the end
+of the phase, Reviews can be created, read, edited and destroyed in the browser.
+Reviews should save to the database when the form loses focus or is left idle after
+editing. Users can create their basic profiles as well. I'll start using basic bootstrap
 for styling.
 
 [Details][phase-two]
 
 ### Phase 3: Restaurants and Search (3 days)
 
-After Reviews are functional, I will add in Restaurants. Reviews must be 
+After Reviews are functional, I will add in Restaurants. Reviews must be
 associated with a particular Restaurant. I will also create a JSON API
-for Restaurants along with a `Show` view to display one Restaurant and 
+for Restaurants along with a `Show` view to display one Restaurant and
 its Reviews. Restaurants will have properties that are aggregates of
 their Reviews' properties. Users will also be able to filter Restaurants
-and Reviews using `Search` views. Finally, I will create a Restaurants `Form` 
+and Reviews using `Search` views. Finally, I will create a Restaurants `Form`
 view to add potential new Restaurants pending Admin review.
 
 [Details][phase-three]
@@ -65,7 +67,7 @@ view to add potential new Restaurants pending Admin review.
 ### Phase 4: Allow Subscribing to other Users and Rating Reviews (2 days)
 
 I will create models and views to allow users to search for and subscribe to
-other users. This will grant additional weight to these users' reviews when 
+other users. This will grant additional weight to these users' reviews when
 calculating Restaurant ratings. Users will also be able to modify their
 profile page and "thumbs up" or "thumbs down" other reviews.
 
@@ -73,7 +75,7 @@ profile page and "thumbs up" or "thumbs down" other reviews.
 
 ### Phase 5: Map and Tracking (1 day)
 
-I will display a list of Restaurants on a map, allow users to search within the 
+I will display a list of Restaurants on a map, allow users to search within the
 map bounds, and adjust the map to match the list returned by the search.
 I will also implement a backend server which tracks user activity including
 Restaurants and Review impressions and interaction, search activity,
