@@ -36,12 +36,12 @@ module.exports = React.createClass({
             {"...this is filler review text..."}
           </div>
         </div>
+        <div className="index-item-button"
+          onClick={this.addReview}>
+        </div>
         <div className="index-item-rating group">
           <div className="star-rating"></div>
           <div className="price-rating"></div>
-        </div>
-        <div className="index-item-button"
-          onClick={this.addReview}>
         </div>
       </li>
     );

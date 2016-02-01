@@ -1,15 +1,31 @@
 var React = require('react');
+var Modal = require('react-modal');
+
 var RestaurantStore = require('../../stores/restaurant_store');
 var ApiUtil = require('../../util/restaurants_api_util');
 var RestaurantIndexItem = require('./index_item.jsx');
+var RestaurantForm = require('./form.jsx');
 
 var RestaurantIndex = React.createClass({
   getInitialState: function () {
-    return { restaurants: RestaurantStore.all() };
+    return {
+      restaurants: RestaurantStore.all(),
+      modalIsOpen: false
+    };
   },
 
   _onChange: function () {
     this.setState({ restaurants: RestaurantStore.all()});
+  },
+
+  openModal: function () {
+    this.setState({modalIsOpen: true});
+  },
+
+  closeModal: function (e) {
+    e.preventDefault();
+
+    this.setState({modalIsOpen: false});
   },
 
   componentDidMount: function () {
@@ -32,11 +48,16 @@ var RestaurantIndex = React.createClass({
   render: function () {
 
     return(
-      <div className="group">
+      <div className="group" id="restaurant-index">
         <div className="index-header">Restaurants</div>
-        <div className="index-add-button group">
+        <div className="index-add-button group"
+          onClick={this.openModal}>
           <i className="fa fa-plus"></i>
           Add New Restaurant
+        <Modal
+          isOpen={this.state.modalIsOpen}>
+          <RestaurantForm onRequestClose={this.closeModal}/>
+        </Modal>
         </div>
         <ul className="restaurant-index">
           {this.state.restaurants.map(function (restaurant, i) {

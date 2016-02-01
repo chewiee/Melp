@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   validates :password, length: {in: 6..12, allow_nil: true}, confirmation: true
   validates :password_confirmation, presence: { message: "Please confirm your password!"}
 
+  has_many :photos, as: :photoable
+
   after_initialize :ensure_session_token
 
   def self.find_by_credentials(email, password)
