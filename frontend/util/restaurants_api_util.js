@@ -12,7 +12,7 @@ module.exports = {
 
   fetchOneRestaurant: function (id) {
     $.ajax({
-      url: "api/restaurant/" + id,
+      url: "api/restaurants/" + id,
       success: function (restaurant) {
         RestaurantActions.receiveOneRestaurant(restaurant);
       }

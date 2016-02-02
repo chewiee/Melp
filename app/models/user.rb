@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: { message: "Please confirm your password!"}
 
   has_many :photos, as: :photoable
+  has_many(:reviews, foreign_key: :author_id)
 
   after_initialize :ensure_session_token
 

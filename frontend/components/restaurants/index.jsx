@@ -1,5 +1,6 @@
 var React = require('react');
 var Modal = require('react-modal');
+var Paginate = require('react-paginate');
 
 var RestaurantStore = require('../../stores/restaurant_store');
 var ApiUtil = require('../../util/restaurants_api_util');

@@ -43,37 +43,32 @@ module.exports = React.createClass({
     }
     return(
       <div className="dim-background">
-        <form className="restaurant-form">
+        <form className="restaurant-form group">
+          <h2>Add a new restaurant</h2>
           <div className="form-top-row">
-            <label htmlFor='restaurant_name'>Name</label>
             <input type='text'
               id='restaurant_name'
-              valueLink={this.linkState("name")} />
+              placeholder="Name"/>
           </div>
           <div className="form-map"></div>
           <div className="form-address">
-            <label htmlFor='restaurant_address'>Address</label>
             <input type='text'
               id='restaurant_address'
-              valueLink={this.linkState("address")} />
-            <label htmlFor='restaurant_city'>City</label>
+              placeholder="Address"/>
             <input type='text'
               id='restaurant_city'
-              valueLink={this.linkState("city")} />
-            <label htmlFor='restaurant_zipcode'>Zip</label>
+              placeholder="City"/>
             <input type='text'
               id='restaurant_zipcode'
-              valueLink={this.linkState("zipcode")} />
+              placeholder="Zipcode"/>
           </div>
           <div className="form-other-info">
-            <label htmlFor='restaurant_website'>Website</label>
             <input type='text'
               id='restaurant_website'
-              valueLink={this.linkState("website")} />
-            <label htmlFor='restaurant_phonenumber'>{"Phone Number"}</label>
+              placeholder="Website"/>
             <input type='text'
               id='restaurant_phonenumber'
-              valueLink={this.linkState("phonenumber")} />
+              placeholder="(555) 555-5555"/>
           </div>
           <button className="add-restaurant-button"
             onClick={this.createRestaurant}>
