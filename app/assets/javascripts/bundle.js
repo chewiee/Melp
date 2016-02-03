@@ -46,7 +46,6 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
-	var Modal = __webpack_require__(159);
 	
 	var Router = __webpack_require__(179).Router;
 	var Route = __webpack_require__(179).Route;
@@ -89,13 +88,11 @@
 	);
 	
 	document.addEventListener("DOMContentLoaded", function () {
-	  Modal.setAppElement(document.getElementById('root'));
-	
 	  ReactDOM.render(React.createElement(
 	    Router,
 	    null,
 	    routes
-	  ), document.getElementById('modal-holder'));
+	  ), document.getElementById('root'));
 	});
 
 /***/ },
@@ -33058,7 +33055,6 @@
 	var RestaurantStore = __webpack_require__(264);
 	var ApiUtil = __webpack_require__(266);
 	var RestaurantIndexItem = __webpack_require__(268);
-	var RestaurantForm = __webpack_require__(269);
 	
 	var RestaurantIndex = React.createClass({
 	  displayName: 'RestaurantIndex',
@@ -33113,16 +33109,9 @@
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'index-add-button group',
-	          onClick: this.openModal },
+	        { className: 'index-add-button group' },
 	        React.createElement('i', { className: 'fa fa-plus' }),
-	        'Add New Restaurant',
-	        React.createElement(
-	          Modal,
-	          {
-	            isOpen: this.state.modalIsOpen },
-	          React.createElement(RestaurantForm, { onRequestClose: this.closeModal })
-	        )
+	        'Add New Restaurant'
 	      ),
 	      React.createElement(
 	        'ul',
@@ -33849,346 +33838,11 @@
 	});
 
 /***/ },
-/* 269 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var ApiUtil = __webpack_require__(266);
-	var History = __webpack_require__(179).History;
-	var LinkedStateMixin = __webpack_require__(270);
-	
-	module.exports = React.createClass({
-	  displayName: 'exports',
-	
-	  mixins: [LinkedStateMixin, History],
-	
-	  blankAttrs: {
-	    name: '',
-	    address: '',
-	    phone_number: '',
-	    website: '',
-	    city: '',
-	    zipcode: '',
-	    creating: false
-	  },
-	
-	  getInitialState: function () {
-	    return this.blankAttrs;
-	  },
-	
-	  createRestaurant: function (e) {
-	    e.preventDefault();
-	
-	    var restaurant = {};
-	    Object.keys(this.state).forEach(function (key) {
-	      restaurant[key] = this.state[key];
-	    }.bind(this));
-	
-	    ApiUtil.createRestaurant(restaurant, function (id) {
-	      this.history.pushState(null, "/restaurant/" + id, {});
-	    }.bind(this));
-	    this.setState(this.blankAttrs);
-	    this.setState({ creating: true });
-	  },
-	
-	  render: function () {
-	    if (this.state.creating) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        ' creating yo shit bro '
-	      );
-	    }
-	    return React.createElement(
-	      'div',
-	      { className: 'dim-background' },
-	      React.createElement(
-	        'form',
-	        { className: 'restaurant-form group' },
-	        React.createElement(
-	          'h2',
-	          null,
-	          'Add a new restaurant'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'form-top-row' },
-	          React.createElement('input', { type: 'text',
-	            id: 'restaurant_name',
-	            placeholder: 'Name' })
-	        ),
-	        React.createElement('div', { className: 'form-map' }),
-	        React.createElement(
-	          'div',
-	          { className: 'form-address' },
-	          React.createElement('input', { type: 'text',
-	            id: 'restaurant_address',
-	            placeholder: 'Address' }),
-	          React.createElement('input', { type: 'text',
-	            id: 'restaurant_city',
-	            placeholder: 'City' }),
-	          React.createElement('input', { type: 'text',
-	            id: 'restaurant_zipcode',
-	            placeholder: 'Zipcode' })
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'form-other-info' },
-	          React.createElement('input', { type: 'text',
-	            id: 'restaurant_website',
-	            placeholder: 'Website' }),
-	          React.createElement('input', { type: 'text',
-	            id: 'restaurant_phonenumber',
-	            placeholder: '(555) 555-5555' })
-	        ),
-	        React.createElement(
-	          'button',
-	          { className: 'add-restaurant-button',
-	            onClick: this.createRestaurant },
-	          'Add Restaurant'
-	        ),
-	        React.createElement(
-	          'button',
-	          { className: 'form-close-button',
-	            onClick: this.props.onRequestClose },
-	          'X'
-	        )
-	      )
-	    );
-	  }
-	});
-
-/***/ },
-/* 270 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(271);
-
-/***/ },
-/* 271 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule LinkedStateMixin
-	 * @typechecks static-only
-	 */
-	
-	'use strict';
-	
-	var ReactLink = __webpack_require__(272);
-	var ReactStateSetters = __webpack_require__(273);
-	
-	/**
-	 * A simple mixin around ReactLink.forState().
-	 */
-	var LinkedStateMixin = {
-	  /**
-	   * Create a ReactLink that's linked to part of this component's state. The
-	   * ReactLink will have the current value of this.state[key] and will call
-	   * setState() when a change is requested.
-	   *
-	   * @param {string} key state key to update. Note: you may want to use keyOf()
-	   * if you're using Google Closure Compiler advanced mode.
-	   * @return {ReactLink} ReactLink instance linking to the state.
-	   */
-	  linkState: function (key) {
-	    return new ReactLink(this.state[key], ReactStateSetters.createStateKeySetter(this, key));
-	  }
-	};
-	
-	module.exports = LinkedStateMixin;
-
-/***/ },
-/* 272 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule ReactLink
-	 * @typechecks static-only
-	 */
-	
-	'use strict';
-	
-	/**
-	 * ReactLink encapsulates a common pattern in which a component wants to modify
-	 * a prop received from its parent. ReactLink allows the parent to pass down a
-	 * value coupled with a callback that, when invoked, expresses an intent to
-	 * modify that value. For example:
-	 *
-	 * React.createClass({
-	 *   getInitialState: function() {
-	 *     return {value: ''};
-	 *   },
-	 *   render: function() {
-	 *     var valueLink = new ReactLink(this.state.value, this._handleValueChange);
-	 *     return <input valueLink={valueLink} />;
-	 *   },
-	 *   _handleValueChange: function(newValue) {
-	 *     this.setState({value: newValue});
-	 *   }
-	 * });
-	 *
-	 * We have provided some sugary mixins to make the creation and
-	 * consumption of ReactLink easier; see LinkedValueUtils and LinkedStateMixin.
-	 */
-	
-	var React = __webpack_require__(2);
-	
-	/**
-	 * @param {*} value current value of the link
-	 * @param {function} requestChange callback to request a change
-	 */
-	function ReactLink(value, requestChange) {
-	  this.value = value;
-	  this.requestChange = requestChange;
-	}
-	
-	/**
-	 * Creates a PropType that enforces the ReactLink API and optionally checks the
-	 * type of the value being passed inside the link. Example:
-	 *
-	 * MyComponent.propTypes = {
-	 *   tabIndexLink: ReactLink.PropTypes.link(React.PropTypes.number)
-	 * }
-	 */
-	function createLinkTypeChecker(linkType) {
-	  var shapes = {
-	    value: typeof linkType === 'undefined' ? React.PropTypes.any.isRequired : linkType.isRequired,
-	    requestChange: React.PropTypes.func.isRequired
-	  };
-	  return React.PropTypes.shape(shapes);
-	}
-	
-	ReactLink.PropTypes = {
-	  link: createLinkTypeChecker
-	};
-	
-	module.exports = ReactLink;
-
-/***/ },
-/* 273 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule ReactStateSetters
-	 */
-	
-	'use strict';
-	
-	var ReactStateSetters = {
-	  /**
-	   * Returns a function that calls the provided function, and uses the result
-	   * of that to set the component's state.
-	   *
-	   * @param {ReactCompositeComponent} component
-	   * @param {function} funcReturningState Returned callback uses this to
-	   *                                      determine how to update state.
-	   * @return {function} callback that when invoked uses funcReturningState to
-	   *                    determined the object literal to setState.
-	   */
-	  createStateSetter: function (component, funcReturningState) {
-	    return function (a, b, c, d, e, f) {
-	      var partialState = funcReturningState.call(component, a, b, c, d, e, f);
-	      if (partialState) {
-	        component.setState(partialState);
-	      }
-	    };
-	  },
-	
-	  /**
-	   * Returns a single-argument callback that can be used to update a single
-	   * key in the component's state.
-	   *
-	   * Note: this is memoized function, which makes it inexpensive to call.
-	   *
-	   * @param {ReactCompositeComponent} component
-	   * @param {string} key The key in the state that you should update.
-	   * @return {function} callback of 1 argument which calls setState() with
-	   *                    the provided keyName and callback argument.
-	   */
-	  createStateKeySetter: function (component, key) {
-	    // Memoize the setters.
-	    var cache = component.__keySetters || (component.__keySetters = {});
-	    return cache[key] || (cache[key] = createStateKeySetter(component, key));
-	  }
-	};
-	
-	function createStateKeySetter(component, key) {
-	  // Partial state is allocated outside of the function closure so it can be
-	  // reused with every call, avoiding memory allocation when this function
-	  // is called.
-	  var partialState = {};
-	  return function stateKeySetter(value) {
-	    partialState[key] = value;
-	    component.setState(partialState);
-	  };
-	}
-	
-	ReactStateSetters.Mixin = {
-	  /**
-	   * Returns a function that calls the provided function, and uses the result
-	   * of that to set the component's state.
-	   *
-	   * For example, these statements are equivalent:
-	   *
-	   *   this.setState({x: 1});
-	   *   this.createStateSetter(function(xValue) {
-	   *     return {x: xValue};
-	   *   })(1);
-	   *
-	   * @param {function} funcReturningState Returned callback uses this to
-	   *                                      determine how to update state.
-	   * @return {function} callback that when invoked uses funcReturningState to
-	   *                    determined the object literal to setState.
-	   */
-	  createStateSetter: function (funcReturningState) {
-	    return ReactStateSetters.createStateSetter(this, funcReturningState);
-	  },
-	
-	  /**
-	   * Returns a single-argument callback that can be used to update a single
-	   * key in the component's state.
-	   *
-	   * For example, these statements are equivalent:
-	   *
-	   *   this.setState({x: 1});
-	   *   this.createStateKeySetter('x')(1);
-	   *
-	   * Note: this is memoized function, which makes it inexpensive to call.
-	   *
-	   * @param {string} key The key in the state that you should update.
-	   * @return {function} callback of 1 argument which calls setState() with
-	   *                    the provided keyName and callback argument.
-	   */
-	  createStateKeySetter: function (key) {
-	    return ReactStateSetters.createStateKeySetter(this, key);
-	  }
-	};
-	
-	module.exports = ReactStateSetters;
-
-/***/ },
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
 /* 274 */
 /***/ function(module, exports, __webpack_require__) {
 

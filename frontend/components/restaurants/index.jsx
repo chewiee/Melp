@@ -5,7 +5,6 @@ var Paginate = require('react-paginate');
 var RestaurantStore = require('../../stores/restaurant_store');
 var ApiUtil = require('../../util/restaurants_api_util');
 var RestaurantIndexItem = require('./index_item.jsx');
-var RestaurantForm = require('./form.jsx');
 
 var RestaurantIndex = React.createClass({
   getInitialState: function () {
@@ -51,14 +50,9 @@ var RestaurantIndex = React.createClass({
     return(
       <div className="group" id="restaurant-index">
         <div className="index-header">Restaurants</div>
-        <div className="index-add-button group"
-          onClick={this.openModal}>
+        <div className="index-add-button group">
           <i className="fa fa-plus"></i>
           Add New Restaurant
-        <Modal
-          isOpen={this.state.modalIsOpen}>
-          <RestaurantForm onRequestClose={this.closeModal}/>
-        </Modal>
         </div>
         <ul className="restaurant-index">
           {this.state.restaurants.map(function (restaurant, i) {

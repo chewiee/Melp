@@ -1,6 +1,5 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Modal = require('react-modal');
 
 var Router = require('react-router').Router;
 var Route = require('react-router').Route;
@@ -37,10 +36,8 @@ var routes = (
 );
 
 document.addEventListener("DOMContentLoaded", function () {
-  Modal.setAppElement(document.getElementById('root'));
-
   ReactDOM.render(
     <Router>{routes}</Router>,
-    document.getElementById('modal-holder')
+    document.getElementById('root')
   );
 });
