@@ -1,1 +1,4 @@
-json.partial!('restaurant', restaurant: @restaurant)
+json.partial!(
+  'restaurant',
+  restaurant: @restaurant, with_reviews: true
+  )

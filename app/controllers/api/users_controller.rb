@@ -11,11 +11,6 @@ class Api::UsersController < ApplicationController
     end
   end
 
-  def new
-    @user = User.new
-    render "api/users/new.html.erb"
-  end
-
   def show
     @user = User.find(params[:id])
   end

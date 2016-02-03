@@ -31,6 +31,20 @@ var RestaurantDetail = React.createClass({
     this.setState(this.getStateFromStore());
   },
 
+  renderChildren: function () {
+    return(
+      React.Children.map(this.props.children, function (child) {
+        if (child.type.displayName === 'RestaurantList') {
+          //ADD FIND SIMILAR RESTAURANTS METHOD TO STORE
+        } else {
+          return(
+            React.cloneElement(child, {reviews: this.state.restaurant.reviews})
+          );
+        }
+      }.bind(this))
+    );
+  },
+
   render: function () {
     if (this.state.restaurant === undefined) { return (<div> </div>); }
 
@@ -53,7 +67,16 @@ var RestaurantDetail = React.createClass({
             </div>
           </div>
         </div>
-        {this.props.children}
+        <div className="restaurant-detail-tab-container">
+          <ul className="restaurant-detail-tabs">
+            <li> Reviews </li>
+            <li> Users </li>
+            <li> Similar </li>
+          </ul>
+          <div className="restaurant-detail-subcontent">
+            {this.renderChildren()}
+          </div>
+        </div>
       </div>
     );
   }

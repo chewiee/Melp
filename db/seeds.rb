@@ -18,7 +18,7 @@ guest = User.create(email: 'guest@email.com',
   city: 'New York City',
   zipcode: '10023',
   gender: 'F',
-  birthdate: '1/1/1995')
+  birthdate: '1995-1-1')
 
 ranna = User.create(email: 'rannabansal@gmail.com',
   username: 'ranna',
@@ -28,7 +28,7 @@ ranna = User.create(email: 'rannabansal@gmail.com',
   city: 'New York City',
   zipcode: '10023',
   gender: 'M',
-  birthdate: '1/19/1990')
+  birthdate: '1990-1-19')
 
 tony = User.create(email: 'tony@partsunknown.com',
   username: 'anthony',
@@ -38,7 +38,7 @@ tony = User.create(email: 'tony@partsunknown.com',
   city: 'Poughkeepsie',
   zipcode: '12604',
   gender: 'M',
-  birthdate: '6/25/1956')
+  birthdate: '1956-6-25')
 
 gordon = User.create(email: 'gordon@hellskitchen.com',
   username: 'gordon-the-great',
@@ -48,7 +48,7 @@ gordon = User.create(email: 'gordon@hellskitchen.com',
   city: 'New York City',
   zipcode: '10019',
   gender: 'M',
-  birthdate: '11/8/1966')
+  birthdate: '1966-11-8')
 
 bronson = User.create(email: 'action@bronson.com',
   username: 'bronsolini',
@@ -58,7 +58,7 @@ bronson = User.create(email: 'action@bronson.com',
   city: 'Queens',
   zipcode: '11365',
   gender: 'M',
-  birthdate: '12/2/1983')
+  birthdate: '1983-12-2')
 
 
 freddies = Restaurant.create(name: "Freddie & Pepper\'s",

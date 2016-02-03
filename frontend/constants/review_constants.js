@@ -1,4 +1,0 @@
-module.exports = {
-  RECEIVE_ALL: "RECEIVE_ALL_REVIEWS",
-  RECEIVE_ONE: "RECEIVE_ONE_REVIEW"
-}
