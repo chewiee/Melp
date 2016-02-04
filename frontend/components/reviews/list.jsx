@@ -3,13 +3,9 @@ var ReviewItem = require('./item.jsx');
 var RestaurantStore = require('../../stores/restaurant_store');
 
 var ReviewList = React.createClass({
-  getInitialState: function () {
-    return {reviews: this.props.reviews};
-  },
-
   render: function () {
-    if (this.state.reviews) {
-      var ReviewItems = this.state.reviews.reverse().map(function(review) {
+    if (this.props.reviews) {
+      var ReviewItems = this.props.reviews.reverse().map(function(review) {
         return <ReviewItem key={review.id} review={review} />;
       });
 

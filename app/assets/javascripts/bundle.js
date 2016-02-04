@@ -34799,13 +34799,9 @@
 	var ReviewList = React.createClass({
 	  displayName: 'ReviewList',
 	
-	  getInitialState: function () {
-	    return { reviews: this.props.reviews };
-	  },
-	
 	  render: function () {
-	    if (this.state.reviews) {
-	      var ReviewItems = this.state.reviews.reverse().map(function (review) {
+	    if (this.props.reviews) {
+	      var ReviewItems = this.props.reviews.reverse().map(function (review) {
 	        return React.createElement(ReviewItem, { key: review.id, review: review });
 	      });
 	
