@@ -16,6 +16,10 @@ var resetRestaurant = function (restaurant) {
   _restaurants[restaurant.id] = restaurant;
 };
 
+var addReview = function (review) {
+  _restaurants[review.restaurant.id].reviews.push(review);
+};
+
 RestaurantStore.all = function () {
   var restaurants = [];
   for (var id in _restaurants) {
@@ -36,6 +40,10 @@ RestaurantStore.__onDispatch = function (payload) {
       break;
     case RestaurantConstants.RECEIVE_ONE:
       resetRestaurant(payload.restaurant);
+      RestaurantStore.__emitChange();
+      break;
+    case RestaurantConstants.RECEIVE_NEW_REVIEW:
+      addReview(payload.review);
       RestaurantStore.__emitChange();
       break;
   }

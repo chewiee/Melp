@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactTabs = require('react-tabs');
 var RestaurantStore = require('../../stores/restaurant_store');
+var CurrentUserStore = require('../../stores/current_user_store');
 var ApiUtil = require('../../util/restaurants_api_util');
 
 var ReviewList = require('../reviews/list.jsx');
@@ -35,7 +36,6 @@ var RestaurantDetail = React.createClass({
   },
 
   _onChange: function () {
-    var restaurantId = this.props.params.restaurantId;
     this.setState(this.getStateFromStore());
   },
 
@@ -46,14 +46,18 @@ var RestaurantDetail = React.createClass({
   openReviewForm: function (e) {
     e.preventDefault();
 
-    var button = $('.write-review-button');
-    var form = $('.review-form');
+    if (CurrentUserStore.isLoggedIn()) {
+      var button = $('.write-review-button');
+      var form = $('.review-form');
 
-    form.slideToggle(500, function() {
-      button.text(function () {
-        return form.is(":visible") ? "Save Draft" : "Write a Review";
+      form.slideToggle(500, function() {
+        button.text(function () {
+          return form.is(":visible") ? "Save Draft" : "Write a Review";
+        });
       });
-    });
+    } else {
+      alert("you must be logged in dude");
+    }
   },
 
   render: function () {
@@ -83,7 +87,7 @@ var RestaurantDetail = React.createClass({
             Write a Review
           </div>
         </div>
-        <ReviewForm />
+        <ReviewForm restaurantId={this.props.params.restaurantId}/>
         <div className="restaurant-detail-tab-container">
           <Tabs onSelect={this.handleSelect} selectedIndex={0}>
             <TabList>
@@ -92,8 +96,7 @@ var RestaurantDetail = React.createClass({
               <Tab>Similar Restaurants</Tab>
             </TabList>
             <TabPanel>
-              <ReviewList reviews={this.state.restaurant.reviews}
-                restaurantId={this.props.params.restaurantId}/>
+              <ReviewList reviews={this.state.restaurant.reviews}/>
             </TabPanel>
             <TabPanel><ReviewList /></TabPanel>
             <TabPanel><ReviewList /></TabPanel>

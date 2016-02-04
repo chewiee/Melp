@@ -33663,6 +33663,10 @@
 	  _restaurants[restaurant.id] = restaurant;
 	};
 	
+	var addReview = function (review) {
+	  _restaurants[review.restaurant.id].reviews.push(review);
+	};
+	
 	RestaurantStore.all = function () {
 	  var restaurants = [];
 	  for (var id in _restaurants) {
@@ -33685,6 +33689,10 @@
 	      resetRestaurant(payload.restaurant);
 	      RestaurantStore.__emitChange();
 	      break;
+	    case RestaurantConstants.RECEIVE_NEW_REVIEW:
+	      addReview(payload.review);
+	      RestaurantStore.__emitChange();
+	      break;
 	  }
 	};
 	
@@ -33696,7 +33704,8 @@
 
 	module.exports = {
 	  RECEIVE_ALL: "RECEIVE_ALL_RESTAURANTS",
-	  RECEIVE_ONE: "RECEIVE_ONE_RESTAURANT"
+	  RECEIVE_ONE: "RECEIVE_ONE_RESTAURANT",
+	  RECEIVE_NEW_REVIEW: "RECEIVE_NEW_REVIEW"
 	};
 
 /***/ },
@@ -33756,6 +33765,13 @@
 	    Dispatcher.dispatch({
 	      actionType: RestaurantConstants.RECEIVE_ONE,
 	      restaurant: restaurant
+	    });
+	  },
+	
+	  receiveNewReview: function (review) {
+	    Dispatcher.dispatch({
+	      actionType: RestaurantConstants.RECEIVE_NEW_REVIEW,
+	      review: review
 	    });
 	  }
 	};
@@ -33840,6 +33856,7 @@
 	var React = __webpack_require__(1);
 	var ReactTabs = __webpack_require__(270);
 	var RestaurantStore = __webpack_require__(264);
+	var CurrentUserStore = __webpack_require__(215);
 	var ApiUtil = __webpack_require__(266);
 	
 	var ReviewList = __webpack_require__(280);
@@ -33875,7 +33892,6 @@
 	  },
 	
 	  _onChange: function () {
-	    var restaurantId = this.props.params.restaurantId;
 	    this.setState(this.getStateFromStore());
 	  },
 	
@@ -33886,14 +33902,18 @@
 	  openReviewForm: function (e) {
 	    e.preventDefault();
 	
-	    var button = $('.write-review-button');
-	    var form = $('.review-form');
+	    if (CurrentUserStore.isLoggedIn()) {
+	      var button = $('.write-review-button');
+	      var form = $('.review-form');
 	
-	    form.slideToggle(500, function () {
-	      button.text(function () {
-	        return form.is(":visible") ? "Save Draft" : "Write a Review";
+	      form.slideToggle(500, function () {
+	        button.text(function () {
+	          return form.is(":visible") ? "Save Draft" : "Write a Review";
+	        });
 	      });
-	    });
+	    } else {
+	      alert("you must be logged in dude");
+	    }
 	  },
 	
 	  render: function () {
@@ -33947,7 +33967,7 @@
 	          'Write a Review'
 	        )
 	      ),
-	      React.createElement(ReviewForm, null),
+	      React.createElement(ReviewForm, { restaurantId: this.props.params.restaurantId }),
 	      React.createElement(
 	        'div',
 	        { className: 'restaurant-detail-tab-container' },
@@ -33976,8 +33996,7 @@
 	          React.createElement(
 	            TabPanel,
 	            null,
-	            React.createElement(ReviewList, { reviews: this.state.restaurant.reviews,
-	              restaurantId: this.props.params.restaurantId })
+	            React.createElement(ReviewList, { reviews: this.state.restaurant.reviews })
 	          ),
 	          React.createElement(
 	            TabPanel,
@@ -34775,13 +34794,18 @@
 
 	var React = __webpack_require__(1);
 	var ReviewItem = __webpack_require__(281);
+	var RestaurantStore = __webpack_require__(264);
 	
 	var ReviewList = React.createClass({
 	  displayName: 'ReviewList',
 	
+	  getInitialState: function () {
+	    return { reviews: this.props.reviews };
+	  },
+	
 	  render: function () {
-	    if (this.props.reviews) {
-	      var ReviewItems = this.props.reviews.map(function (review) {
+	    if (this.state.reviews) {
+	      var ReviewItems = this.state.reviews.reverse().map(function (review) {
 	        return React.createElement(ReviewItem, { key: review.id, review: review });
 	      });
 	
@@ -34921,19 +34945,20 @@
 	var React = __webpack_require__(1);
 	var LinkedStateMixin = __webpack_require__(285);
 	
+	var ReviewApiUtil = __webpack_require__(289);
+	
 	var ReviewForm = React.createClass({
 	  displayName: 'ReviewForm',
 	
 	  mixins: [LinkedStateMixin],
 	
-	  blankAttrs: {
-	    body: '',
-	    star_rating: 0,
-	    price_rating: 0
-	  },
-	
 	  getInitialState: function () {
-	    return this.blankAttrs;
+	    return {
+	      body: '',
+	      star_rating: 0,
+	      price_rating: 0,
+	      restaurant_id: this.props.restaurantId
+	    };
 	  },
 	
 	  getStarRatingInput: function () {
@@ -35040,6 +35065,9 @@
 	    e.preventDefault();
 	
 	    console.log(this.state);
+	    ReviewApiUtil.createReview(this.state, function () {
+	      this.forceUpdate();
+	    }.bind(this));
 	  },
 	
 	  render: function () {
@@ -35505,6 +35533,26 @@
 	};
 	
 	module.exports = ReactStateSetters;
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var RestaurantActions = __webpack_require__(267);
+	
+	module.exports = {
+	  createReview: function (review, callback) {
+	    $.ajax({
+	      url: "api/reviews",
+	      method: "POST",
+	      data: { review: review },
+	      success: function (review) {
+	        RestaurantActions.receiveNewReview(review);
+	        callback();
+	      }
+	    });
+	  }
+	};
 
 /***/ }
 /******/ ]);

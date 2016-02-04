@@ -14,5 +14,12 @@ module.exports = {
       actionType: RestaurantConstants.RECEIVE_ONE,
       restaurant: restaurant
     });
+  },
+
+  receiveNewReview: function (review) {
+    Dispatcher.dispatch({
+      actionType: RestaurantConstants.RECEIVE_NEW_REVIEW,
+      review: review
+    });
   }
 };

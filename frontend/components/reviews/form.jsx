@@ -1,17 +1,19 @@
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
+var ReviewApiUtil = require('../../util/reviews_api_util');
+
 var ReviewForm = React.createClass({
   mixins: [LinkedStateMixin],
 
-  blankAttrs: {
-    body: '',
-    star_rating: 0,
-    price_rating: 0
-  },
 
   getInitialState: function () {
-    return this.blankAttrs;
+    return {
+      body: '',
+      star_rating: 0,
+      price_rating: 0,
+      restaurant_id: this.props.restaurantId
+    };
   },
 
   getStarRatingInput: function () {
@@ -118,6 +120,10 @@ var ReviewForm = React.createClass({
     e.preventDefault();
 
     console.log(this.state);
+    ReviewApiUtil.createReview(this.state, function() {
+      this.forceUpdate();
+    }.bind(this));
+
   },
 
   render: function () {
