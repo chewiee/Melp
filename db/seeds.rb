@@ -105,28 +105,28 @@ Review.create(author_id: ranna.id,
   restaurant_id: freddies.id,
   star_rating: 4,
   price_rating: 1,
-  snippet: "Solid variety for a pizza place, with big slices. $5 will get you far. Open late too!")
+  body: "Solid variety for a pizza place, with big slices. $5 will get you far. Open late too!")
 
 Review.create(author_id: ranna.id,
   restaurant_id: shack.id,
   star_rating: 5,
   price_rating: 2,
-  snippet: "Love the burgers and fries, but the lines are crazy during normal hours.")
+  body: "Love the burgers and fries, but the lines are crazy during normal hours.")
 
 Review.create(author_id: ranna.id,
   restaurant_id: hummus.id,
   star_rating: 5,
   price_rating: 3,
-  snippet: "Super delicious, best fries ever. The falafel sandwich is amazing, but not very filling.")
+  body: "Super delicious, best fries ever. The falafel sandwich is amazing, but not very filling.")
 
 Review.create(author_id: ranna.id,
   restaurant_id: lenwich.id,
   star_rating: 4,
   price_rating: 2,
-  snippet: "Solid deli, fast service.")
+  body: "Solid deli, fast service.")
 
-  Review.create(author_id: ranna.id,
-    restaurant_id: simit.id,
-    star_rating: 5,
-    price_rating: 1,
-    snippet: 'Great breakfast "bagel". Turkish coffee is yummy too, and the line is never long.')
+Review.create(author_id: ranna.id,
+  restaurant_id: simit.id,
+  star_rating: 5,
+  price_rating: 1,
+  body: 'Great breakfast "bagel". Turkish coffee is yummy too, and the line is never long.')

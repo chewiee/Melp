@@ -27,9 +27,7 @@ var App = React.createClass({
 var routes = (
   <Route path="/" component={App}>
     <IndexRoute component={RestaurantIndex} />
-    <Route path="restaurant/:restaurantId" component={RestaurantDetail}>
-      <IndexRoute component={ReviewList} />
-    </Route>
+    <Route path="restaurant/:restaurantId" component={RestaurantDetail} />
     <Route path="users/new" component={SignUpLogIn} />
     <Route path="session/new" component={SignUpLogIn} />
   </Route>

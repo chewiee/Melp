@@ -174,30 +174,67 @@
   background: linear-gradient(#E85864, #A83C43);
 }
 
-::-webkit-scrollbar {
-    width: 12px;
+.restaurant-detail-header {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  border-bottom: 1px solid #4C4C47;
+  margin-bottom: 100px;
 }
 
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
+.restaurant-detail-header > h1 {
+  font-size: 48px;
 }
 
-::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    background: #848FA5;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+.write-review-button {
+  position: relative;
+  top: 200px;
+  left: 300px;
+  width: 240px;
+  height: 60px;
+  border: 1px solid #4C4C47;
+  border-radius: 3px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 24px;
+  text-align: center;
+  line-height: 1.6;
+  color: white;
+  background: linear-gradient(#C14953, #A83C43);
 }
 
-.dim-background {
-  position:fixed;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
-  background-color: black;
-  opacity:0.8;
-  z-index:1001;
+.write-review-button:hover {
+  cursor: pointer;
+  background: linear-gradient(#E85864, #C14953);
+}
+
+.write-review-button:active {
+  background: linear-gradient(#E85864, #A83C43);
+}
+
+.restaurant-detail-info {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  left: 20px;
+  bottom: -80px;
+  border: 1px solid #4C4C47;
+  border-radius: 5px;
+  background-color: white;
+  padding: 5px;
+}
+
+.restaurant-detail-map {
+  height: 160px;
+  width: 100%;
+  background-color: yellow;
+  margin-bottom: 5px;
+}
+
+.restaurant-detail-info > a {
+  color: #848FA5;
+}
+
+.restaurant-detail-info > a:hover {
+  text-decoration: underline;
 }

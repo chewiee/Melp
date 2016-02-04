@@ -1,13 +1,13 @@
 /*used http://codepen.io/ehermanson/pen/KwKWEv as guide*/
 
 
-a {
+.sign-up-log-in-form > a {
   background-color: white;
   color: #4C4C44;
   transition: .2s ease;
 }
 
-a:hover {
+.sign-up-log-in-form > a:hover {
   background-color: #4C4C44;
   color: white;
 }
@@ -74,37 +74,9 @@ a:hover {
   display:none;
 }
 
-h2 {
-  text-align:center;
-  color:#C1454E;
-  margin:0 0 40px;
-  font-size: 36px;
-}
-
 .field-wrap {
   position:relative;
   margin-bottom:40px;
-}
-
-input, text {
-  font-size:22px;
-  display:block;
-  width:100%;
-  height:100%;
-  padding:5px 10px;
-  border:1px solid #4C4C44;
-  color:#4C4C44;
-  border-radius:3px;
-  transition:border-color .25s ease, box-shadow .25s ease;
-}
-
-input:focus, text:focus {
-  outline:0;
-  border-color:#C1454E;
-}
-
-#user_password {
-  margin-bottom: 20px;
 }
 
 .form-button {

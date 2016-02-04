@@ -3,4 +3,8 @@ class Restaurant < ActiveRecord::Base
 
   has_many :photos, as: :photoable
   has_many :reviews
+
+  def review_count
+    reviews.size
+  end
 end

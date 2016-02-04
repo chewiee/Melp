@@ -1,8 +1,16 @@
 var React = require('react');
+var ReactTabs = require('react-tabs');
 var RestaurantStore = require('../../stores/restaurant_store');
 var ApiUtil = require('../../util/restaurants_api_util');
 
 var ReviewList = require('../reviews/list.jsx');
+var ReviewForm = require('../reviews/form.jsx');
+
+var Tab = ReactTabs.Tab;
+var Tabs = ReactTabs.Tabs;
+var TabList = ReactTabs.TabList;
+var TabPanel = ReactTabs.TabPanel;
+
 
 var RestaurantDetail = React.createClass({
   getStateFromStore: function () {
@@ -31,18 +39,21 @@ var RestaurantDetail = React.createClass({
     this.setState(this.getStateFromStore());
   },
 
-  renderChildren: function () {
-    return(
-      React.Children.map(this.props.children, function (child) {
-        if (child.type.displayName === 'RestaurantList') {
-          //ADD FIND SIMILAR RESTAURANTS METHOD TO STORE
-        } else {
-          return(
-            React.cloneElement(child, {reviews: this.state.restaurant.reviews})
-          );
-        }
-      }.bind(this))
-    );
+  handleSelect: function (index, last) {
+    console.log(index + " - " + last);
+  },
+
+  openReviewForm: function (e) {
+    e.preventDefault();
+
+    var button = $('.write-review-button');
+    var form = $('.review-form');
+
+    form.slideToggle(500, function() {
+      button.text(function () {
+        return form.is(":visible") ? "Save Draft" : "Write a Review";
+      });
+    });
   },
 
   render: function () {
@@ -53,6 +64,8 @@ var RestaurantDetail = React.createClass({
         <div className="restaurant-detail-header">
           <h1>{this.state.restaurant.name}</h1>
           <div className="restaurant-detail-info">
+            <div className="restaurant-detail-map">
+            </div>
             <div className="restaurant-address">
               {this.state.restaurant.address}
             </div>
@@ -63,19 +76,28 @@ var RestaurantDetail = React.createClass({
               {this.state.restaurant.website}
             </a>
             <div className="restaurant-phone-number">
-              {this.state.restaurant.phone_number}
+              {this.state.restaurant.phone_number.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')}
             </div>
           </div>
-        </div>
-        <div className="restaurant-detail-tab-container">
-          <ul className="restaurant-detail-tabs">
-            <li> Reviews </li>
-            <li> Users </li>
-            <li> Similar </li>
-          </ul>
-          <div className="restaurant-detail-subcontent">
-            {this.renderChildren()}
+          <div className="write-review-button" onClick={this.openReviewForm}>
+            Write a Review
           </div>
+        </div>
+        <ReviewForm />
+        <div className="restaurant-detail-tab-container">
+          <Tabs onSelect={this.handleSelect} selectedIndex={0}>
+            <TabList>
+              <Tab>Reviews</Tab>
+              <Tab>Reviewers</Tab>
+              <Tab>Similar Restaurants</Tab>
+            </TabList>
+            <TabPanel>
+              <ReviewList reviews={this.state.restaurant.reviews}
+                restaurantId={this.props.params.restaurantId}/>
+            </TabPanel>
+            <TabPanel><ReviewList /></TabPanel>
+            <TabPanel><ReviewList /></TabPanel>
+          </Tabs>
         </div>
       </div>
     );

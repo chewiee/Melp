@@ -1,5 +1,5 @@
 html, body, section, article,
-h1, h2, p, strong, em, a, input, ol {
+h1, h2, p, strong, em, a, input, ol, textarea {
   margin: 0;
   border: 0;
   padding: 0;
@@ -21,7 +21,8 @@ h1, h2, p, strong, em, a, input, ol {
 }
 
 ul {
-  list-style: none;
+  list-style-type: none;
+  padding: 0px;
 }
 
 body {
@@ -49,4 +50,46 @@ body {
   z-index: 0;
   box-sizing: border-box;
   padding: 20px;
+}
+
+h2 {
+  text-align:center;
+  color:#C1454E;
+  margin:0 0 40px;
+  font-size: 36px;
+}
+
+input, text {
+  font-size:22px;
+  display:block;
+  width:100%;
+  height:100%;
+  padding:5px 10px;
+  border:1px solid #4C4C44;
+  color:#4C4C44;
+  border-radius:3px;
+  transition:border-color .25s ease, box-shadow .25s ease;
+  box-sizing: border-box;
+}
+
+input:focus, text:focus {
+  outline:0;
+  border-color:#C1454E;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #848FA5;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
