@@ -52,11 +52,12 @@
 	var IndexRoute = __webpack_require__(159).IndexRoute;
 	
 	var HeaderNav = __webpack_require__(206);
-	var Search = __webpack_require__(272);
-	var RestaurantIndex = __webpack_require__(238);
-	var RestaurantDetail = __webpack_require__(261);
-	var SignUpLogIn = __webpack_require__(271);
-	var ReviewList = __webpack_require__(262);
+	var MainIndex = __webpack_require__(275);
+	var Onboarding = __webpack_require__(276);
+	var RestaurantIndex = __webpack_require__(250);
+	var RestaurantDetail = __webpack_require__(264);
+	var SignUpLogIn = __webpack_require__(274);
+	var ReviewList = __webpack_require__(265);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -81,7 +82,9 @@
 	  React.createElement(IndexRoute, { component: RestaurantIndex }),
 	  React.createElement(Route, { path: 'restaurant/:restaurantId', component: RestaurantDetail }),
 	  React.createElement(Route, { path: 'users/new', component: SignUpLogIn }),
-	  React.createElement(Route, { path: 'session/new', component: SignUpLogIn })
+	  React.createElement(Route, { path: 'session/new', component: SignUpLogIn }),
+	  React.createElement(Route, { path: 'search', component: MainIndex }),
+	  React.createElement(Route, { path: 'welcome', component: Onboarding })
 	);
 	
 	document.addEventListener("DOMContentLoaded", function () {
@@ -24035,9 +24038,9 @@
 	var ApiUtil = __webpack_require__(207);
 	var CurrentUserStore = __webpack_require__(215);
 	
-	var LoggedOutHeader = __webpack_require__(233);
-	var LogInHeader = __webpack_require__(235);
-	var LoggedInHeader = __webpack_require__(236);
+	var LoggedOutHeader = __webpack_require__(231);
+	var LogInHeader = __webpack_require__(256);
+	var LoggedInHeader = __webpack_require__(257);
 	
 	var HeaderNav = React.createClass({
 	  displayName: 'HeaderNav',
@@ -24576,7 +24579,7 @@
 	
 	module.exports.Container = __webpack_require__(217);
 	module.exports.MapStore = __webpack_require__(220);
-	module.exports.Mixin = __webpack_require__(232);
+	module.exports.Mixin = __webpack_require__(230);
 	module.exports.ReduceStore = __webpack_require__(221);
 	module.exports.Store = __webpack_require__(222);
 
@@ -24923,7 +24926,7 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var FluxReduceStore = __webpack_require__(221);
-	var Immutable = __webpack_require__(231);
+	var Immutable = __webpack_require__(229);
 	
 	var invariant = __webpack_require__(212);
 	
@@ -25074,7 +25077,7 @@
 	
 	var FluxStore = __webpack_require__(222);
 	
-	var abstractMethod = __webpack_require__(230);
+	var abstractMethod = __webpack_require__(228);
 	var invariant = __webpack_require__(212);
 	
 	var FluxReduceStore = (function (_FluxStore) {
@@ -25383,8 +25386,8 @@
 	var EmitterSubscription = __webpack_require__(225);
 	var EventSubscriptionVendor = __webpack_require__(227);
 	
-	var emptyFunction = __webpack_require__(229);
-	var invariant = __webpack_require__(228);
+	var emptyFunction = __webpack_require__(15);
+	var invariant = __webpack_require__(13);
 	
 	/**
 	 * @class BaseEventEmitter
@@ -25684,7 +25687,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(228);
+	var invariant = __webpack_require__(13);
 	
 	/**
 	 * EventSubscriptionVendor stores a set of EventSubscriptions that are
@@ -25778,103 +25781,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	'use strict';
-	
-	/**
-	 * Use invariant() to assert state which your program assumes to be true.
-	 *
-	 * Provide sprintf-style format (only %s is supported) and arguments
-	 * to provide information about what broke and what you were
-	 * expecting.
-	 *
-	 * The invariant message will be stripped in production, but the invariant
-	 * will remain to ensure logic does not differ in production.
-	 */
-	
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  if (process.env.NODE_ENV !== 'production') {
-	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
-	    }
-	  }
-	
-	  if (!condition) {
-	    var error;
-	    if (format === undefined) {
-	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-	    } else {
-	      var args = [a, b, c, d, e, f];
-	      var argIndex = 0;
-	      error = new Error(format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      }));
-	      error.name = 'Invariant Violation';
-	    }
-	
-	    error.framesToPop = 1; // we don't care about invariant's own frame
-	    throw error;
-	  }
-	}
-	
-	module.exports = invariant;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
-/* 229 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 */
-	
-	"use strict";
-	
-	function makeEmptyFunction(arg) {
-	  return function () {
-	    return arg;
-	  };
-	}
-	
-	/**
-	 * This function accepts and discards inputs; it has no side effects. This is
-	 * primarily useful idiomatically for overridable function endpoints which
-	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-	 */
-	function emptyFunction() {}
-	
-	emptyFunction.thatReturns = makeEmptyFunction;
-	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-	emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-	emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-	emptyFunction.thatReturnsThis = function () {
-	  return this;
-	};
-	emptyFunction.thatReturnsArgument = function (arg) {
-	  return arg;
-	};
-	
-	module.exports = emptyFunction;
-
-/***/ },
-/* 230 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright (c) 2014-2015, Facebook, Inc.
 	 * All rights reserved.
 	 *
@@ -25898,7 +25804,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 231 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -30885,7 +30791,7 @@
 	}));
 
 /***/ },
-/* 232 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -31008,12 +30914,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 233 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
-	var SearchBar = __webpack_require__(234);
+	var SearchBar = __webpack_require__(232);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -31067,29 +30973,90 @@
 	});
 
 /***/ },
-/* 234 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = SearchBar;
+	
 	var React = __webpack_require__(1);
+	var ReactTabs = __webpack_require__(233);
+	var Paginate = __webpack_require__(243);
+	var History = __webpack_require__(159).History;
+	
+	var Tab = ReactTabs.Tab;
+	var Tabs = ReactTabs.Tabs;
+	var TabList = ReactTabs.TabList;
+	var TabPanel = ReactTabs.TabPanel;
+	
+	var SearchResultsStore = __webpack_require__(260);
+	var SearchApiUtil = __webpack_require__(262);
 	
 	var SearchBar = React.createClass({
-	  displayName: "SearchBar",
+	  displayName: 'SearchBar',
+	
+	  mixins: [History],
+	
+	  componentDidMount: function () {
+	    this.listener = SearchResultsStore.addListener(this._onChange);
+	  },
+	
+	  getInitialState: function () {
+	    return { page: 1, query: "freddie" };
+	  },
+	
+	  _onChange: function () {
+	    this.forceUpdate();
+	  },
+	
+	  search: function (e) {
+	    var query = e.target.value;
+	    SearchApiUtil.search(query, 1);
+	
+	    this.setState({ page: 1, query: query });
+	  },
+	
+	  nextPage: function () {
+	    var nextPage = this.state.page + 1;
+	    SearchApiUtil.search(this.state.query, nextPage);
+	
+	    this.setState({ page: nextPage });
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listener.remove();
+	  },
+	
+	  showSearch: function () {
+	    this.history.pushState(null, '/search/', {});
+	  },
 	
 	  render: function () {
-	    var searchBoxText = "Search for restaurants, reviews, or users";
+	    var restaurants = [];
+	    var reviews = [];
+	    var users = [];
+	    var searchResults = SearchResultsStore.all().map(function (searchResult) {
+	      if (searchResult._type === "Restaurant") {
+	        restaurants.push(searchResult);
+	      } else if (searchResult._type === "Review") {
+	        reviews.push(searchResult);
+	      } else {
+	        users.push(searchResult);
+	      }
+	    });
 	
 	    return React.createElement(
-	      "form",
-	      { className: "search-bar group" },
-	      React.createElement("input", {
-	        type: "text",
-	        className: "search-box",
-	        placeholder: searchBoxText,
-	        autofocus: "true" }),
+	      'form',
+	      { className: 'search-bar group' },
+	      React.createElement('input', {
+	        type: 'text',
+	        className: 'search-box',
+	        placeholder: "Search for restaurants, reviews, and users",
+	        autofocus: 'true',
+	        onKeyUp: this.search }),
 	      React.createElement(
-	        "div",
-	        { className: "search-button header-button" },
-	        React.createElement("i", { className: "fa fa-search" })
+	        'div',
+	        { className: 'search-button header-button', onClick: this.showSearch },
+	        React.createElement('i', { className: 'fa fa-search' })
 	      )
 	    );
 	  }
@@ -31099,247 +31066,20 @@
 	module.exports = SearchBar;
 
 /***/ },
-/* 235 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	
-	module.exports = React.createClass({
-	  displayName: 'exports',
-	
-	  loadHomePage: function () {
-	    window.location = '/#/';
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { className: 'header' },
-	      React.createElement(
-	        'div',
-	        { className: 'header-nav group' },
-	        React.createElement(
-	          'div',
-	          { className: 'header-logo-centered' },
-	          React.createElement('img', { src: 'https://s3.amazonaws.com/melp-assets/melp_logo.png', onClick: this.loadHomePage })
-	        )
-	      )
-	    );
-	  }
-	});
-
-/***/ },
-/* 236 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var SearchBar = __webpack_require__(234);
-	var UserDropdown = __webpack_require__(237);
-	
-	module.exports = React.createClass({
-	  displayName: 'exports',
-	
-	  loadHomePage: function () {
-	    window.location = '/#/';
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { className: 'header' },
-	      React.createElement(
-	        'div',
-	        { className: 'header-nav group' },
-	        React.createElement(
-	          'div',
-	          { className: 'header-logo' },
-	          React.createElement('img', { src: 'https://s3.amazonaws.com/melp-assets/melp_logo.png', onClick: this.loadHomePage })
-	        ),
-	        React.createElement(SearchBar, null),
-	        React.createElement(UserDropdown, null)
-	      )
-	    );
-	  }
-	});
-
-/***/ },
-/* 237 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var ApiUtil = __webpack_require__(207);
-	
-	module.exports = React.createClass({
-	  displayName: 'exports',
-	
-	  showDropdown: function () {
-	    $('.header-user-dropdown-content').toggleClass('show');
-	  },
-	
-	  logOut: function () {
-	    ApiUtil.logout();
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'div',
-	        { className: 'header-button header-user group' },
-	        React.createElement('div', { className: 'header-user-avatar' }),
-	        React.createElement(
-	          'div',
-	          { className: 'header-user-arrow',
-	            onClick: this.showDropdown },
-	          React.createElement('i', { className: 'fa fa-caret-down' })
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'header-user-dropdown' },
-	        React.createElement(
-	          'div',
-	          { className: 'header-user-dropdown-content' },
-	          React.createElement(
-	            'div',
-	            { className: 'header-button header-logout', onClick: this.logOut },
-	            'Logout'
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-
-/***/ },
-/* 238 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var ReactTabs = __webpack_require__(239);
-	var Paginate = __webpack_require__(249);
-	
-	var RestaurantStore = __webpack_require__(256);
-	var ApiUtil = __webpack_require__(258);
-	var RestaurantIndexItem = __webpack_require__(260);
-	
-	var Tab = ReactTabs.Tab;
-	var Tabs = ReactTabs.Tabs;
-	var TabList = ReactTabs.TabList;
-	var TabPanel = ReactTabs.TabPanel;
-	
-	var RestaurantIndex = React.createClass({
-	  displayName: 'RestaurantIndex',
-	
-	  getInitialState: function () {
-	    return {
-	      restaurants: RestaurantStore.all()
-	    };
-	  },
-	
-	  _onChange: function () {
-	    this.setState({ restaurants: RestaurantStore.all() });
-	  },
-	
-	  componentDidMount: function () {
-	    this.listenerToken = RestaurantStore.addListener(this._onChange);
-	    ApiUtil.fetchAllRestaurants();
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.listenerToken.remove();
-	  },
-	
-	  playVideo: function (e) {
-	    $(e.currentTarget).find('video')[0].play();
-	  },
-	
-	  pauseVideo: function (e) {
-	    $(e.currentTarget).find('video')[0].pause();
-	  },
-	
-	  handleSelect: function (index, last) {
-	    console.log(index + " - " + last);
-	  },
-	
-	  render: function () {
-	
-	    // Defunct add restaurant button, will add a
-	    // write a review button to blank search form
-	    // <div className="index-add-button group">
-	    //   <i className="fa fa-plus"></i>
-	    //   Add New Restaurant
-	    // </div>
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'search-results-container' },
-	      React.createElement(
-	        Tabs,
-	        { onSelect: this.handleSelect, selectedIndex: 0 },
-	        React.createElement(
-	          TabList,
-	          null,
-	          React.createElement(
-	            Tab,
-	            null,
-	            'Restaurants'
-	          ),
-	          React.createElement(
-	            Tab,
-	            null,
-	            'Reviews'
-	          ),
-	          React.createElement(
-	            Tab,
-	            null,
-	            'Users'
-	          )
-	        ),
-	        React.createElement(
-	          TabPanel,
-	          null,
-	          React.createElement(
-	            'div',
-	            { className: 'group', id: 'restaurant-index' },
-	            React.createElement(
-	              'ul',
-	              { className: 'restaurant-index' },
-	              this.state.restaurants.map(function (restaurant, i) {
-	                return React.createElement(RestaurantIndexItem, {
-	                  key: restaurant.id,
-	                  restaurant: restaurant,
-	                  idx: i + 1,
-	                  onHover: [this.playVideo, this.pauseVideo] });
-	              }.bind(this))
-	            )
-	          )
-	        ),
-	        React.createElement(TabPanel, null),
-	        React.createElement(TabPanel, null)
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = RestaurantIndex;
-
-/***/ },
-/* 239 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	module.exports = {
-	  Tabs: __webpack_require__(240),
-	  TabList: __webpack_require__(246),
-	  Tab: __webpack_require__(245),
-	  TabPanel: __webpack_require__(248)
+	  Tabs: __webpack_require__(234),
+	  TabList: __webpack_require__(240),
+	  Tab: __webpack_require__(239),
+	  TabPanel: __webpack_require__(242)
 	};
 
 /***/ },
-/* 240 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31352,19 +31092,19 @@
 	
 	var _reactDom = __webpack_require__(158);
 	
-	var _classnames = __webpack_require__(241);
+	var _classnames = __webpack_require__(235);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _jsStylesheet = __webpack_require__(242);
+	var _jsStylesheet = __webpack_require__(236);
 	
 	var _jsStylesheet2 = _interopRequireDefault(_jsStylesheet);
 	
-	var _helpersUuid = __webpack_require__(243);
+	var _helpersUuid = __webpack_require__(237);
 	
 	var _helpersUuid2 = _interopRequireDefault(_helpersUuid);
 	
-	var _helpersChildrenPropType = __webpack_require__(244);
+	var _helpersChildrenPropType = __webpack_require__(238);
 	
 	var _helpersChildrenPropType2 = _interopRequireDefault(_helpersChildrenPropType);
 	
@@ -31422,7 +31162,7 @@
 	
 	  componentDidMount: function componentDidMount() {
 	    if (useDefaultStyles) {
-	      (0, _jsStylesheet2['default'])(__webpack_require__(247));
+	      (0, _jsStylesheet2['default'])(__webpack_require__(241));
 	    }
 	  },
 	
@@ -31698,7 +31438,7 @@
 	});
 
 /***/ },
-/* 241 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -31752,7 +31492,7 @@
 
 
 /***/ },
-/* 242 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	!(function() {
@@ -31796,7 +31536,7 @@
 
 
 /***/ },
-/* 243 */
+/* 237 */
 /***/ function(module, exports) {
 
 	// Get a universally unique identifier
@@ -31808,7 +31548,7 @@
 	};
 
 /***/ },
-/* 244 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31819,11 +31559,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _componentsTab = __webpack_require__(245);
+	var _componentsTab = __webpack_require__(239);
 	
 	var _componentsTab2 = _interopRequireDefault(_componentsTab);
 	
-	var _componentsTabList = __webpack_require__(246);
+	var _componentsTabList = __webpack_require__(240);
 	
 	var _componentsTabList2 = _interopRequireDefault(_componentsTabList);
 	
@@ -31869,7 +31609,7 @@
 	};
 
 /***/ },
-/* 245 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31882,7 +31622,7 @@
 	
 	var _reactDom = __webpack_require__(158);
 	
-	var _classnames = __webpack_require__(241);
+	var _classnames = __webpack_require__(235);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -31949,7 +31689,7 @@
 	});
 
 /***/ },
-/* 246 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31960,7 +31700,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(241);
+	var _classnames = __webpack_require__(235);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -31985,7 +31725,7 @@
 	});
 
 /***/ },
-/* 247 */
+/* 241 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32040,7 +31780,7 @@
 	};
 
 /***/ },
-/* 248 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32051,7 +31791,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(241);
+	var _classnames = __webpack_require__(235);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
@@ -32098,12 +31838,12 @@
 	});
 
 /***/ },
-/* 249 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var _PaginationBoxView = __webpack_require__(250);
+	var _PaginationBoxView = __webpack_require__(244);
 	
 	var _PaginationBoxView2 = _interopRequireDefault(_PaginationBoxView);
 	
@@ -32113,7 +31853,7 @@
 	//# sourceMappingURL=index.js.map
 
 /***/ },
-/* 250 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32128,11 +31868,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _classnames = __webpack_require__(251);
+	var _classnames = __webpack_require__(245);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _PaginationListView = __webpack_require__(252);
+	var _PaginationListView = __webpack_require__(246);
 	
 	var _PaginationListView2 = _interopRequireDefault(_PaginationListView);
 	
@@ -32295,7 +32035,7 @@
 	//# sourceMappingURL=PaginationBoxView.js.map
 
 /***/ },
-/* 251 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -32344,7 +32084,7 @@
 
 
 /***/ },
-/* 252 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32359,11 +32099,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactAddonsCreateFragment = __webpack_require__(253);
+	var _reactAddonsCreateFragment = __webpack_require__(247);
 	
 	var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
 	
-	var _PageView = __webpack_require__(255);
+	var _PageView = __webpack_require__(249);
 	
 	var _PageView2 = _interopRequireDefault(_PageView);
 	
@@ -32469,13 +32209,13 @@
 	//# sourceMappingURL=PaginationListView.js.map
 
 /***/ },
-/* 253 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(254).create;
+	module.exports = __webpack_require__(248).create;
 
 /***/ },
-/* 254 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -32545,7 +32285,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 255 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32613,12 +32353,97 @@
 	//# sourceMappingURL=PageView.js.map
 
 /***/ },
-/* 256 */
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ReactTabs = __webpack_require__(233);
+	var Paginate = __webpack_require__(243);
+	
+	var RestaurantStore = __webpack_require__(251);
+	var ApiUtil = __webpack_require__(253);
+	var RestaurantIndexItem = __webpack_require__(255);
+	
+	var Tab = ReactTabs.Tab;
+	var Tabs = ReactTabs.Tabs;
+	var TabList = ReactTabs.TabList;
+	var TabPanel = ReactTabs.TabPanel;
+	
+	var RestaurantIndex = React.createClass({
+	  displayName: 'RestaurantIndex',
+	
+	  getInitialState: function () {
+	    return {
+	      restaurants: RestaurantStore.all()
+	    };
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ restaurants: RestaurantStore.all() });
+	  },
+	
+	  componentDidMount: function () {
+	    this.listenerToken = RestaurantStore.addListener(this._onChange);
+	    ApiUtil.fetchAllRestaurants();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.listenerToken.remove();
+	  },
+	
+	  playVideo: function (e) {
+	    $(e.currentTarget).find('video')[0].play();
+	  },
+	
+	  pauseVideo: function (e) {
+	    $(e.currentTarget).find('video')[0].pause();
+	  },
+	
+	  handleSelect: function (index, last) {
+	    console.log(index + " - " + last);
+	  },
+	
+	  render: function () {
+	
+	    // Defunct add restaurant button, will add a
+	    // write a review button to blank search form
+	    // <div className="index-add-button group">
+	    //   <i className="fa fa-plus"></i>
+	    //   Add New Restaurant
+	    // </div>
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'group', id: 'restaurant-index' },
+	      React.createElement(
+	        'div',
+	        { className: 'index-header' },
+	        'Restaurants'
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'restaurant-index' },
+	        this.state.restaurants.map(function (restaurant, i) {
+	          return React.createElement(RestaurantIndexItem, {
+	            key: restaurant.id,
+	            restaurant: restaurant,
+	            idx: i + 1,
+	            onHover: [this.playVideo, this.pauseVideo] });
+	        }.bind(this))
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = RestaurantIndex;
+
+/***/ },
+/* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(216).Store;
 	var AppDispatcher = __webpack_require__(209);
-	var RestaurantConstants = __webpack_require__(257);
+	var RestaurantConstants = __webpack_require__(252);
 	var RestaurantStore = new Store(AppDispatcher);
 	
 	var _restaurants = {};
@@ -32670,7 +32495,7 @@
 	module.exports = RestaurantStore;
 
 /***/ },
-/* 257 */
+/* 252 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -32680,10 +32505,10 @@
 	};
 
 /***/ },
-/* 258 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var RestaurantActions = __webpack_require__(259);
+	var RestaurantActions = __webpack_require__(254);
 	
 	module.exports = {
 	  fetchAllRestaurants: function () {
@@ -32718,11 +32543,11 @@
 	};
 
 /***/ },
-/* 259 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Dispatcher = __webpack_require__(209);
-	var RestaurantConstants = __webpack_require__(257);
+	var RestaurantConstants = __webpack_require__(252);
 	
 	module.exports = {
 	  receiveAllRestaurants: function (restaurants) {
@@ -32748,7 +32573,7 @@
 	};
 
 /***/ },
-/* 260 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -32821,17 +32646,222 @@
 	});
 
 /***/ },
-/* 261 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var ReactTabs = __webpack_require__(239);
-	var RestaurantStore = __webpack_require__(256);
-	var CurrentUserStore = __webpack_require__(215);
-	var ApiUtil = __webpack_require__(258);
 	
-	var ReviewList = __webpack_require__(262);
-	var ReviewForm = __webpack_require__(265);
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	
+	  loadHomePage: function () {
+	    window.location = '/#/';
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'header' },
+	      React.createElement(
+	        'div',
+	        { className: 'header-nav group' },
+	        React.createElement(
+	          'div',
+	          { className: 'header-logo-centered' },
+	          React.createElement('img', { src: 'https://s3.amazonaws.com/melp-assets/melp_logo.png', onClick: this.loadHomePage })
+	        )
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 257 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var SearchBar = __webpack_require__(232);
+	var UserDropdown = __webpack_require__(258);
+	
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	
+	  loadHomePage: function () {
+	    window.location = '/#/';
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'header' },
+	      React.createElement(
+	        'div',
+	        { className: 'header-nav group' },
+	        React.createElement(
+	          'div',
+	          { className: 'header-logo' },
+	          React.createElement('img', { src: 'https://s3.amazonaws.com/melp-assets/melp_logo.png', onClick: this.loadHomePage })
+	        ),
+	        React.createElement(SearchBar, null),
+	        React.createElement(UserDropdown, null)
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(207);
+	
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	
+	  showDropdown: function () {
+	    $('.header-user-dropdown-content').toggleClass('show');
+	  },
+	
+	  logOut: function () {
+	    ApiUtil.logout();
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'header-button header-user group' },
+	        React.createElement('div', { className: 'header-user-avatar' }),
+	        React.createElement(
+	          'div',
+	          { className: 'header-user-arrow',
+	            onClick: this.showDropdown },
+	          React.createElement('i', { className: 'fa fa-caret-down' })
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'header-user-dropdown' },
+	        React.createElement(
+	          'div',
+	          { className: 'header-user-dropdown-content' },
+	          React.createElement(
+	            'div',
+	            { className: 'header-button header-logout', onClick: this.logOut },
+	            'Logout'
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 259 */,
+/* 260 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(216).Store;
+	var AppDispatcher = __webpack_require__(209);
+	var SearchConstants = __webpack_require__(261);
+	
+	var _searchResults = [];
+	var _meta = {};
+	
+	var SearchResultsStore = new Store(AppDispatcher);
+	
+	SearchResultsStore.all = function () {
+	  return _searchResults.slice();
+	};
+	
+	SearchResultsStore.meta = function () {
+	  return _meta;
+	};
+	
+	SearchResultsStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	
+	    case SearchConstants.RECEIVE_SEARCH_RESULTS:
+	      _searchResults = payload.searchResults;
+	      _meta = payload.meta;
+	      SearchResultsStore.__emitChange();
+	      break;
+	
+	  }
+	};
+	
+	module.exports = SearchResultsStore;
+
+/***/ },
+/* 261 */
+/***/ function(module, exports) {
+
+	
+	var SearchConstants = {
+	  RECEIVE_SEARCH_RESULTS: "RECEIVE_SEARCH_RESULTS"
+	};
+	
+	module.exports = SearchConstants;
+
+/***/ },
+/* 262 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var SearchActions = __webpack_require__(263);
+	
+	var SearchApiUtil = {
+	
+	  search: function (query, page) {
+	    $.ajax({
+	      url: '/api/search',
+	      type: 'GET',
+	      dataType: 'json',
+	      data: { query: query, page: page },
+	      success: function (data) {
+	        SearchActions.receiveResults(data);
+	      }
+	    });
+	  }
+	
+	};
+	
+	module.exports = SearchApiUtil;
+
+/***/ },
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var SearchConstants = __webpack_require__(261);
+	var AppDispatcher = __webpack_require__(209);
+	
+	var SearchActions = {
+	  receiveResults: function (data) {
+	    AppDispatcher.dispatch({
+	      actionType: SearchConstants.RECEIVE_SEARCH_RESULTS,
+	      searchResults: data.results,
+	      meta: { totalCount: data.total_count }
+	    });
+	  }
+	
+	};
+	
+	module.exports = SearchActions;
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ReactTabs = __webpack_require__(233);
+	var RestaurantStore = __webpack_require__(251);
+	var CurrentUserStore = __webpack_require__(215);
+	var ApiUtil = __webpack_require__(253);
+	
+	var ReviewList = __webpack_require__(265);
+	var ReviewForm = __webpack_require__(268);
 	
 	var Tab = ReactTabs.Tab;
 	var Tabs = ReactTabs.Tabs;
@@ -32989,12 +33019,12 @@
 	module.exports = RestaurantDetail;
 
 /***/ },
-/* 262 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var ReviewItem = __webpack_require__(263);
-	var RestaurantStore = __webpack_require__(256);
+	var ReviewItem = __webpack_require__(266);
+	var RestaurantStore = __webpack_require__(251);
 	
 	var ReviewList = React.createClass({
 	  displayName: 'ReviewList',
@@ -33023,11 +33053,11 @@
 	module.exports = ReviewList;
 
 /***/ },
-/* 263 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var StarRating = __webpack_require__(264);
+	var StarRating = __webpack_require__(267);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -33107,7 +33137,7 @@
 	});
 
 /***/ },
-/* 264 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -33135,13 +33165,13 @@
 	});
 
 /***/ },
-/* 265 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var LinkedStateMixin = __webpack_require__(266);
+	var LinkedStateMixin = __webpack_require__(269);
 	
-	var ReviewApiUtil = __webpack_require__(270);
+	var ReviewApiUtil = __webpack_require__(273);
 	
 	var ReviewForm = React.createClass({
 	  displayName: 'ReviewForm',
@@ -33290,13 +33320,13 @@
 	module.exports = ReviewForm;
 
 /***/ },
-/* 266 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(267);
+	module.exports = __webpack_require__(270);
 
 /***/ },
-/* 267 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33313,8 +33343,8 @@
 	
 	'use strict';
 	
-	var ReactLink = __webpack_require__(268);
-	var ReactStateSetters = __webpack_require__(269);
+	var ReactLink = __webpack_require__(271);
+	var ReactStateSetters = __webpack_require__(272);
 	
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -33337,7 +33367,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 268 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -33411,7 +33441,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 269 */
+/* 272 */
 /***/ function(module, exports) {
 
 	/**
@@ -33520,10 +33550,10 @@
 	module.exports = ReactStateSetters;
 
 /***/ },
-/* 270 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var RestaurantActions = __webpack_require__(259);
+	var RestaurantActions = __webpack_require__(254);
 	
 	module.exports = {
 	  createReview: function (review, callback) {
@@ -33540,7 +33570,7 @@
 	};
 
 /***/ },
-/* 271 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -33574,7 +33604,7 @@
 	    var user_params = $(e.currentTarget).serializeJSON();
 	
 	    UserSessionApiUtil.createUser(user_params, function () {
-	      this.history.pushState({}, "/");
+	      this.history.pushState({}, "/welcome/");
 	    }.bind(this));
 	  },
 	
@@ -33609,7 +33639,7 @@
 	    var credentials = { user: { email: "guest@email.com", password: "password" } };
 	
 	    UserSessionApiUtil.login(credentials, function () {
-	      this.history.pushState({}, "/");
+	      this.history.pushState({}, "/welcome/");
 	    }.bind(this));
 	  },
 	
@@ -33750,27 +33780,27 @@
 	module.exports = SignUpLogIn;
 
 /***/ },
-/* 272 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var ReactTabs = __webpack_require__(239);
-	var Paginate = __webpack_require__(249);
+	var ReactTabs = __webpack_require__(233);
+	var Paginate = __webpack_require__(243);
 	
-	var RestaurantStore = __webpack_require__(256);
-	var ApiUtil = __webpack_require__(258);
-	var RestaurantIndexItem = __webpack_require__(260);
+	var RestaurantStore = __webpack_require__(251);
+	var ApiUtil = __webpack_require__(253);
+	var RestaurantIndexItem = __webpack_require__(255);
 	
 	var Tab = ReactTabs.Tab;
 	var Tabs = ReactTabs.Tabs;
 	var TabList = ReactTabs.TabList;
 	var TabPanel = ReactTabs.TabPanel;
 	
-	var SearchResultsStore = __webpack_require__(273);
-	var SearchApiUtil = __webpack_require__(275);
+	var SearchResultsStore = __webpack_require__(260);
+	var SearchApiUtil = __webpack_require__(262);
 	
-	var Search = React.createClass({
-	  displayName: 'Search',
+	var MainIndex = React.createClass({
+	  displayName: 'MainIndex',
 	
 	  componentDidMount: function () {
 	    this.listener = SearchResultsStore.addListener(this._onChange);
@@ -33784,14 +33814,6 @@
 	    this.forceUpdate();
 	  },
 	
-	  search: function (e) {
-	    var query = e.target.value;
-	    SearchApiUtil.search(query, 1);
-	    console.log(query);
-	
-	    this.setState({ page: 1, query: query });
-	  },
-	
 	  nextPage: function () {
 	    var nextPage = this.state.page + 1;
 	    SearchApiUtil.search(this.state.query, nextPage);
@@ -33803,134 +33825,168 @@
 	    this.listener.remove();
 	  },
 	
+	  handleSelect: function (index, last) {
+	    console.log(index + " - " + last);
+	  },
+	
 	  render: function () {
+	    var restaurants = [];
+	    var reviews = [];
+	    var users = [];
 	    var searchResults = SearchResultsStore.all().map(function (searchResult) {
 	      if (searchResult._type === "Restaurant") {
-	        return React.createElement(RestaurantIndexItem, { restaurant: searchResult });
+	        restaurants.push(searchResult);
+	      } else if (searchResult._type === "Review") {
+	        reviews.push(searchResult);
 	      } else {
-	        return React.createElement('div', null);
+	        users.push(searchResult);
 	      }
+	    });
+	
+	    var restaurantsList = restaurants.map(function (restaurant) {
+	      return React.createElement(
+	        'li',
+	        null,
+	        restaurant.name
+	      );
+	    });
+	
+	    var reviewsList = reviews.map(function (review) {
+	      return React.createElement(
+	        'li',
+	        null,
+	        review.body
+	      );
+	    });
+	
+	    var usersList = users.map(function (user) {
+	      return React.createElement(
+	        'li',
+	        null,
+	        user.username
+	      );
 	    });
 	
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'search-results-container' },
 	      React.createElement(
-	        'h1',
-	        { className: 'title' },
-	        'Search!'
-	      ),
-	      React.createElement('input', { type: 'text', placeholder: 'wut u want', onKeyUp: this.search }),
-	      'Displaying ',
-	      SearchResultsStore.all().length,
-	      ' of',
-	      SearchResultsStore.meta().totalCount,
-	      React.createElement(
-	        'button',
-	        { onClick: this.nextPage },
-	        'Next >'
-	      ),
-	      React.createElement(
-	        'ul',
-	        { className: 'users-index' },
-	        searchResults
+	        Tabs,
+	        { onSelect: this.handleSelect, selectedIndex: 0 },
+	        React.createElement(
+	          TabList,
+	          null,
+	          React.createElement(
+	            Tab,
+	            null,
+	            'Restaurants (',
+	            restaurantsList.length,
+	            ')'
+	          ),
+	          React.createElement(
+	            Tab,
+	            null,
+	            'Reviews (',
+	            reviewsList.length,
+	            ')'
+	          ),
+	          React.createElement(
+	            Tab,
+	            null,
+	            'Users (',
+	            usersList.length,
+	            ') '
+	          )
+	        ),
+	        React.createElement(
+	          TabPanel,
+	          null,
+	          React.createElement(
+	            'ul',
+	            null,
+	            restaurantsList
+	          )
+	        ),
+	        React.createElement(
+	          TabPanel,
+	          null,
+	          React.createElement(
+	            'ul',
+	            null,
+	            reviewsList
+	          )
+	        ),
+	        React.createElement(
+	          TabPanel,
+	          null,
+	          React.createElement(
+	            'ul',
+	            null,
+	            usersList
+	          )
+	        )
 	      )
 	    );
 	  }
 	
 	});
 	
-	module.exports = Search;
-
-/***/ },
-/* 273 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Store = __webpack_require__(216).Store;
-	var AppDispatcher = __webpack_require__(209);
-	var SearchConstants = __webpack_require__(274);
-	
-	var _searchResults = [];
-	var _meta = {};
-	
-	var SearchResultsStore = new Store(AppDispatcher);
-	
-	SearchResultsStore.all = function () {
-	  return _searchResults.slice();
-	};
-	
-	SearchResultsStore.meta = function () {
-	  return _meta;
-	};
-	
-	SearchResultsStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	
-	    case SearchConstants.RECEIVE_SEARCH_RESULTS:
-	      _searchResults = payload.searchResults;
-	      _meta = payload.meta;
-	      SearchResultsStore.__emitChange();
-	      break;
-	
-	  }
-	};
-	
-	module.exports = SearchResultsStore;
-
-/***/ },
-/* 274 */
-/***/ function(module, exports) {
-
-	
-	var SearchConstants = {
-	  RECEIVE_SEARCH_RESULTS: "RECEIVE_SEARCH_RESULTS"
-	};
-	
-	module.exports = SearchConstants;
-
-/***/ },
-/* 275 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var SearchActions = __webpack_require__(276);
-	
-	var SearchApiUtil = {
-	
-	  search: function (query, page) {
-	    $.ajax({
-	      url: '/api/search',
-	      type: 'GET',
-	      dataType: 'json',
-	      data: { query: query, page: page },
-	      success: function (data) {
-	        SearchActions.receiveResults(data);
-	      }
-	    });
-	  }
-	
-	};
-	
-	module.exports = SearchApiUtil;
+	module.exports = MainIndex;
 
 /***/ },
 /* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var SearchConstants = __webpack_require__(274);
-	var AppDispatcher = __webpack_require__(209);
+	var React = __webpack_require__(1);
 	
-	var SearchActions = {
-	  receiveResults: function (data) {
-	    AppDispatcher.dispatch({
-	      actionType: SearchConstants.RECEIVE_SEARCH_RESULTS,
-	      searchResults: data.results,
-	      meta: { totalCount: data.total_count }
-	    });
+	var CurrentUserStore = __webpack_require__(215);
+	var UserInfoForm = __webpack_require__(277);
+	
+	var Onboarding = React.createClass({
+	  displayName: 'Onboarding',
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'welcome-header' },
+	      'Welcome to Melp!',
+	      React.createElement(UserInfoForm, null)
+	    );
 	  }
+	});
 	
-	};
+	module.exports = Onboarding;
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var LinkedStateMixin = __webpack_require__(269);
 	
-	module.exports = SearchActions;
+	var CurrentUserStore = __webpack_require__(215);
+	
+	var UserInfoForm = React.createClass({
+	  displayName: 'UserInfoForm',
+	
+	  mixins: [LinkedStateMixin],
+	
+	  render: function () {
+	    return React.createElement(
+	      'form',
+	      { className: 'user-info-form group', onSubmit: this.updateUser },
+	      React.createElement('input', { type: 'text',
+	        placeholder: 'Choose a username' }),
+	      React.createElement(
+	        'button',
+	        { className: 'submit-review' },
+	        "Submit Review"
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = UserInfoForm;
 
 /***/ }
 /******/ ]);

@@ -14,7 +14,7 @@ var TabPanel = ReactTabs.TabPanel;
 var SearchResultsStore = require('../stores/search_results_store');
 var SearchApiUtil = require('../util/search_api_util');
 
-var Search = React.createClass({
+var MainIndex = React.createClass({
 
   componentDidMount: function() {
     this.listener = SearchResultsStore.addListener(this._onChange);
@@ -28,14 +28,6 @@ var Search = React.createClass({
     this.forceUpdate();
   },
 
-  search: function (e) {
-    var query = e.target.value;
-    SearchApiUtil.search(query, 1);
-    console.log(query);
-
-    this.setState({page: 1, query: query});
-  },
-
   nextPage: function () {
     var nextPage = this.state.page + 1;
     SearchApiUtil.search(this.state.query, nextPage);
@@ -47,24 +39,49 @@ var Search = React.createClass({
     this.listener.remove();
   },
 
+  handleSelect: function (index, last) {
+    console.log(index + " - " + last);
+
+  },
+
   render: function() {
+    var restaurants = [];
+    var reviews = [];
+    var users = [];
     var searchResults = SearchResultsStore.all().map(function (searchResult) {
       if (searchResult._type === "Restaurant") {
-        return <RestaurantIndexItem restaurant={searchResult} />
+        restaurants.push(searchResult);
+      } else if (searchResult._type === "Review") {
+        reviews.push(searchResult);
       } else {
-        return <div />
+        users.push(searchResult);
       }
     });
 
-    return (
-      <div>
-        <h1 className="title">Search!</h1>
-        <input type="text" placeholder="wut u want" onKeyUp={ this.search } />
-        Displaying {SearchResultsStore.all().length} of
-        {SearchResultsStore.meta().totalCount}
-        <button onClick={this.nextPage}>Next ></button>
+    var restaurantsList = restaurants.map(function (restaurant) {
+      return <li>{restaurant.name}</li>;
+    });
 
-        <ul className="users-index">{ searchResults }</ul>
+    var reviewsList = reviews.map(function (review) {
+      return <li>{review.body}</li>;
+    });
+
+    var usersList = users.map(function (user) {
+      return <li>{user.username}</li>;
+    });
+
+    return (
+      <div className="search-results-container">
+        <Tabs onSelect={this.handleSelect} selectedIndex={0}>
+          <TabList>
+            <Tab>Restaurants ({restaurantsList.length})</Tab>
+            <Tab>Reviews ({reviewsList.length})</Tab>
+            <Tab>Users ({usersList.length}) </Tab>
+          </TabList>
+          <TabPanel><ul>{restaurantsList}</ul></TabPanel>
+          <TabPanel><ul>{reviewsList}</ul></TabPanel>
+          <TabPanel><ul>{usersList}</ul></TabPanel>
+        </Tabs>
       </div>
     );
   },
@@ -72,4 +89,4 @@ var Search = React.createClass({
 
 });
 
-module.exports = Search;
+module.exports = MainIndex;

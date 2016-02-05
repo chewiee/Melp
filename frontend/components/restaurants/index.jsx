@@ -55,33 +55,18 @@ var RestaurantIndex = React.createClass({
     // </div>
 
     return(
-      <div className="search-results-container">
-        <Tabs onSelect={this.handleSelect} selectedIndex={0}>
-          <TabList>
-            <Tab>
-              Restaurants
-            </Tab>
-            <Tab>Reviews</Tab>
-            <Tab>Users</Tab>
-          </TabList>
-          <TabPanel>
-            <div className="group" id="restaurant-index">
-              <ul className="restaurant-index">
-                {this.state.restaurants.map(function (restaurant, i) {
-                  return <RestaurantIndexItem
-                    key={restaurant.id}
-                    restaurant={restaurant}
-                    idx={i + 1}
-                    onHover={[this.playVideo, this.pauseVideo]}/>;
-                }.bind(this))}
-              </ul>
-            </div>
-          </TabPanel>
-          <TabPanel></TabPanel>
-          <TabPanel></TabPanel>
-        </Tabs>
+      <div className="group" id="restaurant-index">
+        <div className="index-header">Restaurants</div>
+        <ul className="restaurant-index">
+          {this.state.restaurants.map(function (restaurant, i) {
+            return <RestaurantIndexItem
+              key={restaurant.id}
+              restaurant={restaurant}
+              idx={i + 1}
+              onHover={[this.playVideo, this.pauseVideo]}/>;
+          }.bind(this))}
+        </ul>
       </div>
-
     );
   }
 });

@@ -27,6 +27,11 @@ class User < ActiveRecord::Base
     token
   end
 
+  def onboarded!
+    self.onboarded = true;
+    self.save;
+  end
+
   def reset_session_token!
     self.session_token = User.generate_session_token
     self.save!

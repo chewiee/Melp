@@ -27,7 +27,7 @@ var SignUpLogIn = React.createClass({
     var user_params = $(e.currentTarget).serializeJSON();
 
     UserSessionApiUtil.createUser(user_params, function () {
-      this.history.pushState({}, "/");
+      this.history.pushState({}, "/welcome/");
     }.bind(this));
   },
 
@@ -62,7 +62,7 @@ var SignUpLogIn = React.createClass({
     var credentials = {user: {email: "guest@email.com", password: "password"}};
 
     UserSessionApiUtil.login(credentials, function () {
-      this.history.pushState({}, "/");
+      this.history.pushState({}, "/welcome/");
     }.bind(this));
   },
 

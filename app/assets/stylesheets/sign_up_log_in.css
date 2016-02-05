@@ -102,6 +102,10 @@
   background: linear-gradient(#E85864, #C14953)
 }
 
+#user_password {
+  margin-bottom: 20px;
+}
+
 #guest-login {
   margin-top: 10px;
   background: linear-gradient(#8189A5, #6D738C);
