@@ -119,7 +119,6 @@ var ReviewForm = React.createClass({
   createReview: function (e) {
     e.preventDefault();
 
-    console.log(this.state);
     ReviewApiUtil.createReview(this.state, function() {
       this.forceUpdate();
     }.bind(this));

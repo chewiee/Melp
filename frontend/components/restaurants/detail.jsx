@@ -40,7 +40,8 @@ var RestaurantDetail = React.createClass({
   },
 
   handleSelect: function (index, last) {
-    console.log(index + " - " + last);
+    // console.log(index + " - " + last);
+    
   },
 
   openReviewForm: function (e) {
