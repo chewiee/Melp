@@ -15,7 +15,6 @@ var RestaurantIndex = React.createClass({
   getInitialState: function () {
     return {
       restaurants: RestaurantStore.all(),
-      modalIsOpen: false
     };
   },
 
@@ -23,15 +22,6 @@ var RestaurantIndex = React.createClass({
     this.setState({ restaurants: RestaurantStore.all()});
   },
 
-  openModal: function () {
-    this.setState({modalIsOpen: true});
-  },
-
-  closeModal: function (e) {
-    e.preventDefault();
-
-    this.setState({modalIsOpen: false});
-  },
 
   componentDidMount: function () {
     this.listenerToken = RestaurantStore.addListener(this._onChange);

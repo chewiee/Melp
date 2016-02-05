@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :restaurants, only: [:create, :show, :index]
     resources :reviews
     resource :session, only: [:show, :create, :destroy]
+    get "search", to: "utils#search"
   end
 
 end

@@ -6,6 +6,7 @@ var Route = require('react-router').Route;
 var IndexRoute = require('react-router').IndexRoute;
 
 var HeaderNav = require('./components/header_nav.jsx');
+var Search = require('./components/search.jsx');
 var RestaurantIndex = require('./components/restaurants/index.jsx');
 var RestaurantDetail = require('./components/restaurants/detail.jsx');
 var SignUpLogIn = require('./components/sign_up_log_in.jsx');

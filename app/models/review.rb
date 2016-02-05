@@ -1,4 +1,7 @@
 class Review < ActiveRecord::Base
+  include PgSearch
+  multisearchable :against => [:body]
+
   validates :author, :restaurant, :star_rating, :body, presence: true
   validates :body, length: { minimum: 20, maximum: 500, allow_nil: true }
 

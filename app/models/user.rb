@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  include PgSearch
+  multisearchable :against => [:username, :city, :gender, :age]
+
   attr_reader :password
 
   validates :session_token, presence: true

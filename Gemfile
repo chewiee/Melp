@@ -36,6 +36,7 @@ gem 'aws-sdk', '~> 1.6'
 gem 'figaro'
 
 gem 'pg_search'
+gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
