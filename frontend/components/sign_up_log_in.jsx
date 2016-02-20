@@ -2,11 +2,19 @@ var React = require('react');
 var History = require('react-router').History;
 var UserSessionApiUtil = require('../util/user_session_api_util');
 var CurrentUserStore = require('../stores/current_user_store');
+var FlashStore = require('../stores/flash_store');
+var FlashActions = require('../actions/flash_actions');
 
 var SignUpLogIn = React.createClass({
   mixins: [History],
 
+  getInitialState: function () {
+    return {flash: FlashStore.all()};
+  },
+
   componentDidMount: function () {
+    this.flashListener = FlashStore.addListener(this._updateFlash);
+
     var LogInActive = window.location.hash.includes("#/session/new");
 
     if (LogInActive) {
@@ -19,6 +27,15 @@ var SignUpLogIn = React.createClass({
       $('.log-in-tab').parent().addClass('active');
       $('.sign-up-tab').parent().removeClass('active');
     }
+  },
+
+  componentWillUnmount: function () {
+    this.flashListener.remove();
+    FlashActions.receiveFlash([]);
+  },
+
+  _updateFlash: function () {
+    this.setState({flash: FlashStore.all()});
   },
 
   signUp: function (e) {
@@ -68,6 +85,10 @@ var SignUpLogIn = React.createClass({
 
   // used http://codepen.io/ehermanson/pen/KwKWEv
   render: function () {
+    var errors = "";
+    if (this.state.flash.length > 0) {
+      console.log(this.state.flash);
+    }
 
     return(
       <div className="sign-up-log-in-form">

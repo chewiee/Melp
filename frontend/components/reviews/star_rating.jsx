@@ -5,7 +5,7 @@ module.exports = React.createClass({
     var stars = new Array(5);
 
     for (var i = 1; i <= 5; i++) {
-      if (i <= this.props.stars - 1) {
+      if (i <= this.props.stars) {
         stars[i - 1] = <i className="fa fa-star filled-star" key={i}></i>;
       } else {
         stars[i - 1] = <i className="fa fa-star empty-star" key={i}></i>;

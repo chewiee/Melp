@@ -5,14 +5,14 @@ var CurrentUserStore = require('../../stores/current_user_store');
 
 var UserInfoForm = React.createClass({
   mixins: [LinkedStateMixin],
-  
+
   render: function () {
     return (
       <form className="user-info-form group" onSubmit={this.updateUser}>
         <input type='text'
           placeholder='Choose a username' />
-        <button className="submit-review">
-          {"Submit Review"}
+        <button className="lets-go-button">
+          {"Let's go!"}
         </button>
       </form>
     );

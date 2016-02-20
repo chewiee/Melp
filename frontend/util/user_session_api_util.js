@@ -1,5 +1,6 @@
 var CurrentUserActions = require("./../actions/current_user_actions");
 var UserActions = require("./../actions/user_actions");
+var FlashActions = require("./../actions/flash_actions");
 
 var UserSessionApiUtil = {
   login: function (credentials, success) {
@@ -11,6 +12,10 @@ var UserSessionApiUtil = {
       success: function (currentUser) {
         CurrentUserActions.receiveCurrentUser(currentUser);
         success && success();
+      },
+      error: function (data) {
+        console.log(data);
+        FlashActions.receiveFlash(data.responseJSON);
       }
     });
   },
@@ -69,6 +74,9 @@ var UserSessionApiUtil = {
       success: function (user) {
         UserActions.receiveUser(user);
         callback && callback();
+      },
+      error: function (data) {
+        FlashActions.receiveFlash(data.responseJSON);
       }
     });
   }

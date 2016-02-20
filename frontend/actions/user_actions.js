@@ -1,5 +1,6 @@
 var AppDispatcher = require('../dispatcher/dispatcher');
 var UserConstants = require('../constants/user_constants');
+var FlashActions = require('../actions/flash_actions');
 
 var UserActions = {
   receiveUsers: function (users) {
