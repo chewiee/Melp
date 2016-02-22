@@ -14,8 +14,6 @@ FlashStore.resetNotifications = function(notifications) {
 };
 
 FlashStore.__onDispatch = function (payload) {
-  console.log(payload);
-
   switch(payload.actionType) {
     case FlashConstants.RECEIVE_FLASH:
       FlashStore.resetNotifications(payload.flash);

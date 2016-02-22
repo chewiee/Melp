@@ -41,7 +41,7 @@ var RestaurantIndex = React.createClass({
   },
 
   handleSelect: function (index, last) {
-    console.log(index + " - " + last);
+
 
   },
 

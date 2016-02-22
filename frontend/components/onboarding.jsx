@@ -7,7 +7,7 @@ var Onboarding = React.createClass({
   render: function () {
     return(
       <div className="welcome-header">
-        Welcome to Melp!
+        <h2>Welcome to Melp!</h2>
         <UserInfoForm />
       </div>
     );

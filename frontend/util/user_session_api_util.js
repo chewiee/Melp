@@ -14,8 +14,7 @@ var UserSessionApiUtil = {
         success && success();
       },
       error: function (data) {
-        console.log(data);
-        FlashActions.receiveFlash(data.responseJSON);
+        FlashActions.receiveFlash(data.responseText);
       }
     });
   },
