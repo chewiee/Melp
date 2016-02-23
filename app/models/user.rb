@@ -10,7 +10,12 @@ class User < ActiveRecord::Base
   validates :password, length: {in: 6..12, allow_nil: true}, confirmation: true
   validates :password_confirmation, presence: { message: "Please confirm your password!"}
 
-  has_many :photos, as: :photoable
+  has_attached_file :avatar
+  validates_attachment_content_type(
+    :avatar,
+    content_type: /\Aimage\/.*\Z/
+  )
+
   has_many(:reviews, foreign_key: :author_id)
 
   after_initialize :ensure_session_token

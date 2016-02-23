@@ -27,7 +27,8 @@
     "react-paginate": "^0.5.1",
     "react-router": "^1.0.0",
     "react-tabs": "^0.5.3",
-    "webpack": "^1.12.4"
+    "webpack": "^1.12.4",
+    "react-dropzone": "~3.3.2"
   },
   "engines": {
     "node": "4.1.1",

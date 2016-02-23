@@ -7,6 +7,9 @@ var ApiUtil = require('../../util/restaurants_api_util');
 var ReviewList = require('../reviews/list.jsx');
 var ReviewForm = require('../reviews/form.jsx');
 
+var RestaurantPhotoForm = require('./photo_form.jsx');
+
+
 var Tab = ReactTabs.Tab;
 var Tabs = ReactTabs.Tabs;
 var TabList = ReactTabs.TabList;
@@ -15,7 +18,10 @@ var TabPanel = ReactTabs.TabPanel;
 
 var RestaurantDetail = React.createClass({
   getStateFromStore: function () {
-    return { restaurant: RestaurantStore.find(parseInt(this.props.params.restaurantId)) };
+    return ({
+      restaurant: RestaurantStore.find(parseInt(this.props.params.restaurantId)),
+      photoFormOpen: false
+    });
   },
 
   getInitialState: function () {
@@ -41,7 +47,7 @@ var RestaurantDetail = React.createClass({
 
   handleSelect: function (index, last) {
     // console.log(index + " - " + last);
-    
+
   },
 
   openReviewForm: function (e) {
@@ -59,6 +65,16 @@ var RestaurantDetail = React.createClass({
     } else {
       alert("you must be logged in dude");
     }
+  },
+
+  openAddPhoto: function (e) {
+    e.preventDefault();
+
+    this.setState({photoFormOpen: true});
+  },
+
+  closePhotoForm: function () {
+    this.setState({photoFormOpen: false});
   },
 
   render: function () {
@@ -87,6 +103,14 @@ var RestaurantDetail = React.createClass({
           <div className="write-review-button" onClick={this.openReviewForm}>
             Write a Review
           </div>
+          <div className="add-photo-button" onClick={this.openAddPhoto}>
+            Add a Photo
+          </div>
+          {this.state.photoFormOpen ?
+            <RestaurantPhotoForm
+              restaurant={this.state.restaurant}
+              closePhotoForm={this.closePhotoForm}/>
+          : null}
         </div>
         <ReviewForm restaurantId={this.props.params.restaurantId}/>
         <div className="restaurant-detail-tab-container">

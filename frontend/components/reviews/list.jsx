@@ -5,7 +5,7 @@ var RestaurantStore = require('../../stores/restaurant_store');
 var ReviewList = React.createClass({
   render: function () {
     if (this.props.reviews) {
-      var ReviewItems = this.props.reviews.reverse().map(function(review) {
+      var ReviewItems = this.props.reviews.map(function(review) {
         return <ReviewItem key={review.id} review={review} />;
       });
 

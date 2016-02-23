@@ -212,6 +212,32 @@
   background: linear-gradient(#E85864, #A83C43);
 }
 
+.add-photo-button {
+  position: relative;
+  top: 140px;
+  left: 600px;
+  width: 240px;
+  height: 60px;
+  border: 1px solid #4C4C47;
+  border-radius: 3px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 24px;
+  text-align: center;
+  line-height: 1.6;
+  color: white;
+  background: linear-gradient(#848fa5, #666e7f);
+}
+
+.add-photo-button:hover {
+  cursor: pointer;
+  background: linear-gradient(#a3b0cc, #848fa5);
+}
+
+.add-photo-button:active {
+  background: linear-gradient(#848fa5, #515866);
+}
+
 .restaurant-detail-info {
   position: absolute;
   width: 240px;
@@ -237,4 +263,67 @@
 
 .restaurant-detail-info > a:hover {
   text-decoration: underline;
+}
+
+.photo-form-container {
+  left: 50%;
+  margin-left: -250px;
+  top: 15%;
+  width: 500px;
+  height: 500px;
+  position: fixed;
+  background: #FFFFFF;
+  box-sizing: border-box;
+  padding: 25px;
+  border-radius: 12px;
+}
+
+.restaurant-dropzone {
+  width: 450px;
+  height: 450px;
+  border: 5px dashed #666;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.restaurant-dropzone > :first-child {
+  display: block;
+  text-align: center;
+  font-size: 24px;
+  margin-top: 200px;
+  color: #666;
+}
+
+.image-preview-container {
+  width: 400px;
+  height: 400px;
+  margin: auto;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.preview-image {
+
+}
+
+.submit-photo-button {
+
+}
+
+.photo-cancel-button {
+  font-weight: 900;
+  font-size: 40px;
+  display: block;
+  padding: 10px 12px;
+  color: #666;
+  border-radius: 5px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.photo-cancel-button:hover {
+  color: #000;
 }

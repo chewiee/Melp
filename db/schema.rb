@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205140958) do
+ActiveRecord::Schema.define(version: 20160223145906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,21 +29,29 @@ ActiveRecord::Schema.define(version: 20160205140958) do
   create_table "photos", force: :cascade do |t|
     t.integer  "photoable_id"
     t.string   "photoable_type"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "photos", ["photoable_type", "photoable_id"], name: "index_photos_on_photoable_type_and_photoable_id", using: :btree
 
   create_table "restaurants", force: :cascade do |t|
-    t.string   "name",         null: false
-    t.string   "address",      null: false
+    t.string   "name",                       null: false
+    t.string   "address",                    null: false
     t.string   "phone_number"
     t.string   "website"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.string   "city",         null: false
-    t.integer  "zipcode",      null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "city",                       null: false
+    t.integer  "zipcode",                    null: false
+    t.string   "default_photo_file_name"
+    t.string   "default_photo_content_type"
+    t.integer  "default_photo_file_size"
+    t.datetime "default_photo_updated_at"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -60,18 +68,22 @@ ActiveRecord::Schema.define(version: 20160205140958) do
   add_index "reviews", ["restaurant_id"], name: "index_reviews_on_restaurant_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                                     null: false
-    t.string   "username",                                  null: false
-    t.string   "password_digest",                           null: false
-    t.string   "session_token",                             null: false
+    t.string   "email",                                         null: false
+    t.string   "username",                                      null: false
+    t.string   "password_digest",                               null: false
+    t.string   "session_token",                                 null: false
     t.string   "address"
-    t.string   "gender",          limit: 1
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.string   "gender",              limit: 1
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.date     "birthdate"
     t.string   "city"
     t.integer  "zipcode"
-    t.boolean  "onboarded",                 default: false
+    t.boolean  "onboarded",                     default: false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
 end
