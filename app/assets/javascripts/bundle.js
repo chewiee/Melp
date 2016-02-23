@@ -31079,7 +31079,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'header-logo' },
-	          React.createElement('img', { src: 'https://s3.amazonaws.com/melp-assets/melp_logo.png', onClick: this.loadHomePage })
+	          React.createElement('img', { src: window.melpLogo, onClick: this.loadHomePage })
 	        ),
 	        React.createElement(SearchBar, null),
 	        React.createElement(
@@ -32596,7 +32596,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'header-logo-centered' },
-	          React.createElement('img', { src: 'https://s3.amazonaws.com/melp-assets/melp_logo.png', onClick: this.loadHomePage })
+	          React.createElement('img', { src: window.melpLogo, onClick: this.loadHomePage })
 	        )
 	      )
 	    );
@@ -32628,7 +32628,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'header-logo' },
-	          React.createElement('img', { src: 'https://s3.amazonaws.com/melp-assets/melp_logo.png', onClick: this.loadHomePage })
+	          React.createElement('img', { src: window.melpLogo, onClick: this.loadHomePage })
 	        ),
 	        React.createElement(SearchBar, null),
 	        React.createElement(UserDropdown, null)
@@ -33144,18 +33144,32 @@
 	        valueLink: this.linkState("address"),
 	        type: 'text',
 	        placeholder: 'Enter your address' }),
-	      React.createElement('input', { className: 'gender-input-female',
-	        type: 'radio',
-	        name: 'gender',
-	        checked: this.state.gender === "F",
-	        onChange: this.onGenderChanged,
-	        value: 'F' }),
-	      React.createElement('input', { className: 'gender-input-male',
-	        type: 'radio',
-	        name: 'gender',
-	        checked: this.state.gender === "M",
-	        onChange: this.onGenderChanged,
-	        value: 'M' }),
+	      React.createElement(
+	        'div',
+	        { className: 'gender-selector group' },
+	        React.createElement(
+	          'label',
+	          null,
+	          ' M '
+	        ),
+	        React.createElement('input', { className: 'gender-input-female',
+	          type: 'radio',
+	          name: 'gender',
+	          checked: this.state.gender === "F",
+	          onChange: this.onGenderChanged,
+	          value: 'F' }),
+	        React.createElement(
+	          'label',
+	          null,
+	          ' F '
+	        ),
+	        React.createElement('input', { className: 'gender-input-male',
+	          type: 'radio',
+	          name: 'gender',
+	          checked: this.state.gender === "M",
+	          onChange: this.onGenderChanged,
+	          value: 'M' })
+	      ),
 	      React.createElement('input', { className: 'birthdate-input',
 	        valueLink: this.linkState("birthdate"),
 	        type: 'text',

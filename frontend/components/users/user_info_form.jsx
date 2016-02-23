@@ -58,18 +58,22 @@ var UserInfoForm = React.createClass({
           valueLink={this.linkState("address")}
           type='text'
           placeholder="Enter your address" />
-        <input className='gender-input-female'
-          type="radio"
-          name="gender"
-          checked={this.state.gender === "F"}
-          onChange={this.onGenderChanged}
-          value="F" />
-        <input className='gender-input-male'
-          type="radio"
-          name="gender"
-          checked={this.state.gender === "M"}
-          onChange={this.onGenderChanged}
-          value="M" />
+        <div className="gender-selector group">
+          <label> M </label>
+          <input className='gender-input-female'
+            type="radio"
+            name="gender"
+            checked={this.state.gender === "F"}
+            onChange={this.onGenderChanged}
+            value="F" />
+          <label> F </label>
+          <input className='gender-input-male'
+            type="radio"
+            name="gender"
+            checked={this.state.gender === "M"}
+            onChange={this.onGenderChanged}
+            value="M" />
+        </div>
         <input className='birthdate-input'
           valueLink={this.linkState("birthdate")}
           type='text'
