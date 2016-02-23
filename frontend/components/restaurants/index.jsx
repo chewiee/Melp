@@ -32,12 +32,12 @@ var RestaurantIndex = React.createClass({
     this.listenerToken.remove();
   },
 
-  playVideo: function (e) {
-    $(e.currentTarget).find('video')[0].play();
+  hoverStart: function (e) {
+    $($(e.currentTarget).find("img")[0]).addClass("hovering");
   },
 
-  pauseVideo: function (e) {
-    $(e.currentTarget).find('video')[0].pause();
+  hoverEnd: function (e) {
+    $($(e.currentTarget).find("img")[0]).removeClass("hovering");
   },
 
   handleSelect: function (index, last) {
@@ -63,7 +63,7 @@ var RestaurantIndex = React.createClass({
               key={restaurant.id}
               restaurant={restaurant}
               idx={i + 1}
-              onHover={[this.playVideo, this.pauseVideo]}/>;
+              onHover={[this.hoverStart, this.hoverEnd]}/>;
           }.bind(this))}
         </ul>
       </div>

@@ -68,27 +68,33 @@
 
 .index-item-image {
   float: left;
+  width: 200px;
   height: 100%;
-  width: 140px;
   overflow: hidden;
   position: relative;
   cursor: pointer;
+}
+
+.index-item-image > img {
+  position: absolute;
+  left: -70px;
+  transition:1s ease;
+}
+
+.index-item-image > .hovering {
+  left: 0px;
 }
 
 .index-item-image:after {
   content: "";
   display: block;
   position: absolute;
-  width: 70%;
+  width: 30%;
   height: 100%;
   right: 0;
   bottom: 0;
   background: -webkit-linear-gradient(to right, transparent, #FFF) left repeat;
   background: linear-gradient(to right, transparent, #FFF) left repeat;
-}
-
-.index-item-image > video {
-  height: 100%;
 }
 
 .index-item-info {
@@ -267,10 +273,9 @@
 
 .photo-form-container {
   left: 50%;
-  margin-left: -250px;
-  top: 15%;
-  width: 500px;
-  height: 500px;
+  transform: translateX(-50%);
+  margin-top: 100px;
+  min-width: 500px;
   position: fixed;
   background: #FFFFFF;
   box-sizing: border-box;
@@ -295,35 +300,57 @@
 }
 
 .image-preview-container {
-  width: 400px;
-  height: 400px;
   margin: auto;
   background: transparent;
   position: relative;
   overflow: hidden;
+  border-radius: 5px;
 }
 
 .preview-image {
-
+  max-width: 800px;
+  width: 100%;
+  height: auto;
 }
 
 .submit-photo-button {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 60px;
+  margin-top: 20px;
+  border: 1px solid #4C4C47;
+  border-radius: 3px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 24px;
+  text-align: center;
+  line-height: 1.6;
+  color: white;
+  background: linear-gradient(#848fa5, #666e7f);
+}
 
+.submit-photo-button:hover {
+  cursor: pointer;
+  background: linear-gradient(#a3b0cc, #848fa5);
+}
+
+.submit-photo-button:active {
+  background: linear-gradient(#848fa5, #515866);
 }
 
 .photo-cancel-button {
-  font-weight: 900;
-  font-size: 40px;
+  font-size: 60px;
   display: block;
-  padding: 10px 12px;
-  color: #666;
-  border-radius: 5px;
+  padding: 10px;
+  color: #FFF;
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 0px;
+  right: -70px;
   cursor: pointer;
 }
 
 .photo-cancel-button:hover {
-  color: #000;
+  color: #C11;
 }

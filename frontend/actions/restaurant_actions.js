@@ -21,5 +21,12 @@ module.exports = {
       actionType: RestaurantConstants.RECEIVE_NEW_REVIEW,
       review: review
     });
+  },
+
+  addPhoto: function (photo) {
+    Dispatcher.dispatch({
+      actionType: RestaurantConstants.ADD_PHOTO,
+      photo: photo
+    });
   }
 };

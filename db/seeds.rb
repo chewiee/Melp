@@ -61,12 +61,13 @@ bronson = User.create(email: 'action@bronson.com',
   birthdate: '1983-12-2')
 
 
-freddies = Restaurant.create(name: "Freddie & Pepper\'s",
+freddie = Restaurant.create(name: "Freddie & Pepper\'s",
   address: "303 Amsterdam Ave",
   city: 'New York City',
   zipcode: '10023',
   phone_number: '2127992463',
-  website: 'www.freddieandpeppers.com'
+  website: 'www.freddieandpeppers.com',
+  default_photo: File.open("#{Rails.root}/app/assets/images/freddie_default.jpg")
   )
 
 shack = Restaurant.create(name: "Shake Shack",
@@ -74,7 +75,8 @@ shack = Restaurant.create(name: "Shake Shack",
   city: 'New York City',
   zipcode: '10023',
   phone_number: '6467478770',
-  website: 'www.shakeshack.com'
+  website: 'www.shakeshack.com',
+  default_photo: File.open("#{Rails.root}/app/assets/images/shack_default.jpg")
   )
 
 hummus = Restaurant.create(name: "Hummus Place",
@@ -82,7 +84,8 @@ hummus = Restaurant.create(name: "Hummus Place",
   city: 'New York City',
   zipcode: '10023',
   phone_number: '2127993335',
-  website: 'www.hummusplace.com'
+  website: 'www.hummusplace.com',
+  default_photo: File.open("#{Rails.root}/app/assets/images/hummus_default.jpg")
   )
 
 lenwich = Restaurant.create(name: "Lenwich by Lenny\'s",
@@ -90,7 +93,8 @@ lenwich = Restaurant.create(name: "Lenwich by Lenny\'s",
   city: 'New York City',
   zipcode: '10023',
   phone_number: '2125808300',
-  website: 'www.lenwich.com'
+  website: 'www.lenwich.com',
+  default_photo: File.open("#{Rails.root}/app/assets/images/lenwich_default.jpg")
   )
 
 simit = Restaurant.create(name: "Simit & Smith",
@@ -98,11 +102,12 @@ simit = Restaurant.create(name: "Simit & Smith",
   city: 'New York City',
   zipcode: '10023',
   phone_number: '2124966605',
-  website: 'www.simitandsmith.com'
+  website: 'www.simitandsmith.com',
+  default_photo: File.open("#{Rails.root}/app/assets/images/simit_default.jpg")
   )
 
 Review.create(author_id: ranna.id,
-  restaurant_id: freddies.id,
+  restaurant_id: freddie.id,
   star_rating: 4,
   price_rating: 1,
   body: "Solid variety for a pizza place, with big slices. $5 will get you far. Open late too!")

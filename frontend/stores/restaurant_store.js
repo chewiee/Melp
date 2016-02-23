@@ -32,6 +32,22 @@ RestaurantStore.find = function (id) {
   return _restaurants[id];
 };
 
+RestaurantStore.findById = function(id) {
+  for (var i=0; i<_restaurants.length; i++) {
+    var restaurant = _restaurants[i];
+    if (restaurant.id == id) {
+      return restaurant;
+    }
+  }
+};
+
+RestaurantStore.loadPhoto = function(photo) {
+  var restaurant = RestaurantStore.findById(photo.restaurant_id);
+  if (restaurant) {
+    restaurant.photos.unshift(photo);
+  }
+};
+
 RestaurantStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
     case RestaurantConstants.RECEIVE_ALL:
@@ -44,6 +60,10 @@ RestaurantStore.__onDispatch = function (payload) {
       break;
     case RestaurantConstants.RECEIVE_NEW_REVIEW:
       addReview(payload.review);
+      RestaurantStore.__emitChange();
+      break;
+    case RestaurantConstants.ADD_PHOTO:
+      RestaurantStore.loadPhoto(payload.photo);
       RestaurantStore.__emitChange();
       break;
   }

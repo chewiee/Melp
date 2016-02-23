@@ -16,9 +16,7 @@ module.exports = React.createClass({
         className="restaurant-index-item">
         <div className="index-item-image"
           onClick={this.showDetail}>
-          <video loop>
-            <source src="https://s3.amazonaws.com/melp-assets/default-restaurant-bg.mp4" type="video/mp4"/>
-          </video>
+          <img src={this.props.restaurant.default_photo_url} />
         </div>
         <div className="index-item-info">
           <div className="item-name" onClick={this.showDetail}>

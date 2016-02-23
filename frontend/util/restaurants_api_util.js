@@ -29,5 +29,21 @@ module.exports = {
         callback(restaurant.id);
       }
     });
+  },
+
+  uploadRestaurantPhoto: function (id, formData, callback) {
+    $.ajax({
+      method: "POST",
+      url: "api/restaurants/" + id + "/photos",
+      processData: false,
+      contentType: false,
+      dataType: 'json',
+      data: formData,
+      success: function(photo) {
+        RestaurantActions.addPhoto(photo);
+
+        callback && callback();
+      }
+    });
   }
 };

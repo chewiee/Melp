@@ -32879,6 +32879,22 @@
 	  return _restaurants[id];
 	};
 	
+	RestaurantStore.findById = function (id) {
+	  for (var i = 0; i < _restaurants.length; i++) {
+	    var restaurant = _restaurants[i];
+	    if (restaurant.id == id) {
+	      return restaurant;
+	    }
+	  }
+	};
+	
+	RestaurantStore.loadPhoto = function (photo) {
+	  var restaurant = RestaurantStore.findById(photo.restaurant_id);
+	  if (restaurant) {
+	    restaurant.photos.unshift(photo);
+	  }
+	};
+	
 	RestaurantStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
 	    case RestaurantConstants.RECEIVE_ALL:
@@ -32893,6 +32909,10 @@
 	      addReview(payload.review);
 	      RestaurantStore.__emitChange();
 	      break;
+	    case RestaurantConstants.ADD_PHOTO:
+	      RestaurantStore.loadPhoto(payload.photo);
+	      RestaurantStore.__emitChange();
+	      break;
 	  }
 	};
 	
@@ -32905,7 +32925,8 @@
 	module.exports = {
 	  RECEIVE_ALL: "RECEIVE_ALL_RESTAURANTS",
 	  RECEIVE_ONE: "RECEIVE_ONE_RESTAURANT",
-	  RECEIVE_NEW_REVIEW: "RECEIVE_NEW_REVIEW"
+	  RECEIVE_NEW_REVIEW: "RECEIVE_NEW_REVIEW",
+	  ADD_PHOTO: "ADD_PHOTO"
 	};
 
 /***/ },
@@ -32943,6 +32964,22 @@
 	        callback(restaurant.id);
 	      }
 	    });
+	  },
+	
+	  uploadRestaurantPhoto: function (id, formData, callback) {
+	    $.ajax({
+	      method: "POST",
+	      url: "api/restaurants/" + id + "/photos",
+	      processData: false,
+	      contentType: false,
+	      dataType: 'json',
+	      data: formData,
+	      success: function (photo) {
+	        RestaurantActions.addPhoto(photo);
+	
+	        callback && callback();
+	      }
+	    });
 	  }
 	};
 
@@ -32972,6 +33009,13 @@
 	    Dispatcher.dispatch({
 	      actionType: RestaurantConstants.RECEIVE_NEW_REVIEW,
 	      review: review
+	    });
+	  },
+	
+	  addPhoto: function (photo) {
+	    Dispatcher.dispatch({
+	      actionType: RestaurantConstants.ADD_PHOTO,
+	      photo: photo
 	    });
 	  }
 	};
@@ -33003,11 +33047,7 @@
 	        'div',
 	        { className: 'index-item-image',
 	          onClick: this.showDetail },
-	        React.createElement(
-	          'video',
-	          { loop: true },
-	          React.createElement('source', { src: 'https://s3.amazonaws.com/melp-assets/default-restaurant-bg.mp4', type: 'video/mp4' })
-	        )
+	        React.createElement('img', { src: this.props.restaurant.default_photo_url })
 	      ),
 	      React.createElement(
 	        'div',
@@ -33454,12 +33494,12 @@
 	    this.listenerToken.remove();
 	  },
 	
-	  playVideo: function (e) {
-	    $(e.currentTarget).find('video')[0].play();
+	  hoverStart: function (e) {
+	    $($(e.currentTarget).find("img")[0]).addClass("hovering");
 	  },
 	
-	  pauseVideo: function (e) {
-	    $(e.currentTarget).find('video')[0].pause();
+	  hoverEnd: function (e) {
+	    $($(e.currentTarget).find("img")[0]).removeClass("hovering");
 	  },
 	
 	  handleSelect: function (index, last) {},
@@ -33489,7 +33529,7 @@
 	            key: restaurant.id,
 	            restaurant: restaurant,
 	            idx: i + 1,
-	            onHover: [this.playVideo, this.pauseVideo] });
+	            onHover: [this.hoverStart, this.hoverEnd] });
 	        }.bind(this))
 	      )
 	    );
@@ -34309,17 +34349,18 @@
 	
 	    var formData = new FormData();
 	
-	    formData.append("photo[upload]", this.state.imageFile);
+	    formData.append("photo[image]", this.state.imageFile);
 	
 	    RestaurantApiUtil.uploadRestaurantPhoto(this.props.restaurant.id, formData, this.resetForm);
 	  },
 	
 	  resetForm: function () {
-	    this.setState({ caption: "", imageFile: null, imageUrl: "" });
-	    this.props.closeForm();
+	    this.props.closePhotoForm();
 	  },
 	
 	  render: function () {
+	    var validPhoto = !!this.state.imageFile;
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'screen-blur' },
@@ -34342,20 +34383,28 @@
 	          ) : null,
 	          !!this.state.imageFile ? React.createElement(
 	            'div',
-	            { className: 'image-preview-container' },
-	            React.createElement('img', {
-	              className: 'preview-image',
-	              src: this.state.imageUrl
-	            }),
+	            null,
+	            React.createElement(
+	              'div',
+	              { className: 'image-preview-container' },
+	              React.createElement('img', {
+	                className: 'preview-image',
+	                src: this.state.imageUrl
+	              })
+	            ),
 	            React.createElement(
 	              'button',
 	              {
-	                className: "submit-photo-button " + !!disabled },
-	              'Submit'
+	                className: validPhoto ? "submit-photo-button" : "submit-photo-button disabled" },
+	              'Add Photo'
 	            )
 	          ) : null
 	        ),
-	        React.createElement('div', { className: 'photo-cancel-button', onClick: this.props.closePhotoForm })
+	        React.createElement(
+	          'div',
+	          { className: 'photo-cancel-button', onClick: this.props.closePhotoForm },
+	          React.createElement('i', { className: 'fa fa-times' })
+	        )
 	      )
 	    );
 	  }

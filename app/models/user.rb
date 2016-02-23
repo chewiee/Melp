@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
 
   has_many(:reviews, foreign_key: :author_id)
 
+  has_many(:photos, foreign_key: :user_id)
+
   after_initialize :ensure_session_token
 
   def self.find_by_credentials(email, password)
