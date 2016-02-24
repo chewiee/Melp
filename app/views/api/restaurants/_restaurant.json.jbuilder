@@ -4,6 +4,12 @@ json.extract!(
     :phone_number, :website, :review_count
 )
 
+json.cuisines do
+  json.array!(restaurant.cuisines) do |cuisine|
+    json.extract!(cuisine, :cuisine_name)
+  end
+end
+
 if (with_reviews)
   json.default_photo_url asset_path(restaurant.default_photo.url(:original))
   json.reviews do

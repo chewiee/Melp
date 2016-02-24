@@ -11,10 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223193440) do
+ActiveRecord::Schema.define(version: 20160224172910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cuisine_tags", force: :cascade do |t|
+    t.integer  "restaurant_id"
+    t.integer  "cuisine_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "cuisine_tags", ["cuisine_id"], name: "index_cuisine_tags_on_cuisine_id", using: :btree
+  add_index "cuisine_tags", ["restaurant_id"], name: "index_cuisine_tags_on_restaurant_id", using: :btree
+
+  create_table "cuisines", force: :cascade do |t|
+    t.string   "cuisine_name", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "pg_search_documents", force: :cascade do |t|
     t.text     "content"
@@ -67,6 +83,17 @@ ActiveRecord::Schema.define(version: 20160223193440) do
 
   add_index "reviews", ["author_id"], name: "index_reviews_on_author_id", using: :btree
   add_index "reviews", ["restaurant_id"], name: "index_reviews_on_restaurant_id", using: :btree
+
+  create_table "user_weights", force: :cascade do |t|
+    t.integer  "user_id",                          null: false
+    t.integer  "weight_for_user_id",               null: false
+    t.float    "weight",             default: 1.0
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "user_weights", ["user_id"], name: "index_user_weights_on_user_id", using: :btree
+  add_index "user_weights", ["weight_for_user_id"], name: "index_user_weights_on_weight_for_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                                         null: false

@@ -33,7 +33,11 @@ var RestaurantIndex = React.createClass({
   },
 
   hoverStart: function (e) {
-    $($(e.currentTarget).find("img")[0]).addClass("hovering");
+    var hoveredItem = $($(e.currentTarget).find("img")[0])
+    hoveredItem.addClass("hovering");
+    setTimeout(function () {
+      hoveredItem.removeClass("hovering");
+    }, 3000);
   },
 
   hoverEnd: function (e) {

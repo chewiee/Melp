@@ -56,8 +56,8 @@
 	var Onboarding = __webpack_require__(267);
 	var RestaurantIndex = __webpack_require__(273);
 	var RestaurantDetail = __webpack_require__(274);
-	var SignUpLogIn = __webpack_require__(275);
-	var ReviewList = __webpack_require__(277);
+	var SignUpLogIn = __webpack_require__(283);
+	var ReviewList = __webpack_require__(275);
 	
 	var App = React.createClass({
 	  displayName: 'App',
@@ -33037,7 +33037,18 @@
 	  },
 	
 	  render: function () {
-	
+	    var cuisine_links = this.props.restaurant.cuisines.slice(0, 2).map(function (el, idx) {
+	      return React.createElement(
+	        'span',
+	        { key: idx },
+	        React.createElement(
+	          'a',
+	          { className: 'cuisine-link', href: '#' },
+	          el.cuisine_name.charAt(0).toUpperCase() + el.cuisine_name.slice(1)
+	        ),
+	        idx == 0 ? ", " : ""
+	      );
+	    });
 	    return React.createElement(
 	      'li',
 	      { onMouseEnter: this.props.onHover[0],
@@ -33063,7 +33074,7 @@
 	          React.createElement(
 	            'span',
 	            { className: 'cuisines' },
-	            "filler cuisine"
+	            cuisine_links
 	          ),
 	          React.createElement(
 	            'span',
@@ -33082,7 +33093,6 @@
 	      React.createElement(
 	        'div',
 	        { className: 'index-item-rating group' },
-	        React.createElement('div', { className: 'star-rating' }),
 	        React.createElement('div', { className: 'price-rating' })
 	      )
 	    );
@@ -33495,7 +33505,11 @@
 	  },
 	
 	  hoverStart: function (e) {
-	    $($(e.currentTarget).find("img")[0]).addClass("hovering");
+	    var hoveredItem = $($(e.currentTarget).find("img")[0]);
+	    hoveredItem.addClass("hovering");
+	    setTimeout(function () {
+	      hoveredItem.removeClass("hovering");
+	    }, 3000);
 	  },
 	
 	  hoverEnd: function (e) {
@@ -33548,10 +33562,10 @@
 	var CurrentUserStore = __webpack_require__(217);
 	var ApiUtil = __webpack_require__(264);
 	
-	var ReviewList = __webpack_require__(277);
-	var ReviewForm = __webpack_require__(280);
+	var ReviewList = __webpack_require__(275);
+	var ReviewForm = __webpack_require__(278);
 	
-	var RestaurantPhotoForm = __webpack_require__(282);
+	var RestaurantPhotoForm = __webpack_require__(280);
 	
 	var Tab = ReactTabs.Tab;
 	var Tabs = ReactTabs.Tabs;
@@ -33734,268 +33748,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var History = __webpack_require__(159).History;
-	var UserSessionApiUtil = __webpack_require__(207);
-	var CurrentUserStore = __webpack_require__(217);
-	var FlashStore = __webpack_require__(276);
-	var FlashActions = __webpack_require__(215);
-	
-	var SignUpLogIn = React.createClass({
-	  displayName: 'SignUpLogIn',
-	
-	  mixins: [History],
-	
-	  getInitialState: function () {
-	    return { flash: FlashStore.all() };
-	  },
-	
-	  componentDidMount: function () {
-	    this.flashListener = FlashStore.addListener(this._updateFlash);
-	
-	    var LogInActive = window.location.hash.includes("#/session/new");
-	
-	    if (LogInActive) {
-	      target = "#log-in";
-	
-	      $('.tab-content > div').not(target).hide();
-	
-	      $(target).fadeIn(100);
-	
-	      $('.log-in-tab').parent().addClass('active');
-	      $('.sign-up-tab').parent().removeClass('active');
-	    }
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.flashListener.remove();
-	    FlashActions.receiveFlash([]);
-	  },
-	
-	  _updateFlash: function () {
-	    this.setState({ flash: FlashStore.all() });
-	  },
-	
-	  signUp: function (e) {
-	    e.preventDefault();
-	
-	    var user_params = $(e.currentTarget).serializeJSON();
-	
-	    UserSessionApiUtil.createUser(user_params, function () {
-	      this.history.pushState({}, "/welcome/");
-	    }.bind(this));
-	  },
-	
-	  logIn: function (e) {
-	    e.preventDefault();
-	
-	    var credentials = $(e.currentTarget).serializeJSON();
-	
-	    UserSessionApiUtil.login(credentials, function () {
-	      this.history.pushState({}, "/");
-	    }.bind(this));
-	  },
-	
-	  changeTabs: function (e) {
-	    var clicked_el = e.currentTarget;
-	
-	    e.preventDefault();
-	
-	    $(clicked_el).parent().addClass('active');
-	    $(clicked_el).parent().siblings().removeClass('active');
-	
-	    target = $(clicked_el).attr('href');
-	
-	    $('.tab-content > div').not(target).hide();
-	
-	    $(target).fadeIn(200);
-	  },
-	
-	  guestLogin: function (e) {
-	    e.preventDefault();
-	
-	    var credentials = { user: { email: "guest@email.com", password: "password" } };
-	
-	    UserSessionApiUtil.login(credentials, function () {
-	      this.history.pushState({}, "/welcome/");
-	    }.bind(this));
-	  },
-	
-	  // used http://codepen.io/ehermanson/pen/KwKWEv
-	  render: function () {
-	    var errors = "";
-	    if (this.state.flash.length > 0) {
-	      console.log(this.state.flash);
-	    }
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'sign-up-log-in-form' },
-	      React.createElement(
-	        'ul',
-	        { className: 'tab-group' },
-	        React.createElement(
-	          'li',
-	          { className: 'tab active' },
-	          React.createElement(
-	            'a',
-	            { className: 'tab-button sign-up-tab',
-	              onClick: this.changeTabs,
-	              href: '#sign-up' },
-	            "Sign Up"
-	          )
-	        ),
-	        React.createElement(
-	          'li',
-	          { className: 'tab' },
-	          React.createElement(
-	            'a',
-	            { className: 'tab-button log-in-tab',
-	              onClick: this.changeTabs,
-	              href: '#log-in' },
-	            "Log In"
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'tab-content' },
-	        React.createElement(
-	          'div',
-	          { id: 'sign-up' },
-	          React.createElement(
-	            'h2',
-	            null,
-	            ' ',
-	            "Sign Up for Melp",
-	            ' '
-	          ),
-	          React.createElement(
-	            'form',
-	            { onSubmit: this.signUp },
-	            React.createElement(
-	              'div',
-	              { className: 'field-wrap' },
-	              React.createElement('input', {
-	                type: 'text',
-	                name: 'user[email]',
-	                placeholder: 'email *',
-	                autofocus: 'true',
-	                id: 'user_email' })
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'field-wrap' },
-	              React.createElement('input', {
-	                type: 'password',
-	                name: 'user[password]',
-	                placeholder: 'password *',
-	                id: 'user_password' }),
-	              React.createElement('input', {
-	                type: 'password',
-	                name: 'user[password_confirmation]',
-	                placeholder: 'confirm password *',
-	                id: 'user_password_confirmation' })
-	            ),
-	            React.createElement(
-	              'button',
-	              { className: 'form-button',
-	                type: 'submit',
-	                name: 'register' },
-	              "register"
-	            )
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { id: 'log-in' },
-	          React.createElement(
-	            'h2',
-	            null,
-	            ' ',
-	            "Welcome Back",
-	            ' '
-	          ),
-	          React.createElement(
-	            'form',
-	            { onSubmit: this.logIn },
-	            React.createElement(
-	              'div',
-	              { className: 'field-wrap' },
-	              React.createElement('input', {
-	                type: 'text',
-	                name: 'user[email]',
-	                placeholder: 'email',
-	                autofocus: 'true',
-	                id: 'user_email' })
-	            ),
-	            React.createElement(
-	              'div',
-	              { className: 'field-wrap' },
-	              React.createElement('input', {
-	                type: 'password',
-	                name: 'user[password]',
-	                placeholder: 'password',
-	                id: 'user_password' })
-	            ),
-	            React.createElement(
-	              'button',
-	              { className: 'form-button',
-	                type: 'submit',
-	                name: 'login' },
-	              "log in"
-	            )
-	          ),
-	          React.createElement(
-	            'button',
-	            { className: 'form-button',
-	              id: 'guest-login',
-	              onClick: this.guestLogin },
-	            "log in as guest"
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-	
-	module.exports = SignUpLogIn;
-
-/***/ },
-/* 276 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Store = __webpack_require__(218).Store;
-	var AppDispatcher = __webpack_require__(209);
-	var FlashConstants = __webpack_require__(216);
-	
-	var _notifications = [];
-	var FlashStore = new Store(AppDispatcher);
-	
-	FlashStore.all = function () {
-	  return _notifications.slice();
-	};
-	
-	FlashStore.resetNotifications = function (notifications) {
-	  _notifications = notifications;
-	};
-	
-	FlashStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case FlashConstants.RECEIVE_FLASH:
-	      FlashStore.resetNotifications(payload.flash);
-	      FlashStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	module.exports = FlashStore;
-
-/***/ },
-/* 277 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var ReviewItem = __webpack_require__(278);
+	var ReviewItem = __webpack_require__(276);
 	var RestaurantStore = __webpack_require__(262);
 	
 	var ReviewList = React.createClass({
@@ -34025,11 +33778,11 @@
 	module.exports = ReviewList;
 
 /***/ },
-/* 278 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var StarRating = __webpack_require__(279);
+	var StarRating = __webpack_require__(277);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -34109,7 +33862,7 @@
 	});
 
 /***/ },
-/* 279 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -34137,13 +33890,13 @@
 	});
 
 /***/ },
-/* 280 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var LinkedStateMixin = __webpack_require__(269);
 	
-	var ReviewApiUtil = __webpack_require__(281);
+	var ReviewApiUtil = __webpack_require__(279);
 	
 	var ReviewForm = React.createClass({
 	  displayName: 'ReviewForm',
@@ -34292,7 +34045,7 @@
 	module.exports = ReviewForm;
 
 /***/ },
-/* 281 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var RestaurantActions = __webpack_require__(265);
@@ -34312,12 +34065,12 @@
 	};
 
 /***/ },
-/* 282 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var RestaurantApiUtil = __webpack_require__(264);
-	var Dropzone = __webpack_require__(283);
+	var Dropzone = __webpack_require__(281);
 	
 	var RestaurantPhotoForm = React.createClass({
 	  displayName: 'RestaurantPhotoForm',
@@ -34413,7 +34166,7 @@
 	module.exports = RestaurantPhotoForm;
 
 /***/ },
-/* 283 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34430,7 +34183,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _attrAccept = __webpack_require__(284);
+	var _attrAccept = __webpack_require__(282);
 	
 	var _attrAccept2 = _interopRequireDefault(_attrAccept);
 	
@@ -34698,10 +34451,271 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 284 */
+/* 282 */
 /***/ function(module, exports) {
 
 	module.exports=function(t){function n(e){if(r[e])return r[e].exports;var o=r[e]={exports:{},id:e,loaded:!1};return t[e].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var r={};return n.m=t,n.c=r,n.p="",n(0)}([function(t,n,r){"use strict";n.__esModule=!0,r(8),r(9),n["default"]=function(t,n){if(t&&n){var r=function(){var r=n.split(","),e=t.name||"",o=t.type||"",i=o.replace(/\/.*$/,"");return{v:r.some(function(t){var n=t.trim();return"."===n.charAt(0)?e.toLowerCase().endsWith(n.toLowerCase()):/\/\*$/.test(n)?i===n.replace(/\/.*$/,""):o===n})}}();if("object"==typeof r)return r.v}return!0},t.exports=n["default"]},function(t,n){var r=t.exports={version:"1.2.2"};"number"==typeof __e&&(__e=r)},function(t,n){var r=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=r)},function(t,n,r){var e=r(2),o=r(1),i=r(4),u=r(19),c="prototype",f=function(t,n){return function(){return t.apply(n,arguments)}},s=function(t,n,r){var a,p,l,d,y=t&s.G,h=t&s.P,v=y?e:t&s.S?e[n]||(e[n]={}):(e[n]||{})[c],x=y?o:o[n]||(o[n]={});y&&(r=n);for(a in r)p=!(t&s.F)&&v&&a in v,l=(p?v:r)[a],d=t&s.B&&p?f(l,e):h&&"function"==typeof l?f(Function.call,l):l,v&&!p&&u(v,a,l),x[a]!=l&&i(x,a,d),h&&((x[c]||(x[c]={}))[a]=l)};e.core=o,s.F=1,s.G=2,s.S=4,s.P=8,s.B=16,s.W=32,t.exports=s},function(t,n,r){var e=r(5),o=r(18);t.exports=r(22)?function(t,n,r){return e.setDesc(t,n,o(1,r))}:function(t,n,r){return t[n]=r,t}},function(t,n){var r=Object;t.exports={create:r.create,getProto:r.getPrototypeOf,isEnum:{}.propertyIsEnumerable,getDesc:r.getOwnPropertyDescriptor,setDesc:r.defineProperty,setDescs:r.defineProperties,getKeys:r.keys,getNames:r.getOwnPropertyNames,getSymbols:r.getOwnPropertySymbols,each:[].forEach}},function(t,n){var r=0,e=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++r+e).toString(36))}},function(t,n,r){var e=r(20)("wks"),o=r(2).Symbol;t.exports=function(t){return e[t]||(e[t]=o&&o[t]||(o||r(6))("Symbol."+t))}},function(t,n,r){r(26),t.exports=r(1).Array.some},function(t,n,r){r(25),t.exports=r(1).String.endsWith},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){var r={}.toString;t.exports=function(t){return r.call(t).slice(8,-1)}},function(t,n,r){var e=r(10);t.exports=function(t,n,r){if(e(t),void 0===n)return t;switch(r){case 1:return function(r){return t.call(n,r)};case 2:return function(r,e){return t.call(n,r,e)};case 3:return function(r,e,o){return t.call(n,r,e,o)}}return function(){return t.apply(n,arguments)}}},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n,r){t.exports=function(t){var n=/./;try{"/./"[t](n)}catch(e){try{return n[r(7)("match")]=!1,!"/./"[t](n)}catch(o){}}return!0}},function(t,n){t.exports=function(t){try{return!!t()}catch(n){return!0}}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n,r){var e=r(16),o=r(11),i=r(7)("match");t.exports=function(t){var n;return e(t)&&(void 0!==(n=t[i])?!!n:"RegExp"==o(t))}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n,r){var e=r(2),o=r(4),i=r(6)("src"),u="toString",c=Function[u],f=(""+c).split(u);r(1).inspectSource=function(t){return c.call(t)},(t.exports=function(t,n,r,u){"function"==typeof r&&(o(r,i,t[n]?""+t[n]:f.join(String(n))),"name"in r||(r.name=n)),t===e?t[n]=r:(u||delete t[n],o(t,n,r))})(Function.prototype,u,function(){return"function"==typeof this&&this[i]||c.call(this)})},function(t,n,r){var e=r(2),o="__core-js_shared__",i=e[o]||(e[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n,r){var e=r(17),o=r(13);t.exports=function(t,n,r){if(e(n))throw TypeError("String#"+r+" doesn't accept regex!");return String(o(t))}},function(t,n,r){t.exports=!r(15)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n){var r=Math.ceil,e=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?e:r)(t)}},function(t,n,r){var e=r(23),o=Math.min;t.exports=function(t){return t>0?o(e(t),9007199254740991):0}},function(t,n,r){"use strict";var e=r(3),o=r(24),i=r(21),u="endsWith",c=""[u];e(e.P+e.F*r(14)(u),"String",{endsWith:function(t){var n=i(this,t,u),r=arguments,e=r.length>1?r[1]:void 0,f=o(n.length),s=void 0===e?f:Math.min(o(e),f),a=String(t);return c?c.call(n,a,s):n.slice(s-a.length,s)===a}})},function(t,n,r){var e=r(5),o=r(3),i=r(1).Array||Array,u={},c=function(t,n){e.each.call(t.split(","),function(t){void 0==n&&t in i?u[t]=i[t]:t in[]&&(u[t]=r(12)(Function.call,[][t],n))})};c("pop,reverse,shift,keys,values,entries",1),c("indexOf,every,some,forEach,map,filter,find,findIndex,includes",3),c("join,slice,concat,push,splice,unshift,sort,lastIndexOf,reduce,reduceRight,copyWithin,fill"),o(o.S,"Array",u)}]);
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+	var UserSessionApiUtil = __webpack_require__(207);
+	var CurrentUserStore = __webpack_require__(217);
+	var FlashStore = __webpack_require__(284);
+	var FlashActions = __webpack_require__(215);
+	
+	var SignUpLogIn = React.createClass({
+	  displayName: 'SignUpLogIn',
+	
+	  mixins: [History],
+	
+	  getInitialState: function () {
+	    return { flash: FlashStore.all() };
+	  },
+	
+	  componentDidMount: function () {
+	    this.flashListener = FlashStore.addListener(this._updateFlash);
+	
+	    var LogInActive = window.location.hash.includes("#/session/new");
+	
+	    if (LogInActive) {
+	      target = "#log-in";
+	
+	      $('.tab-content > div').not(target).hide();
+	
+	      $(target).fadeIn(100);
+	
+	      $('.log-in-tab').parent().addClass('active');
+	      $('.sign-up-tab').parent().removeClass('active');
+	    }
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.flashListener.remove();
+	    FlashActions.receiveFlash([]);
+	  },
+	
+	  _updateFlash: function () {
+	    this.setState({ flash: FlashStore.all() });
+	  },
+	
+	  signUp: function (e) {
+	    e.preventDefault();
+	
+	    var user_params = $(e.currentTarget).serializeJSON();
+	
+	    UserSessionApiUtil.createUser(user_params, function () {
+	      this.history.pushState({}, "/welcome/");
+	    }.bind(this));
+	  },
+	
+	  logIn: function (e) {
+	    e.preventDefault();
+	
+	    var credentials = $(e.currentTarget).serializeJSON();
+	
+	    UserSessionApiUtil.login(credentials, function () {
+	      this.history.pushState({}, "/");
+	    }.bind(this));
+	  },
+	
+	  changeTabs: function (e) {
+	    var clicked_el = e.currentTarget;
+	
+	    e.preventDefault();
+	
+	    $(clicked_el).parent().addClass('active');
+	    $(clicked_el).parent().siblings().removeClass('active');
+	
+	    target = $(clicked_el).attr('href');
+	
+	    $('.tab-content > div').not(target).hide();
+	
+	    $(target).fadeIn(200);
+	  },
+	
+	  guestLogin: function (e) {
+	    e.preventDefault();
+	
+	    var credentials = { user: { email: "guest@email.com", password: "password" } };
+	
+	    UserSessionApiUtil.login(credentials, function () {
+	      this.history.pushState({}, "/welcome/");
+	    }.bind(this));
+	  },
+	
+	  // used http://codepen.io/ehermanson/pen/KwKWEv
+	  render: function () {
+	    var errors = "";
+	    if (this.state.flash.length > 0) {
+	      console.log(this.state.flash);
+	    }
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'sign-up-log-in-form' },
+	      React.createElement(
+	        'ul',
+	        { className: 'tab-group' },
+	        React.createElement(
+	          'li',
+	          { className: 'tab active' },
+	          React.createElement(
+	            'a',
+	            { className: 'tab-button sign-up-tab',
+	              onClick: this.changeTabs,
+	              href: '#sign-up' },
+	            "Sign Up"
+	          )
+	        ),
+	        React.createElement(
+	          'li',
+	          { className: 'tab' },
+	          React.createElement(
+	            'a',
+	            { className: 'tab-button log-in-tab',
+	              onClick: this.changeTabs,
+	              href: '#log-in' },
+	            "Log In"
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'tab-content' },
+	        React.createElement(
+	          'div',
+	          { id: 'sign-up' },
+	          React.createElement(
+	            'h2',
+	            null,
+	            ' ',
+	            "Sign Up for Melp",
+	            ' '
+	          ),
+	          React.createElement(
+	            'form',
+	            { onSubmit: this.signUp },
+	            React.createElement(
+	              'div',
+	              { className: 'field-wrap' },
+	              React.createElement('input', {
+	                type: 'text',
+	                name: 'user[email]',
+	                placeholder: 'email *',
+	                autofocus: 'true',
+	                id: 'user_email' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'field-wrap' },
+	              React.createElement('input', {
+	                type: 'password',
+	                name: 'user[password]',
+	                placeholder: 'password *',
+	                id: 'user_password' }),
+	              React.createElement('input', {
+	                type: 'password',
+	                name: 'user[password_confirmation]',
+	                placeholder: 'confirm password *',
+	                id: 'user_password_confirmation' })
+	            ),
+	            React.createElement(
+	              'button',
+	              { className: 'form-button',
+	                type: 'submit',
+	                name: 'register' },
+	              "register"
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { id: 'log-in' },
+	          React.createElement(
+	            'h2',
+	            null,
+	            ' ',
+	            "Welcome Back",
+	            ' '
+	          ),
+	          React.createElement(
+	            'form',
+	            { onSubmit: this.logIn },
+	            React.createElement(
+	              'div',
+	              { className: 'field-wrap' },
+	              React.createElement('input', {
+	                type: 'text',
+	                name: 'user[email]',
+	                placeholder: 'email',
+	                autofocus: 'true',
+	                id: 'user_email' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'field-wrap' },
+	              React.createElement('input', {
+	                type: 'password',
+	                name: 'user[password]',
+	                placeholder: 'password',
+	                id: 'user_password' })
+	            ),
+	            React.createElement(
+	              'button',
+	              { className: 'form-button',
+	                type: 'submit',
+	                name: 'login' },
+	              "log in"
+	            )
+	          ),
+	          React.createElement(
+	            'button',
+	            { className: 'form-button',
+	              id: 'guest-login',
+	              onClick: this.guestLogin },
+	            "log in as guest"
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = SignUpLogIn;
+
+/***/ },
+/* 284 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(218).Store;
+	var AppDispatcher = __webpack_require__(209);
+	var FlashConstants = __webpack_require__(216);
+	
+	var _notifications = [];
+	var FlashStore = new Store(AppDispatcher);
+	
+	FlashStore.all = function () {
+	  return _notifications.slice();
+	};
+	
+	FlashStore.resetNotifications = function (notifications) {
+	  _notifications = notifications;
+	};
+	
+	FlashStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case FlashConstants.RECEIVE_FLASH:
+	      FlashStore.resetNotifications(payload.flash);
+	      FlashStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = FlashStore;
 
 /***/ }
 /******/ ]);

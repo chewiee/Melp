@@ -107,7 +107,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #848FA5;
+  color: #515866;
   cursor: pointer;
   font-size: 20px;
 }
@@ -116,8 +116,16 @@
   text-decoration: underline;
 }
 
+.cuisine-link {
+  color: #515866;
+}
+
+.cuisine-link:hover {
+  text-decoration: underline;
+}
+
 .index-item-info > .item-subtitle {
-  width: 250px;
+  width: 350px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

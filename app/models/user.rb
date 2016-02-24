@@ -17,8 +17,15 @@ class User < ActiveRecord::Base
   )
 
   has_many(:reviews, foreign_key: :author_id)
-
   has_many(:photos, foreign_key: :user_id)
+
+  has_many(
+    :user_weights,
+    class_name: "UserWeight",
+    foreign_key: :user_id,
+    primary_key: :id
+  )
+  has_many :weighted_users, through: :user_weights, source: :weight_for_user
 
   after_initialize :ensure_session_token
 

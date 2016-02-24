@@ -60,6 +60,12 @@ bronson = User.create(email: 'action@bronson.com',
   gender: 'M',
   birthdate: '1983-12-2')
 
+UserWeight.create(user_id: guest.id, weight_for_user_id: tony.id, weight: 2)
+
+UserWeight.create(user_id: ranna.id, weight_for_user_id: bronson.id, weight: 2)
+UserWeight.create(user_id: ranna.id, weight_for_user_id: tony.id, weight: 2)
+UserWeight.create(user_id: ranna.id, weight_for_user_id: gordon.id, weight: 2)
+
 
 freddie = Restaurant.create(name: "Freddie & Pepper\'s",
   address: "303 Amsterdam Ave",
@@ -106,6 +112,29 @@ simit = Restaurant.create(name: "Simit & Smith",
   default_photo: File.open("#{Rails.root}/app/assets/images/simit_default.jpg")
   )
 
+pizza = Cuisine.create(cuisine_name: "pizza")
+italian = Cuisine.create(cuisine_name: "italian")
+deli = Cuisine.create(cuisine_name: "deli")
+breakfast = Cuisine.create(cuisine_name: "breakfast")
+mediterranean = Cuisine.create(cuisine_name: "mediterranean")
+american = Cuisine.create(cuisine_name: "american")
+burgers = Cuisine.create(cuisine_name: "burgers")
+coffee = Cuisine.create(cuisine_name: "coffee")
+salad = Cuisine.create(cuisine_name: "salad")
+vegetarian = Cuisine.create(cuisine_name: "vegetarian")
+
+CuisineTag.create(restaurant_id: freddie.id, cuisine_id: pizza.id)
+CuisineTag.create(restaurant_id: freddie.id, cuisine_id: italian.id)
+CuisineTag.create(restaurant_id: shack.id, cuisine_id: american.id)
+CuisineTag.create(restaurant_id: shack.id, cuisine_id: burgers.id)
+CuisineTag.create(restaurant_id: hummus.id, cuisine_id: mediterranean.id)
+CuisineTag.create(restaurant_id: hummus.id, cuisine_id: vegetarian.id)
+CuisineTag.create(restaurant_id: lenwich.id, cuisine_id: deli.id)
+CuisineTag.create(restaurant_id: lenwich.id, cuisine_id: salad.id)
+CuisineTag.create(restaurant_id: lenwich.id, cuisine_id: breakfast.id)
+CuisineTag.create(restaurant_id: simit.id, cuisine_id: breakfast.id)
+CuisineTag.create(restaurant_id: simit.id, cuisine_id: coffee.id)
+
 Review.create(author_id: ranna.id,
   restaurant_id: freddie.id,
   star_rating: 4,
@@ -135,3 +164,9 @@ Review.create(author_id: ranna.id,
   star_rating: 5,
   price_rating: 1,
   body: 'Great breakfast "bagel". Turkish coffee is yummy too, and the line is never long.')
+
+Review.create(author_id: tony.id,
+  restaurant_id: lenwich.id,
+  star_rating: 2,
+  price_rating: 1,
+  body: 'I didn\'t expect much from Lenwich, but it still managed to disappoint me.')

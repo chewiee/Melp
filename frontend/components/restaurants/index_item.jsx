@@ -9,7 +9,16 @@ module.exports = React.createClass({
   },
 
   render: function () {
-
+    var cuisine_links = this.props.restaurant.cuisines.slice(0,2).map(function (el, idx) {
+      return (
+        <span key={idx}>
+          <a className="cuisine-link" href="#">
+            {el.cuisine_name.charAt(0).toUpperCase() + el.cuisine_name.slice(1)}
+          </a>
+          {idx == 0 ? ", " : ""}
+        </span>
+      );
+    })
     return(
       <li onMouseEnter={this.props.onHover[0]}
         onMouseLeave={this.props.onHover[1]}
@@ -24,7 +33,7 @@ module.exports = React.createClass({
           </div>
           <div className="item-subtitle">
             <span className="cuisines">
-              {"filler cuisine"}
+              {cuisine_links}
             </span>
             <span>
               {" - " + this.props.restaurant.address}
@@ -38,7 +47,6 @@ module.exports = React.createClass({
           onClick={this.addReview}>
         </div>
         <div className="index-item-rating group">
-          <div className="star-rating"></div>
           <div className="price-rating"></div>
         </div>
       </li>
