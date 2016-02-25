@@ -49,7 +49,7 @@ class Restaurant < ActiveRecord::Base
     return sum / (reviews.size + extra_weight)
   end
 
-  def top_review
-    reviews.last
+  def top_review_snippet
+    reviews.last.body.truncate(55, separator: ' ')
   end
 end

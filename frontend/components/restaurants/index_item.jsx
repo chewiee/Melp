@@ -40,7 +40,7 @@ module.exports = React.createClass({
             </span>
           </div>
           <div className="item-review">
-            {"...this is filler review text..."}
+            {this.props.restaurant.top_review_snippet}
           </div>
         </div>
         <div className="index-item-button"

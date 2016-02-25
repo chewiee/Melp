@@ -33085,7 +33085,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'item-review' },
-	          "...this is filler review text..."
+	          this.props.restaurant.top_review_snippet
 	        )
 	      ),
 	      React.createElement('div', { className: 'index-item-button',
