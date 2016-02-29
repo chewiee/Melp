@@ -1,7 +1,8 @@
 json.extract!(
   restaurant,
   :id, :name, :address, :city, :zipcode,
-    :phone_number, :website, :review_count, :top_review_snippet
+    :phone_number, :website, :review_count, :top_review_snippet,
+    :star_rating_unweighted, :price_rating_unweighted
 )
 
 json.cuisines do

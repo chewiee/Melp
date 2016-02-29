@@ -138,13 +138,14 @@
 .index-item-info > .item-review {
   width: 350px;
   margin-left: 10px;
-  margin-top: 15px;
-  font-size: 13px;
+  margin-top: 10px;
+  font-size: 16px;
 }
 
 .index-item-rating {
   height: 100%;
   float: right;
+  position: relative;
 }
 
 .index-item-rating > .star-rating {
@@ -157,13 +158,40 @@
   padding: 5px;
 }
 
+.review-count {
+  font-size: 12px;
+}
+
+.reviewer-thumbs {
+  position: absolute;
+  width: 150px;
+  top: 62px;
+  right: -22px;
+}
+
+.reviewer-thumb {
+  display: block;
+  float: left;
+  width: 40px;
+  height: 40px;
+  background: yellow;
+  border-radius: 3px;
+  margin-left: 2px;
+}
+
 .index-item-rating > .price-rating {
   float: right;
-  width: 90px;
-  height: 90px;
-  background-color: green;
-  margin-top: 8px;
+  height: 30px;
+  background-color: #3D7257;
+  margin-top: 12px;
   padding: 5px;
+  border-radius: 5px;
+  font-size: 24px;
+  color: white;
+  text-align: center;
+  letter-spacing: 3px;
+  padding-left: 6px;
+  cursor: pointer;
 }
 
 .index-item-button {
@@ -178,6 +206,9 @@
   padding: 5px;
   background: linear-gradient(#C14953, #A83C43);
   cursor: pointer;
+  color: white;
+  text-align: center;
+  position: relative;
 }
 
 .index-item-button:hover {
@@ -187,6 +218,33 @@
 
 .index-item-button:active {
   background: linear-gradient(#E85864, #A83C43);
+}
+
+.bg-star {
+  left: 17px;
+  top: 8px;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  color: #8c242d;
+  font-size: 72px !important;
+  z-index: 0;
+}
+
+.bg-star-2 {
+  left: 20px;
+  top: 11px;
+  overflow: hidden;
+  position: absolute;
+  color: #4f1b1f;
+  font-size: 65px !important;
+  z-index: 1;
+}
+
+.button-star-rating {
+  position: relative;
+  font-size: 60px;
+  z-index: 10;
 }
 
 .restaurant-detail-header {

@@ -67,9 +67,9 @@ var ReviewForm = React.createClass({
   },
 
   getDollarRatingInput: function () {
-    var dollars = new Array(5);
+    var dollars = new Array(3);
 
-    for (var i = 1; i <= 5; i++) {
+    for (var i = 1; i <= 3; i++) {
       if (i <= this.state.price_rating) {
         dollars[i - 1] = <i className="fa fa-usd filled-dollar"
           key={i} id={"dollar" + i} onClick={this.handleDollarClick} onMouseEnter={this.handleDollarHover}></i>;

@@ -155,7 +155,7 @@ Review.create(author_id: ranna.id,
 
 Review.create(author_id: ranna.id,
   restaurant_id: lenwich.id,
-  star_rating: 4,
+  star_rating: 3,
   price_rating: 2,
   body: "Solid deli, fast service.")
 

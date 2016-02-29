@@ -1,11 +1,15 @@
 var React = require('react');
 var History = require('react-router').History;
+var CurrentUserStore = require('../../stores/current_user_store');
 
 module.exports = React.createClass({
   mixins: [History],
 
   showDetail: function () {
     this.history.pushState(null, '/restaurant/' + this.props.restaurant.id, {});
+  },
+
+  addReview: function () {
   },
 
   render: function () {
@@ -19,6 +23,20 @@ module.exports = React.createClass({
         </span>
       );
     })
+
+    var starHeight = {
+      height: (65 - (this.props.restaurant.star_rating_unweighted * 65 / 5)) + "px"
+    };
+    var dollars = "";
+    for (var i = 0; i < this.props.restaurant.price_rating_unweighted; i++) {
+      dollars += "$";
+    }
+    var reviewerThumbs = [
+      <div className="reviewer-thumb"></div>,
+      <div className="reviewer-thumb"></div>,
+      <div className="reviewer-thumb"></div>
+    ]
+
     return(
       <li onMouseEnter={this.props.onHover[0]}
         onMouseLeave={this.props.onHover[1]}
@@ -45,9 +63,16 @@ module.exports = React.createClass({
         </div>
         <div className="index-item-button"
           onClick={this.addReview}>
+          <div className="button-star-rating">
+            {this.props.restaurant.star_rating_unweighted}
+          </div>
+          <div className="bg-star fa fa-star"></div>
+          <div className="bg-star-2 fa fa-star" style={starHeight}></div>
+          <div className="review-count">{this.props.restaurant.review_count + " reviews"}</div>
         </div>
         <div className="index-item-rating group">
-          <div className="price-rating"></div>
+          <div className="price-rating" onClick={this.addReview}>{dollars}</div>
+          <div className="reviewer-thumbs group">{reviewerThumbs}</div>
         </div>
       </li>
     );

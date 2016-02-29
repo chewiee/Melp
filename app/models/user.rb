@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   validates :password, length: {in: 6..12, allow_nil: true}, confirmation: true
   validates :password_confirmation, presence: { message: "Please confirm your password!"}
 
-  has_attached_file :avatar
+  has_attached_file :avatar, styles: {thumb: "40x40>", small: "100x100>", medium: "200x200>"}
   validates_attachment_content_type(
     :avatar,
     content_type: /\Aimage\/.*\Z/

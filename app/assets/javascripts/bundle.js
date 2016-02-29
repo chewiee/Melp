@@ -33026,6 +33026,7 @@
 
 	var React = __webpack_require__(1);
 	var History = __webpack_require__(159).History;
+	var CurrentUserStore = __webpack_require__(217);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -33035,6 +33036,8 @@
 	  showDetail: function () {
 	    this.history.pushState(null, '/restaurant/' + this.props.restaurant.id, {});
 	  },
+	
+	  addReview: function () {},
 	
 	  render: function () {
 	    var cuisine_links = this.props.restaurant.cuisines.slice(0, 2).map(function (el, idx) {
@@ -33049,6 +33052,16 @@
 	        idx == 0 ? ", " : ""
 	      );
 	    });
+	
+	    var starHeight = {
+	      height: 65 - this.props.restaurant.star_rating_unweighted * 65 / 5 + "px"
+	    };
+	    var dollars = "";
+	    for (var i = 0; i < this.props.restaurant.price_rating_unweighted; i++) {
+	      dollars += "$";
+	    }
+	    var reviewerThumbs = [React.createElement('div', { className: 'reviewer-thumb' }), React.createElement('div', { className: 'reviewer-thumb' }), React.createElement('div', { className: 'reviewer-thumb' })];
+	
 	    return React.createElement(
 	      'li',
 	      { onMouseEnter: this.props.onHover[0],
@@ -33088,12 +33101,36 @@
 	          this.props.restaurant.top_review_snippet
 	        )
 	      ),
-	      React.createElement('div', { className: 'index-item-button',
-	        onClick: this.addReview }),
+	      React.createElement(
+	        'div',
+	        { className: 'index-item-button',
+	          onClick: this.addReview },
+	        React.createElement(
+	          'div',
+	          { className: 'button-star-rating' },
+	          this.props.restaurant.star_rating_unweighted
+	        ),
+	        React.createElement('div', { className: 'bg-star fa fa-star' }),
+	        React.createElement('div', { className: 'bg-star-2 fa fa-star', style: starHeight }),
+	        React.createElement(
+	          'div',
+	          { className: 'review-count' },
+	          this.props.restaurant.review_count + " reviews"
+	        )
+	      ),
 	      React.createElement(
 	        'div',
 	        { className: 'index-item-rating group' },
-	        React.createElement('div', { className: 'price-rating' })
+	        React.createElement(
+	          'div',
+	          { className: 'price-rating', onClick: this.addReview },
+	          dollars
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'reviewer-thumbs group' },
+	          reviewerThumbs
+	        )
 	      )
 	    );
 	  }
@@ -33963,9 +34000,9 @@
 	  },
 	
 	  getDollarRatingInput: function () {
-	    var dollars = new Array(5);
+	    var dollars = new Array(3);
 	
-	    for (var i = 1; i <= 5; i++) {
+	    for (var i = 1; i <= 3; i++) {
 	      if (i <= this.state.price_rating) {
 	        dollars[i - 1] = React.createElement('i', { className: 'fa fa-usd filled-dollar',
 	          key: i, id: "dollar" + i, onClick: this.handleDollarClick, onMouseEnter: this.handleDollarHover });

@@ -26,7 +26,7 @@ class Restaurant < ActiveRecord::Base
 
   def star_rating_unweighted
     ratings = reviews.map{|review| review.star_rating}
-    return ratings.inject(:+).to_f / ratings.size
+    return (ratings.inject(:+).to_f / ratings.size).round(1)
   end
 
   def star_rating_weighted(current_user)
@@ -49,7 +49,12 @@ class Restaurant < ActiveRecord::Base
     return sum / (reviews.size + extra_weight)
   end
 
+  def price_rating_unweighted
+    ratings = reviews.map{|review| review.price_rating}
+    return (ratings.inject(:+).to_f / ratings.size).round(1)
+  end
+
   def top_review_snippet
-    reviews.last.body.truncate(55, separator: ' ')
+    reviews.last.body.truncate(100, separator: ' ')
   end
 end
