@@ -78,13 +78,17 @@
 	
 	var routes = React.createElement(
 	  Route,
-	  { path: '/', component: App },
-	  React.createElement(IndexRoute, { component: RestaurantIndex }),
-	  React.createElement(Route, { path: 'restaurant/:restaurantId', component: RestaurantDetail }),
-	  React.createElement(Route, { path: 'users/new', component: SignUpLogIn }),
-	  React.createElement(Route, { path: 'session/new', component: SignUpLogIn }),
-	  React.createElement(Route, { path: 'search', component: MainIndex }),
-	  React.createElement(Route, { path: 'welcome', component: Onboarding })
+	  { location: 'history' },
+	  React.createElement(
+	    Route,
+	    { path: '/', component: App },
+	    React.createElement(IndexRoute, { component: RestaurantIndex }),
+	    React.createElement(Route, { path: 'restaurant/:restaurantId', component: RestaurantDetail }),
+	    React.createElement(Route, { path: 'users/new', component: SignUpLogIn }),
+	    React.createElement(Route, { path: 'session/new', component: SignUpLogIn }),
+	    React.createElement(Route, { path: 'search', component: MainIndex }),
+	    React.createElement(Route, { path: 'welcome', component: Onboarding })
+	  )
 	);
 	
 	document.addEventListener("DOMContentLoaded", function () {
@@ -33053,14 +33057,15 @@
 	      );
 	    });
 	
-	    var starHeight = {
-	      height: 65 - this.props.restaurant.star_rating_unweighted * 65 / 5 + "px"
-	    };
 	    var dollars = "";
 	    for (var i = 0; i < this.props.restaurant.price_rating_unweighted; i++) {
 	      dollars += "$";
 	    }
 	    var reviewerThumbs = [React.createElement('div', { className: 'reviewer-thumb' }), React.createElement('div', { className: 'reviewer-thumb' }), React.createElement('div', { className: 'reviewer-thumb' })];
+	
+	    var rowStarsMaskWidth = {
+	      width: 16 * (5 - this.props.restaurant.star_rating_unweighted) + "px"
+	    };
 	
 	    return React.createElement(
 	      'li',
@@ -33107,15 +33112,28 @@
 	          onClick: this.addReview },
 	        React.createElement(
 	          'div',
-	          { className: 'button-star-rating' },
+	          { className: 'button-star-rating-label' },
 	          this.props.restaurant.star_rating_unweighted
 	        ),
-	        React.createElement('div', { className: 'bg-star fa fa-star' }),
-	        React.createElement('div', { className: 'bg-star-2 fa fa-star', style: starHeight }),
+	        React.createElement(
+	          'div',
+	          { className: 'button-star-rating' },
+	          React.createElement(
+	            'div',
+	            { className: 'row-stars group' },
+	            React.createElement('i', { className: 'fa fa-star filled-star' }),
+	            React.createElement('i', { className: 'fa fa-star filled-star' }),
+	            React.createElement('i', { className: 'fa fa-star filled-star' }),
+	            React.createElement('i', { className: 'fa fa-star filled-star' }),
+	            React.createElement('i', { className: 'fa fa-star filled-star' }),
+	            React.createElement('div', { className: 'row-stars-mask', style: rowStarsMaskWidth })
+	          )
+	        ),
 	        React.createElement(
 	          'div',
 	          { className: 'review-count' },
-	          this.props.restaurant.review_count + " reviews"
+	          this.props.restaurant.review_count,
+	          this.props.restaurant.review_count == 1 ? " review" : " reviews"
 	        )
 	      ),
 	      React.createElement(
@@ -33135,6 +33153,13 @@
 	    );
 	  }
 	});
+	// add this above return in render for background star
+	// var starHeight = {
+	//   height: (65 - (this.props.restaurant.star_rating_unweighted * 65 / 5)) + "px"
+	// };
+	// add this above review count for background star
+	// <div className="bg-star fa fa-star"></div>
+	// <div className="bg-star-2 fa fa-star" style={starHeight}></div>
 
 /***/ },
 /* 267 */
@@ -34563,6 +34588,10 @@
 	    var clicked_el = e.currentTarget;
 	
 	    e.preventDefault();
+	    this.setState({
+	      flash: []
+	
+	    });
 	
 	    $(clicked_el).parent().addClass('active');
 	    $(clicked_el).parent().siblings().removeClass('active');
@@ -34587,9 +34616,33 @@
 	  // used http://codepen.io/ehermanson/pen/KwKWEv
 	  render: function () {
 	    var errors = "";
+	    var borderStyle = "";
+	    var errorHeight = 0;
 	    if (this.state.flash.length > 0) {
-	      console.log(this.state.flash);
+	      errors = [];
+	      if (typeof this.state.flash === "string") {
+	        errorHeight = 40;
+	        errors = React.createElement(
+	          'li',
+	          null,
+	          this.state.flash
+	        );
+	      } else {
+	        errorHeight = 20 + this.state.flash.length * 20;
+	        for (var i = 0; i < this.state.flash.length; i++) {
+	          errors.push(React.createElement(
+	            'li',
+	            null,
+	            this.state.flash[i]
+	          ));
+	        }
+	      }
+	      borderStyle = "2px solid red";
 	    }
+	    var errorStyle = {
+	      border: borderStyle,
+	      height: errorHeight + "px"
+	    };
 	
 	    return React.createElement(
 	      'div',
@@ -34661,6 +34714,15 @@
 	                id: 'user_password_confirmation' })
 	            ),
 	            React.createElement(
+	              'div',
+	              { className: 'errors sign-up-errors', style: errorStyle },
+	              React.createElement(
+	                'ul',
+	                { className: 'error-list' },
+	                errors
+	              )
+	            ),
+	            React.createElement(
 	              'button',
 	              { className: 'form-button',
 	                type: 'submit',
@@ -34700,6 +34762,15 @@
 	                name: 'user[password]',
 	                placeholder: 'password',
 	                id: 'user_password' })
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'errors log-in-errors', style: errorStyle },
+	              React.createElement(
+	                'ul',
+	                { className: 'error-list' },
+	                errors
+	              )
 	            ),
 	            React.createElement(
 	              'button',

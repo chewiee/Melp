@@ -27,13 +27,15 @@ var App = React.createClass({
 });
 
 var routes = (
-  <Route path="/" component={App}>
-    <IndexRoute component={RestaurantIndex} />
-    <Route path="restaurant/:restaurantId" component={RestaurantDetail} />
-    <Route path="users/new" component={SignUpLogIn} />
-    <Route path="session/new" component={SignUpLogIn} />
-    <Route path="search" component={MainIndex} />
-    <Route path="welcome" component={Onboarding} />
+  <Route location="history">
+    <Route path="/" component={App}>
+      <IndexRoute component={RestaurantIndex} />
+      <Route path="restaurant/:restaurantId" component={RestaurantDetail} />
+      <Route path="users/new" component={SignUpLogIn} />
+      <Route path="session/new" component={SignUpLogIn} />
+      <Route path="search" component={MainIndex} />
+      <Route path="welcome" component={Onboarding} />
+    </Route>
   </Route>
 );
 

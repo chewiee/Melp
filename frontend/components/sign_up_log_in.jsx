@@ -62,6 +62,10 @@ var SignUpLogIn = React.createClass({
     var clicked_el = e.currentTarget;
 
     e.preventDefault();
+    this.setState({
+      flash: [],
+      
+    });
 
     $(clicked_el).parent().addClass('active');
     $(clicked_el).parent().siblings().removeClass('active');
@@ -86,8 +90,24 @@ var SignUpLogIn = React.createClass({
   // used http://codepen.io/ehermanson/pen/KwKWEv
   render: function () {
     var errors = "";
+    var borderStyle = "";
+    var errorHeight = 0
     if (this.state.flash.length > 0) {
-      console.log(this.state.flash);
+      errors = [];
+      if (typeof this.state.flash === "string") {
+        errorHeight = 40;
+        errors = <li>{this.state.flash}</li>
+      } else {
+        errorHeight = 20 + (this.state.flash.length * 20);
+        for (var i = 0; i < this.state.flash.length; i++) {
+          errors.push(<li>{this.state.flash[i]}</li>);
+        }
+      }
+      borderStyle = "2px solid red";
+    }
+    var errorStyle = {
+      border: borderStyle,
+      height: errorHeight + "px"
     }
 
     return(
@@ -133,6 +153,10 @@ var SignUpLogIn = React.createClass({
                   id="user_password_confirmation" />
               </div>
 
+              <div className="errors sign-up-errors" style={errorStyle}>
+                <ul className="error-list">{errors}</ul>
+              </div>
+
               <button className="form-button"
                 type="submit"
                 name="register">
@@ -161,6 +185,11 @@ var SignUpLogIn = React.createClass({
                   placeholder="password"
                   id="user_password" />
               </div>
+
+              <div className="errors log-in-errors" style={errorStyle}>
+                <ul className="error-list">{errors}</ul>
+              </div>
+
               <button className="form-button"
                 type="submit"
                 name="login">{"log in"}

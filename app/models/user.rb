@@ -8,7 +8,9 @@ class User < ActiveRecord::Base
   validates :email, :username, uniqueness: true, presence: true
   validates :password_digest, presence: { message: "Please enter a password!"}
   validates :password, length: {in: 6..12, allow_nil: true}, confirmation: true
-  validates :password_confirmation, presence: { message: "Please confirm your password!"}
+  validates :password_confirmation, presence: { message: "can't be blank"}
+
+  validates_format_of :email, with: /@/
 
   has_attached_file :avatar, styles: {thumb: "40x40>", small: "100x100>", medium: "200x200>"}
   validates_attachment_content_type(

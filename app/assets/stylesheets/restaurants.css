@@ -241,10 +241,45 @@
   z-index: 1;
 }
 
-.button-star-rating {
+.button-star-rating-label {
   position: relative;
-  font-size: 60px;
+  font-size: 40px;
   z-index: 10;
+}
+
+.button-star-rating {
+  width: 100%;
+  background-color: white;
+  height: 20px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+  color: #C14953;
+}
+
+.row-stars {
+  position: absolute;
+  margin: auto;
+  width: 80px;
+  padding-left: 3px;
+}
+
+.row-stars > i {
+  position: relative;
+  z-index: 1;
+  font-size: 14px;
+  color: #C14953;
+  background-color: white;
+  width: 8px;
+}
+
+.row-stars-mask {
+  height: 20px;
+  position: relative;
+  background-color: white;
+  top: -21px;
+  right: -2px;
+  float: right;
+  z-index: 100;
 }
 
 .restaurant-detail-header {

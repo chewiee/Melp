@@ -24,9 +24,6 @@ module.exports = React.createClass({
       );
     })
 
-    var starHeight = {
-      height: (65 - (this.props.restaurant.star_rating_unweighted * 65 / 5)) + "px"
-    };
     var dollars = "";
     for (var i = 0; i < this.props.restaurant.price_rating_unweighted; i++) {
       dollars += "$";
@@ -35,7 +32,11 @@ module.exports = React.createClass({
       <div className="reviewer-thumb"></div>,
       <div className="reviewer-thumb"></div>,
       <div className="reviewer-thumb"></div>
-    ]
+    ];
+
+    var rowStarsMaskWidth = {
+      width: (16 * (5 - this.props.restaurant.star_rating_unweighted)) + "px"
+    }
 
     return(
       <li onMouseEnter={this.props.onHover[0]}
@@ -63,12 +64,20 @@ module.exports = React.createClass({
         </div>
         <div className="index-item-button"
           onClick={this.addReview}>
-          <div className="button-star-rating">
+          <div className="button-star-rating-label">
             {this.props.restaurant.star_rating_unweighted}
           </div>
-          <div className="bg-star fa fa-star"></div>
-          <div className="bg-star-2 fa fa-star" style={starHeight}></div>
-          <div className="review-count">{this.props.restaurant.review_count + " reviews"}</div>
+          <div className="button-star-rating">
+            <div className="row-stars group">
+              <i className="fa fa-star filled-star"></i>
+              <i className="fa fa-star filled-star"></i>
+              <i className="fa fa-star filled-star"></i>
+              <i className="fa fa-star filled-star"></i>
+              <i className="fa fa-star filled-star"></i>
+              <div className="row-stars-mask" style={rowStarsMaskWidth}></div>
+            </div>
+          </div>
+          <div className="review-count">{this.props.restaurant.review_count}{this.props.restaurant.review_count == 1 ? " review" : " reviews"}</div>
         </div>
         <div className="index-item-rating group">
           <div className="price-rating" onClick={this.addReview}>{dollars}</div>
@@ -78,3 +87,10 @@ module.exports = React.createClass({
     );
   }
 });
+// add this above return in render for background star
+// var starHeight = {
+//   height: (65 - (this.props.restaurant.star_rating_unweighted * 65 / 5)) + "px"
+// };
+// add this above review count for background star
+// <div className="bg-star fa fa-star"></div>
+// <div className="bg-star-2 fa fa-star" style={starHeight}></div>

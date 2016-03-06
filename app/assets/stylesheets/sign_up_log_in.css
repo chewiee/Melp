@@ -79,6 +79,20 @@
   margin-bottom:40px;
 }
 
+.error-list {
+  list-style-type: disc !important;
+  margin-left: 30px;
+  margin-top: 10px;
+}
+
+.errors {
+  width: 100%;
+  color: red;
+  transition: height .2s ease;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
 .form-button {
   border:0;
   outline:none;
